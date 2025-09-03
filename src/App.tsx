@@ -207,12 +207,7 @@ function App() {
             <a href="#contact" className="hover:text-blue-700 transition-colors">Contact</a>
           </nav>
           <div className="flex items-center gap-2">
-            <a 
-              href="https://www.zeffy.com/embed/donation-form/lev-echad-a-home-away-from-home-for-jewish-and-israeli-pittsburghers?modal=true"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-2xl bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 inline-block text-center"
-            >
+            <a href="#donate" className="rounded-2xl bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 inline-block text-center">
               Donate
             </a>
           </div>
@@ -252,9 +247,7 @@ function App() {
             </div>
             <div className="mt-8 flex flex-wrap gap-3">
               <a 
-                href="https://www.zeffy.com/embed/donation-form/lev-echad-a-home-away-from-home-for-jewish-and-israeli-pittsburghers?modal=true"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#donate"
                 className="rounded-2xl border border-white text-white hover:bg-white/10 px-8 py-3 font-medium inline-block text-center"
               >
                 Donate Now →
@@ -494,17 +487,121 @@ function App() {
           <div className="absolute bottom-10 left-10 w-32 h-32 bg-white/5 rounded-full blur-xl"></div>
         </div>
         <div className="mx-auto max-w-6xl px-4">
-          <div className="text-center">
+          <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-6">Support Lev Echad</h2>
-            
-            {/* Zeffy Fundraising Thermometer */}
-            <div className="mb-8">
+            <p className="text-xl text-blue-100 mb-4 max-w-3xl mx-auto">
+              At this stage, Shosh personally covers all the costs associated with each Shabbat dinner — including food, supplies, preparation, and cleaning services. 
+              Help us reach our $10,000 goal to support Tishrei holidays, the Sukkah project, and ongoing Shabbos dinners for our community.
+            </p>
+            <p className="text-sm text-blue-200 mb-8 max-w-3xl mx-auto">
+              All donations are tax deductible
+            </p>
+          </div>
+
+          {/* Ways to Help and Form Section */}
+          <div className="grid lg:grid-cols-2 gap-8 items-start">
+            {/* Left Side - Ways to Help */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+              <h3 className="text-xl font-bold mb-4 text-center">Ways to Help</h3>
+              <div 
+                className="overflow-y-auto pr-2"
+                style={{ height: '450px' }}
+              >
+                <div className="space-y-3">
+                  <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-3 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div className="flex items-center gap-3">
+                      <div className="text-2xl">🍷</div>
+                      <div>
+                        <h4 className="text-lg font-bold">$15</h4>
+                        <p className="text-blue-100 text-sm">Cover a bottle of wine for Shabbat</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-3 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div className="flex items-center gap-3">
+                      <div className="text-2xl">🍞</div>
+                      <div>
+                        <h4 className="text-lg font-bold">$20</h4>
+                        <p className="text-blue-100 text-sm">Cover challah for Shabbat dinner</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-3 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div className="flex items-center gap-3">
+                      <div className="text-2xl">👤</div>
+                      <div>
+                        <h4 className="text-lg font-bold">$25</h4>
+                        <p className="text-blue-100 text-sm">Cover one person for Shabbat dinner</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-3 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div className="flex items-center gap-3">
+                      <div className="text-2xl">🍸</div>
+                      <div>
+                        <h4 className="text-lg font-bold">$60</h4>
+                        <p className="text-blue-100 text-sm">Cover a bottle of vodka</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-3 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div className="flex items-center gap-3">
+                      <div className="text-2xl">🥃</div>
+                      <div>
+                        <h4 className="text-lg font-bold">$80</h4>
+                        <p className="text-blue-100 text-sm">Cover a bottle of whiskey</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-3 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div className="flex items-center gap-3">
+                      <div className="text-2xl">👨‍👩‍👧‍👦</div>
+                      <div>
+                        <h4 className="text-lg font-bold">$100</h4>
+                        <p className="text-blue-100 text-sm">Cover a family for Shabbat dinner</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-3 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div className="flex items-center gap-3">
+                      <div className="text-2xl">🛒</div>
+                      <div>
+                        <h4 className="text-lg font-bold">$300</h4>
+                        <p className="text-blue-100 text-sm">Cover weekly groceries for Shabbat dinner</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-gradient-to-br from-green-500 to-green-600 p-3 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div className="flex items-center gap-3">
+                      <div className="text-2xl">🏠</div>
+                      <div>
+                        <h4 className="text-lg font-bold">$50-$300</h4>
+                        <p className="text-green-100 text-sm">Help build our community Sukkah</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-gradient-to-br from-purple-500 to-purple-600 p-3 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div className="flex items-center gap-3">
+                      <div className="text-2xl">💝</div>
+                      <div>
+                        <h4 className="text-lg font-bold">Custom</h4>
+                        <p className="text-purple-100 text-sm">Any amount to be part of our mission</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Side - Donation Form */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+              <h3 className="text-xl font-bold mb-4 text-center">Make a Donation</h3>
               <div 
                 style={{
                   position: 'relative',
                   overflow: 'hidden',
-                  width: '100%',
-                  paddingTop: '120px'
+                  height: '450px',
+                  width: '100%'
                 }}
               >
                 <iframe 
@@ -517,76 +614,13 @@ function App() {
                     bottom: '0',
                     right: '0',
                     width: '100%',
-                    height: '120px'
+                    height: '100%'
                   }}
-                  src="https://www.zeffy.com/embed/thermometer/lev-echad-a-home-away-from-home-for-jewish-and-israeli-pittsburghers"
+                  src="https://www.zeffy.com/embed/donation-form/lev-echad-a-home-away-from-home-for-jewish-and-israeli-pittsburghers"
+                  allowpaymentrequest
                   allowTransparency="true"
                 />
               </div>
-            </div>
-            <p className="text-xl text-blue-100 mb-4 max-w-3xl mx-auto">
-              At this stage, Shosh personally covers all the costs associated with each Shabbat dinner — including food, supplies, preparation, and cleaning services. 
-              Help us reach our $10,000 goal to support Tishrei holidays, the Sukkah project, and ongoing Shabbos dinners for our community.
-            </p>
-            <p className="text-sm text-blue-200 mb-8 max-w-3xl mx-auto">
-              All donations are tax deductible
-            </p>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-              <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                <div className="text-3xl mb-2">🍷</div>
-                <h3 className="text-xl font-bold mb-2">$15</h3>
-                <p className="text-blue-100 text-sm">Cover a bottle of wine for Shabbat</p>
-              </div>
-              <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                <div className="text-3xl mb-2">🍞</div>
-                <h3 className="text-xl font-bold mb-2">$20</h3>
-                <p className="text-blue-100 text-sm">Cover challah for Shabbat dinner</p>
-              </div>
-              <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                <div className="text-3xl mb-2">👤</div>
-                <h3 className="text-xl font-bold mb-2">$25</h3>
-                <p className="text-blue-100 text-sm">Cover one person for Shabbat dinner</p>
-              </div>
-              <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                <div className="text-3xl mb-2">🍸</div>
-                <h3 className="text-xl font-bold mb-2">$60</h3>
-                <p className="text-blue-100 text-sm">Cover a bottle of vodka</p>
-              </div>
-              <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                <div className="text-3xl mb-2">🥃</div>
-                <h3 className="text-xl font-bold mb-2">$80</h3>
-                <p className="text-blue-100 text-sm">Cover a bottle of whiskey</p>
-              </div>
-              <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                <div className="text-3xl mb-2">👨‍👩‍👧‍👦</div>
-                <h3 className="text-xl font-bold mb-2">$100</h3>
-                <p className="text-blue-100 text-sm">Cover a family for Shabbat dinner</p>
-              </div>
-              <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                <div className="text-3xl mb-2">🛒</div>
-                <h3 className="text-xl font-bold mb-2">$300</h3>
-                <p className="text-blue-100 text-sm">Cover weekly groceries for Shabbat dinner</p>
-              </div>
-              <div className="bg-gradient-to-br from-green-500 to-green-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                <div className="text-3xl mb-2">🏠</div>
-                <h3 className="text-xl font-bold mb-2">$50-$300</h3>
-                <p className="text-green-100 text-sm">Help build our community Sukkah</p>
-              </div>
-              <div className="bg-gradient-to-br from-purple-500 to-purple-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                <div className="text-3xl mb-2">💝</div>
-                <h3 className="text-xl font-bold mb-2">Custom</h3>
-                <p className="text-purple-100 text-sm">Any amount to be part of our mission</p>
-              </div>
-            </div>
-            <div className="flex justify-center">
-              <a 
-                href="https://www.zeffy.com/embed/donation-form/lev-echad-a-home-away-from-home-for-jewish-and-israeli-pittsburghers?modal=true"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-2xl bg-white text-blue-600 hover:bg-blue-50 px-8 py-3 font-medium inline-block text-center"
-              >
-                Donate Now
-              </a>
             </div>
           </div>
         </div>
