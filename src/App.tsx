@@ -435,9 +435,9 @@ function App() {
                   <p className="text-xs text-green-200 mt-2">For Sukkah materials and setup</p>
                 </div>
                 <div className="mt-6 text-center">
-                  <p className="text-green-100 text-sm">Total Holiday Budget</p>
-                  <p className="text-2xl font-bold">$6,100</p>
-                  <p className="text-xs text-green-200">For all Tishrei holiday meals + Sukkah project</p>
+                  <p className="text-green-100 text-sm">Total Campaign Goal</p>
+                  <p className="text-2xl font-bold">$10,000</p>
+                  <p className="text-xs text-green-200">For Tishrei holidays + Sukkah project + ongoing Shabbos support</p>
                 </div>
               </div>
             </div>
@@ -457,7 +457,7 @@ function App() {
             <h2 className="text-3xl font-bold mb-6">Support Lev Echad</h2>
             <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
               At this stage, Shosh personally covers all the costs associated with each Shabbat dinner — including food, supplies, preparation, and cleaning services. 
-              To continue offering meaningful, high-quality Shabbat experiences, Lev Echad needs your support.
+              Help us reach our $10,000 goal to support Tishrei holidays, the Sukkah project, and ongoing Shabbos dinners for our community.
             </p>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
               <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
