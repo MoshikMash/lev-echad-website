@@ -489,9 +489,12 @@ function App() {
         <div className="mx-auto max-w-6xl px-4">
           <div className="text-center">
             <h2 className="text-3xl font-bold mb-6">Support Lev Echad</h2>
-            <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl text-blue-100 mb-4 max-w-3xl mx-auto">
               At this stage, Shosh personally covers all the costs associated with each Shabbat dinner — including food, supplies, preparation, and cleaning services. 
               Help us reach our $10,000 goal to support Tishrei holidays, the Sukkah project, and ongoing Shabbos dinners for our community.
+            </p>
+            <p className="text-sm text-blue-200 mb-8 max-w-3xl mx-auto">
+              All donations are tax deductible
             </p>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
               <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
@@ -562,14 +565,18 @@ function App() {
                 <div className="text-blue-600">📧</div>
                 <div>
                   <p className="font-medium">Email</p>
-                  <p className="text-gray-600">mashshosh@gmail.com</p>
+                  <a href="mailto:mashshosh@gmail.com" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">
+                    mashshosh@gmail.com
+                  </a>
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <div className="text-blue-600">📞</div>
                 <div>
                   <p className="font-medium">Phone</p>
-                  <p className="text-gray-600">412-626-1823</p>
+                  <a href="tel:+14126261823" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">
+                    412-626-1823
+                  </a>
                   <div className="flex gap-2 mt-2">
                     <a 
                       href="sms:+14126261823" 
