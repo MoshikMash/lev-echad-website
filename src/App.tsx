@@ -207,8 +207,11 @@ function App() {
             <a href="#contact" className="hover:text-blue-700 transition-colors">Contact</a>
           </nav>
           <div className="flex items-center gap-2">
-            <button className="rounded-2xl bg-blue-600 hover:bg-blue-700 text-white px-4 py-2">
-              <a href="#donate">Donate</a>
+            <button 
+              className="rounded-2xl bg-blue-600 hover:bg-blue-700 text-white px-4 py-2"
+              zeffy-form-link="https://www.zeffy.com/embed/donation-form/lev-echad-a-home-away-from-home-for-jewish-and-israeli-pittsburghers?modal=true"
+            >
+              Donate
             </button>
           </div>
         </div>
@@ -249,8 +252,11 @@ function App() {
               <button className="rounded-2xl bg-white text-blue-700 hover:bg-blue-50 px-8 py-3 font-medium">
                 <a href="#volunteer">Join Us</a>
               </button>
-              <button className="rounded-2xl border border-white text-white hover:bg-white/10 px-8 py-3 font-medium">
-                <a href="#donate">Donate Now →</a>
+              <button 
+                className="rounded-2xl border border-white text-white hover:bg-white/10 px-8 py-3 font-medium"
+                zeffy-form-link="https://www.zeffy.com/embed/donation-form/lev-echad-a-home-away-from-home-for-jewish-and-israeli-pittsburghers?modal=true"
+              >
+                Donate Now →
               </button>
             </div>
           </div>
@@ -544,10 +550,11 @@ function App() {
               </div>
             </div>
             <div className="flex justify-center">
-              <button className="rounded-2xl bg-white text-blue-600 hover:bg-blue-50 px-8 py-3 font-medium">
-                <a href="https://donate.levechad.org" target="_blank" rel="noopener noreferrer">
-                  Donate Now
-                </a>
+              <button 
+                className="rounded-2xl bg-white text-blue-600 hover:bg-blue-50 px-8 py-3 font-medium"
+                zeffy-form-link="https://www.zeffy.com/embed/donation-form/lev-echad-a-home-away-from-home-for-jewish-and-israeli-pittsburghers?modal=true"
+              >
+                Donate Now
               </button>
             </div>
           </div>
