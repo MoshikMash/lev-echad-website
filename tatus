@@ -1,0 +1,3 @@
+[33mb2bb549[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m Force deployment
+[33m285d015[m Make donation options scrollable list matching form height
+[33md5624db[m Add Zeffy fundraising thermometer - Embedded fundraising progress thermometer in donation section - Shows real-time progress toward ,000 goal - Responsive design that adapts to different screen sizes - Automatically updates as donations are received

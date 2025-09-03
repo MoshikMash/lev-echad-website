@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import emailjs from '@emailjs/browser'
+// Updated donation section with scrollable options
 
 function App() {
   const [formData, setFormData] = useState({
