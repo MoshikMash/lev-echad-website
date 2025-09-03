@@ -14,19 +14,44 @@ function App() {
   // Sample testimonials - you can replace these with your actual testimonials
   const testimonials = [
     {
-      text: "Lev Echad has been a true blessing for our family. The weekly Shabbat dinners have given us a sense of community and belonging that we desperately needed when we moved to Pittsburgh.",
-      author: "Sarah M.",
-      role: "Israeli Family"
-    },
-    {
-      text: "When my husband was in the hospital, Shosh and the Lev Echad community provided meals and emotional support that helped us through the most difficult time of our lives.",
-      author: "Rachel K.",
+      text: "I had just moved to Pittsburgh and didn't know a soul. That first Shabbat dinner at Shosh and Moshe's home felt like walking into a warm hug. It's not just a meal — it's a family.",
+      author: "Tammy",
       role: "Community Member"
     },
     {
-      text: "The postpartum meals were exactly what I needed. Having authentic Israeli food delivered to my door made me feel cared for and connected to my culture.",
-      author: "Miriam L.",
-      role: "New Mother"
+      text: "As someone who lives alone and has no family nearby, these dinners are the highlight of my week. The atmosphere, the food, the learning — it brings my heart back to life.",
+      author: "Dave",
+      role: "Community Member"
+    },
+    {
+      text: "Lev Echad brings people together in a way I've never seen before. Shosh sees each person and makes them feel like they matter.",
+      author: "Mordechai",
+      role: "Community Member"
+    },
+    {
+      text: "It's hard being a student away from home. I didn't expect to feel this kind of connection around a Shabbat table in someone's house — but I did, and I keep coming back.",
+      author: "David",
+      role: "Student"
+    },
+    {
+      text: "As an Israeli living far from home, it's easy to feel alone, especially on Shabbat. At the Mash's house, I didn't just meet people, I felt like I found a family. Sitting around the table, singing and sharing stories, I felt seen and loved in a way I didn't expect.",
+      author: "Noga",
+      role: "Israeli Community Member"
+    },
+    {
+      text: "Lev Echad's help with getting our kids into school made everything so much easier. Shosh connected us directly with the school registrar, and shared so much helpful information that it took all our concerns away. We felt supported from the very beginning.",
+      author: "Adam",
+      role: "Parent"
+    },
+    {
+      text: "We came to Pittsburgh in complete shock due to our daughter's urgent medical treatment. Everything happened so fast, and we suddenly found ourselves alone, afraid, and barely able to speak English. It was incredibly challenging. Shosh was the first person we reached out to — we got her number from another woman, Tal, whom she had helped in a similar situation. From the moment we connected, I felt like I had family here. Shosh was the first person who truly supported me, and her presence brought us comfort and strength when we needed it most.",
+      author: "Avraham",
+      role: "Parent"
+    },
+    {
+      text: "Lev Echad helped us find the best care for our baby boy. We were very anxious about the transition — especially worried that the language barrier would make it hard for our son to connect with his teachers since no one spoke Hebrew. Shosh understood our concerns immediately. She supported us through the process, reassured us, and helped us find a place with Hebrew-speaking staff where we feel much more comfortable and at ease.",
+      author: "Rafi",
+      role: "Parent"
     }
   ];
 
