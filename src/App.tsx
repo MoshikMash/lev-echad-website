@@ -146,18 +146,25 @@ function App() {
             to_email: formData.email,
             from_name: 'Lev Echad',
             message: formData.message,
-            reply_to: 'mashshosh@gmail.com'
+            reply_to: 'mashshosh@gmail.com',
+            user_name: formData.name,
+            user_email: formData.email,
+            user_message: formData.message
           };
 
-          await emailjs.send(
+          console.log('Sending EmailJS copy with params:', templateParams);
+          
+          const result = await emailjs.send(
             'service_l47oh6c',
             'template_3a68j0o',
             templateParams
           );
           
+          console.log('EmailJS result:', result);
           console.log('Copy sent to user successfully!');
         } catch (emailError) {
           console.error('Error sending copy to user:', emailError);
+          console.error('EmailJS error details:', emailError);
           // Don't fail the whole form if the copy fails
         }
         
