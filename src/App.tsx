@@ -570,6 +570,23 @@ function App() {
                 <div>
                   <p className="font-medium">Phone</p>
                   <p className="text-gray-600">412-626-1823</p>
+                  <div className="flex gap-2 mt-2">
+                    <a 
+                      href="sms:+14126261823" 
+                      className="inline-flex items-center gap-1 px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm hover:bg-green-200 transition-colors"
+                    >
+                      📱 SMS
+                    </a>
+                    <a 
+                      href="https://wa.me/14126261823" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm hover:bg-green-200 transition-colors"
+                    >
+                      💬 WhatsApp
+                    </a>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-1">Better to text than call - I'm often not available for calls</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
