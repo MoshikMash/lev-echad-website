@@ -249,9 +249,6 @@ function App() {
               </span>
             </div>
             <div className="mt-8 flex flex-wrap gap-3">
-              <button className="rounded-2xl bg-white text-blue-700 hover:bg-blue-50 px-8 py-3 font-medium">
-                <a href="#volunteer">Join Us</a>
-              </button>
               <button 
                 className="rounded-2xl border border-white text-white hover:bg-white/10 px-8 py-3 font-medium"
                 zeffy-form-link="https://www.zeffy.com/embed/donation-form/lev-echad-a-home-away-from-home-for-jewish-and-israeli-pittsburghers?modal=true"
