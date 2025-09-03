@@ -618,8 +618,7 @@ function App() {
                     height: '100%'
                   }}
                   src="https://www.zeffy.com/embed/donation-form/lev-echad-a-home-away-from-home-for-jewish-and-israeli-pittsburghers"
-                  allowPaymentRequest={true}
-                  allowTransparency={true}
+                  allow="payment *"
                 />
               </div>
             </div>
