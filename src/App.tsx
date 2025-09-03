@@ -207,12 +207,14 @@ function App() {
             <a href="#contact" className="hover:text-blue-700 transition-colors">Contact</a>
           </nav>
           <div className="flex items-center gap-2">
-            <button 
-              className="rounded-2xl bg-blue-600 hover:bg-blue-700 text-white px-4 py-2"
-              zeffy-form-link="https://www.zeffy.com/embed/donation-form/lev-echad-a-home-away-from-home-for-jewish-and-israeli-pittsburghers?modal=true"
+            <a 
+              href="https://www.zeffy.com/embed/donation-form/lev-echad-a-home-away-from-home-for-jewish-and-israeli-pittsburghers?modal=true"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-2xl bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 inline-block text-center"
             >
               Donate
-            </button>
+            </a>
           </div>
         </div>
       </header>
@@ -249,12 +251,14 @@ function App() {
               </span>
             </div>
             <div className="mt-8 flex flex-wrap gap-3">
-              <button 
-                className="rounded-2xl border border-white text-white hover:bg-white/10 px-8 py-3 font-medium"
-                zeffy-form-link="https://www.zeffy.com/embed/donation-form/lev-echad-a-home-away-from-home-for-jewish-and-israeli-pittsburghers?modal=true"
+              <a 
+                href="https://www.zeffy.com/embed/donation-form/lev-echad-a-home-away-from-home-for-jewish-and-israeli-pittsburghers?modal=true"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-2xl border border-white text-white hover:bg-white/10 px-8 py-3 font-medium inline-block text-center"
               >
                 Donate Now →
-              </button>
+              </a>
             </div>
           </div>
           <div className="flex justify-center">
@@ -547,12 +551,14 @@ function App() {
               </div>
             </div>
             <div className="flex justify-center">
-              <button 
-                className="rounded-2xl bg-white text-blue-600 hover:bg-blue-50 px-8 py-3 font-medium"
-                zeffy-form-link="https://www.zeffy.com/embed/donation-form/lev-echad-a-home-away-from-home-for-jewish-and-israeli-pittsburghers?modal=true"
+              <a 
+                href="https://www.zeffy.com/embed/donation-form/lev-echad-a-home-away-from-home-for-jewish-and-israeli-pittsburghers?modal=true"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-2xl bg-white text-blue-600 hover:bg-blue-50 px-8 py-3 font-medium inline-block text-center"
               >
                 Donate Now
-              </button>
+              </a>
             </div>
           </div>
         </div>

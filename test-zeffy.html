@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Zeffy Integration</title>
+    <script src="https://zeffy-scripts.s3.ca-central-1.amazonaws.com/embed-form-script.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .test-button {
+            background: #007bff;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .test-button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Zeffy Integration</h1>
+    <p>Click the button below to test if Zeffy donation form opens:</p>
+    
+    <button 
+        class="test-button"
+        zeffy-form-link="https://www.zeffy.com/embed/donation-form/lev-echad-a-home-away-from-home-for-jewish-and-israeli-pittsburghers?modal=true"
+    >
+        Test Donate Button
+    </button>
+    
+    <p><strong>Instructions:</strong></p>
+    <ul>
+        <li>Open this file in your web browser</li>
+        <li>Click the "Test Donate Button"</li>
+        <li>If Zeffy is working, a donation form modal should open</li>
+    </ul>
+</body>
+</html>
