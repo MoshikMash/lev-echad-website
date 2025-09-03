@@ -134,7 +134,7 @@ function App() {
       <header className="sticky top-0 z-50 bg-white/80 border-b border-blue-200">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
           <div className="flex items-center gap-3">
-            <img src="/logo.jpg" alt="Lev Echad Logo" className="h-12 w-12 rounded-full object-cover shadow-lg" />
+            <img src="./logo.jpg" alt="Lev Echad Logo" className="h-12 w-12 rounded-full object-cover shadow-lg" />
             <div className="leading-tight">
               <div className="text-lg font-bold text-blue-900">Lev Echad</div>
               <div className="text-xs text-blue-600">A Home Away from Home</div>
@@ -543,7 +543,7 @@ function App() {
       <footer className="bg-blue-900 text-white py-8">
         <div className="mx-auto max-w-6xl px-4 text-center">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <img src="/logo.jpg" alt="Lev Echad Logo" className="h-8 w-8 rounded-full object-cover shadow-lg" />
+            <img src="./logo.jpg" alt="Lev Echad Logo" className="h-8 w-8 rounded-full object-cover shadow-lg" />
             <span className="text-lg font-bold">Lev Echad</span>
           </div>
           <p className="text-blue-200 mb-4">A Home Away from Home for Jewish and Israeli Pittsburghers</p>
