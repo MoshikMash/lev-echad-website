@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import emailjs from '@emailjs/browser'
 
 function App() {
   const [formData, setFormData] = useState({
@@ -134,6 +135,32 @@ function App() {
 
       if (response.ok) {
         console.log('Email sent successfully!');
+        
+        // Send copy to user using EmailJS
+        try {
+          // Initialize EmailJS with your service ID
+          emailjs.init('9uN_4d08ybrG6_IhR');
+          
+          const templateParams = {
+            to_name: formData.name,
+            to_email: formData.email,
+            from_name: 'Lev Echad',
+            message: formData.message,
+            reply_to: 'mashshosh@gmail.com'
+          };
+
+          await emailjs.send(
+            'service_l47oh6c',
+            'template_3a68j0o',
+            templateParams
+          );
+          
+          console.log('Copy sent to user successfully!');
+        } catch (emailError) {
+          console.error('Error sending copy to user:', emailError);
+          // Don't fail the whole form if the copy fails
+        }
+        
         setIsSubmitted(true);
         
         // Reset form after 3 seconds
@@ -553,6 +580,7 @@ function App() {
                   <div className="text-green-600 text-4xl mb-4">✓</div>
                   <h4 className="text-lg font-semibold text-green-600 mb-2">Message Sent!</h4>
                   <p className="text-gray-600">Thank you for contacting us. We'll get back to you soon!</p>
+                  <p className="text-gray-500 text-sm mt-2">A copy of your message has been sent to your email.</p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
