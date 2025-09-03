@@ -68,7 +68,7 @@ function App() {
     {
       name: "Rosh Hashanah",
       days: "2 days",
-      amount: "$800",
+      amount: "$1,200",
       description: "Traditional New Year meals for the community",
       emoji: "🍎"
     },
@@ -427,16 +427,16 @@ function App() {
                 <div className="text-4xl mb-4">🏠</div>
                 <h4 className="text-2xl font-bold mb-3">Community Sukkah Project</h4>
                 <p className="text-green-100 mb-6">
-                  We're building a large Sukkah that can accommodate 40-50 people for community celebrations
+                  We're building a large Sukkah that can accommodate 20-30 people for community celebrations
                 </p>
                 <div className="bg-white/20 rounded-lg p-6">
                   <p className="text-sm text-green-100 mb-2">Goal Amount</p>
-                  <p className="text-3xl font-bold">$5,000</p>
+                  <p className="text-3xl font-bold">$3,000</p>
                   <p className="text-xs text-green-200 mt-2">For Sukkah materials and setup</p>
                 </div>
                 <div className="mt-6 text-center">
                   <p className="text-green-100 text-sm">Total Holiday Budget</p>
-                  <p className="text-2xl font-bold">$2,700</p>
+                  <p className="text-2xl font-bold">$3,100</p>
                   <p className="text-xs text-green-200">For all Tishrei holiday meals</p>
                 </div>
               </div>
