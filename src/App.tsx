@@ -496,6 +496,34 @@ function App() {
         <div className="mx-auto max-w-6xl px-4">
           <div className="text-center">
             <h2 className="text-3xl font-bold mb-6">Support Lev Echad</h2>
+            
+            {/* Zeffy Fundraising Thermometer */}
+            <div className="mb-8">
+              <div 
+                style={{
+                  position: 'relative',
+                  overflow: 'hidden',
+                  width: '100%',
+                  paddingTop: '120px'
+                }}
+              >
+                <iframe 
+                  title="Donation form powered by Zeffy"
+                  style={{
+                    position: 'absolute',
+                    border: '0',
+                    top: '0',
+                    left: '0',
+                    bottom: '0',
+                    right: '0',
+                    width: '100%',
+                    height: '120px'
+                  }}
+                  src="https://www.zeffy.com/embed/thermometer/lev-echad-a-home-away-from-home-for-jewish-and-israeli-pittsburghers"
+                  allowTransparency="true"
+                />
+              </div>
+            </div>
             <p className="text-xl text-blue-100 mb-4 max-w-3xl mx-auto">
               At this stage, Shosh personally covers all the costs associated with each Shabbat dinner — including food, supplies, preparation, and cleaning services. 
               Help us reach our $10,000 goal to support Tishrei holidays, the Sukkah project, and ongoing Shabbos dinners for our community.
