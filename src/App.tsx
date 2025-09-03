@@ -461,38 +461,47 @@ function App() {
             </p>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
               <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div className="text-3xl mb-2">🍷</div>
                 <h3 className="text-xl font-bold mb-2">$15</h3>
                 <p className="text-blue-100 text-sm">Cover a bottle of wine for Shabbat</p>
               </div>
               <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div className="text-3xl mb-2">🍞</div>
                 <h3 className="text-xl font-bold mb-2">$20</h3>
                 <p className="text-blue-100 text-sm">Cover challah for Shabbat dinner</p>
               </div>
               <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div className="text-3xl mb-2">👤</div>
                 <h3 className="text-xl font-bold mb-2">$25</h3>
                 <p className="text-blue-100 text-sm">Cover one person for Shabbat dinner</p>
               </div>
               <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div className="text-3xl mb-2">🍸</div>
                 <h3 className="text-xl font-bold mb-2">$60</h3>
                 <p className="text-blue-100 text-sm">Cover a bottle of vodka</p>
               </div>
               <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div className="text-3xl mb-2">🥃</div>
                 <h3 className="text-xl font-bold mb-2">$80</h3>
                 <p className="text-blue-100 text-sm">Cover a bottle of whiskey</p>
               </div>
               <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div className="text-3xl mb-2">👨‍👩‍👧‍👦</div>
                 <h3 className="text-xl font-bold mb-2">$100</h3>
                 <p className="text-blue-100 text-sm">Cover a family for Shabbat dinner</p>
               </div>
               <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div className="text-3xl mb-2">🛒</div>
                 <h3 className="text-xl font-bold mb-2">$300</h3>
                 <p className="text-blue-100 text-sm">Cover weekly groceries for Shabbat dinner</p>
               </div>
               <div className="bg-gradient-to-br from-green-500 to-green-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div className="text-3xl mb-2">🏠</div>
                 <h3 className="text-xl font-bold mb-2">$50-$300</h3>
                 <p className="text-green-100 text-sm">Help build our community Sukkah</p>
               </div>
               <div className="bg-gradient-to-br from-purple-500 to-purple-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div className="text-3xl mb-2">💝</div>
                 <h3 className="text-xl font-bold mb-2">Custom</h3>
                 <p className="text-purple-100 text-sm">Any amount to be part of our mission</p>
               </div>
