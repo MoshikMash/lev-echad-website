@@ -478,12 +478,12 @@ function App() {
               <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                 <div className="text-3xl mb-2">🍸</div>
                 <h3 className="text-xl font-bold mb-2">$60</h3>
-                <p className="text-blue-100 text-sm">Cover bottles of vodka</p>
+                <p className="text-blue-100 text-sm">Cover a bottle of vodka</p>
               </div>
               <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                 <div className="text-3xl mb-2">🥃</div>
                 <h3 className="text-xl font-bold mb-2">$80</h3>
-                <p className="text-blue-100 text-sm">Cover bottles of whiskey</p>
+                <p className="text-blue-100 text-sm">Cover a bottle of whiskey</p>
               </div>
               <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                 <div className="text-3xl mb-2">👨‍👩‍👧‍👦</div>
