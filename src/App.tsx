@@ -436,8 +436,8 @@ function App() {
                 </div>
                 <div className="mt-6 text-center">
                   <p className="text-green-100 text-sm">Total Holiday Budget</p>
-                  <p className="text-2xl font-bold">$3,100</p>
-                  <p className="text-xs text-green-200">For all Tishrei holiday meals</p>
+                  <p className="text-2xl font-bold">$6,100</p>
+                  <p className="text-xs text-green-200">For all Tishrei holiday meals + Sukkah project</p>
                 </div>
               </div>
             </div>
