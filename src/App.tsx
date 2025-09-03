@@ -459,18 +459,42 @@ function App() {
               At this stage, Shosh personally covers all the costs associated with each Shabbat dinner — including food, supplies, preparation, and cleaning services. 
               To continue offering meaningful, high-quality Shabbat experiences, Lev Echad needs your support.
             </p>
-            <div className="grid md:grid-cols-3 gap-6 mb-8">
-              <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-6 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                <h3 className="text-2xl font-bold mb-2">$50</h3>
-                <p className="text-blue-100">Covers one Shabbat dinner for a family</p>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+              <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <h3 className="text-xl font-bold mb-2">$15</h3>
+                <p className="text-blue-100 text-sm">Cover a bottle of wine for Shabbat</p>
               </div>
-              <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-6 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                <h3 className="text-2xl font-bold mb-2">$200</h3>
-                <p className="text-blue-100">Supports a month of Shabbat dinners</p>
+              <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <h3 className="text-xl font-bold mb-2">$20</h3>
+                <p className="text-blue-100 text-sm">Cover challah for Shabbat dinner</p>
               </div>
-              <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-6 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                <h3 className="text-2xl font-bold mb-2">$500</h3>
-                <p className="text-blue-100">Helps with relocation support services</p>
+              <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <h3 className="text-xl font-bold mb-2">$25</h3>
+                <p className="text-blue-100 text-sm">Cover one person for Shabbat dinner</p>
+              </div>
+              <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <h3 className="text-xl font-bold mb-2">$60</h3>
+                <p className="text-blue-100 text-sm">Cover a bottle of vodka</p>
+              </div>
+              <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <h3 className="text-xl font-bold mb-2">$80</h3>
+                <p className="text-blue-100 text-sm">Cover a bottle of whiskey</p>
+              </div>
+              <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <h3 className="text-xl font-bold mb-2">$100</h3>
+                <p className="text-blue-100 text-sm">Cover a family for Shabbat dinner</p>
+              </div>
+              <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <h3 className="text-xl font-bold mb-2">$300</h3>
+                <p className="text-blue-100 text-sm">Cover weekly groceries for Shabbat dinner</p>
+              </div>
+              <div className="bg-gradient-to-br from-green-500 to-green-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <h3 className="text-xl font-bold mb-2">$50-$300</h3>
+                <p className="text-green-100 text-sm">Help build our community Sukkah</p>
+              </div>
+              <div className="bg-gradient-to-br from-purple-500 to-purple-600 p-4 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <h3 className="text-xl font-bold mb-2">Custom</h3>
+                <p className="text-purple-100 text-sm">Any amount to be part of our mission</p>
               </div>
             </div>
             <div className="flex justify-center">
