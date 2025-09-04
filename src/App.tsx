@@ -594,32 +594,14 @@ function App() {
               </div>
             </div>
 
-            {/* Right Side - Donation Form */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-              <h3 className="text-xl font-bold mb-4 text-center">Make a Donation</h3>
-              <div 
-                style={{
-                  position: 'relative',
-                  overflow: 'hidden',
-                  height: '450px',
-                  width: '100%'
-                }}
-              >
-                <iframe 
-                  title="Donation form powered by Zeffy"
-                  style={{
-                    position: 'absolute',
-                    border: '0',
-                    top: '0',
-                    left: '0',
-                    bottom: '0',
-                    right: '0',
-                    width: '100%',
-                    height: '100%'
-                  }}
-                  src="https://www.zeffy.com/embed/donation-form/lev-echad-a-home-away-from-home-for-jewish-and-israeli-pittsburghers"
-                  allow="payment *"
-                />
+            {/* Right Side - Donation Temporarily Unavailable */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 flex items-center justify-center h-[450px]">
+              <div className="text-center max-w-md">
+                <h3 className="text-xl font-bold mb-3">Donations Temporarily Unavailable</h3>
+                <p className="text-blue-100">
+                  We’re not accepting donations right now. Please check back soon or
+                  <a href="#contact" className="underline ml-1">contact us</a> if you have questions.
+                </p>
               </div>
             </div>
           </div>
