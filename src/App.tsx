@@ -376,7 +376,7 @@ function App() {
                 <div className="bg-white/20 rounded-lg p-4">
                   <h4 className="font-semibold mb-2">Optional Contribution</h4>
                   <p className="text-blue-100 text-sm mb-3">Help cover event costs with an optional $15 contribution</p>
-                  <p className="text-blue-200 text-sm mb-4 font-medium">Send money to Moshe Mash - 412-626-1676 by Venmo or Zelle</p>
+                  <p className="text-blue-200 text-sm mb-4 font-medium">Send money to Moshe Mash - 412-626-1676 by Venmo or Zelle or use the following buttons</p>
                   
                   <div className="flex flex-col sm:flex-row gap-3">
                     <a 
@@ -439,7 +439,7 @@ function App() {
                 <div className="bg-white/20 rounded-lg p-4">
                   <h4 className="font-semibold mb-2">Optional Contribution</h4>
                   <p className="text-blue-100 text-sm mb-3">Help cover event costs with an optional $15 contribution</p>
-                  <p className="text-blue-200 text-sm mb-4 font-medium">Send money to Moshe Mash - 412-626-1676 by Venmo or Zelle</p>
+                  <p className="text-blue-200 text-sm mb-4 font-medium">Send money to Moshe Mash - 412-626-1676 by Venmo or Zelle or use the following buttons</p>
                   
                   <div className="flex flex-col sm:flex-row gap-3">
                     <a 
