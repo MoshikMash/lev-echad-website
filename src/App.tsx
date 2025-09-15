@@ -11,8 +11,6 @@ function App() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
-  const [currentHoliday, setCurrentHoliday] = useState(0);
-
   // Sample testimonials - you can replace these with your actual testimonials
   const testimonials = [
     {
@@ -65,45 +63,6 @@ function App() {
     setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
 
-  // Holiday meals data with amounts
-  const holidayMeals = [
-    {
-      name: "Rosh Hashanah",
-      days: "2 days",
-      amount: "$1,200",
-      description: "Traditional New Year meals for the community",
-      emoji: "🍎"
-    },
-    {
-      name: "Yom Kippur",
-      days: "Break-fast",
-      amount: "$400",
-      description: "Break-fast meal after the Day of Atonement",
-      emoji: "🕊️"
-    },
-    {
-      name: "Sukkot",
-      days: "8 days",
-      amount: "$1,200",
-      description: "Eight days of Sukkah celebrations and meals",
-      emoji: "🏠"
-    },
-    {
-      name: "Simchat Torah",
-      days: "1 day",
-      amount: "$300",
-      description: "Rejoicing with the Torah celebration",
-      emoji: "📜"
-    }
-  ];
-
-  const nextHoliday = () => {
-    setCurrentHoliday((prev) => (prev + 1) % holidayMeals.length);
-  };
-
-  const prevHoliday = () => {
-    setCurrentHoliday((prev) => (prev - 1 + holidayMeals.length) % holidayMeals.length);
-  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -203,15 +162,9 @@ function App() {
           <nav className="hidden items-center gap-6 md:flex">
             <a href="#about" className="hover:text-blue-700 transition-colors">About</a>
             <a href="#programs" className="hover:text-blue-700 transition-colors">Programs</a>
-            <a href="#goals" className="hover:text-blue-700 transition-colors">Upcoming Goals</a>
             <a href="#events" className="hover:text-blue-700 transition-colors">Events</a>
             <a href="#contact" className="hover:text-blue-700 transition-colors">Contact</a>
           </nav>
-          <div className="flex items-center gap-2">
-            <a href="#events" className="rounded-2xl bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 inline-block text-center">
-              Join Events
-            </a>
-          </div>
         </div>
       </header>
 
@@ -325,7 +278,7 @@ function App() {
               </p>
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-6">
                 <p className="text-sm text-blue-800 font-medium">
-                  <strong>Legal Notice:</strong> Lev Echad is a community and personal-friendly organization that operates on a not-for-profit basis. We are committed to serving our community through personal connections and support.
+                  <strong>Legal Notice:</strong> Lev Echad is a community and personal-friendly organization that operates on a not-for-profit basis. All help provided is friendly and not professional. We are committed to serving our community through personal connections and support.
                 </p>
               </div>
             </div>
@@ -360,7 +313,7 @@ function App() {
           <h2 className="text-3xl font-bold text-center mb-12">Our Programs</h2>
           <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-8">
             <p className="text-sm text-amber-800 font-medium text-center">
-              <strong>Important Notice:</strong> All services provided by Lev Echad are personal-friendly and community-based. We do not provide professional services and our support is offered in a personal, informal capacity.
+              <strong>Important Notice:</strong> All help provided by Lev Echad is friendly and not professional. We are a community-based organization offering personal support in an informal capacity.
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -396,99 +349,6 @@ function App() {
         </div>
       </section>
 
-      {/* Upcoming Goals Section */}
-      <section id="goals" className="py-16 bg-gradient-to-b from-white to-blue-50">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-blue-900 mb-4">Upcoming Goals</h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              We're preparing for the Tishrei holidays and have exciting plans to bring our community together
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Holiday Meals Carousel */}
-            <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl p-8 text-white shadow-2xl">
-              <div className="text-center mb-6">
-                <div className="text-3xl mb-2">🍂</div>
-                <h3 className="text-2xl font-bold">Tishrei Holidays Meals</h3>
-                <p className="text-blue-100 text-sm mt-2">Help us provide meals for all the holidays</p>
-              </div>
-              
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-                <div className="text-center">
-                  <div className="text-4xl mb-4">{holidayMeals[currentHoliday].emoji}</div>
-                  <h4 className="text-xl font-bold mb-2">{holidayMeals[currentHoliday].name}</h4>
-                  <p className="text-blue-200 text-sm mb-3">{holidayMeals[currentHoliday].days}</p>
-                  <p className="text-blue-100 mb-4">{holidayMeals[currentHoliday].description}</p>
-                  <div className="bg-white/20 rounded-lg p-4">
-                    <p className="text-sm text-blue-100 mb-1">Cost for this holiday</p>
-                    <p className="text-3xl font-bold">{holidayMeals[currentHoliday].amount}</p>
-                  </div>
-                </div>
-                
-                {/* Navigation arrows */}
-                <div className="flex justify-between items-center mt-6">
-                  <button 
-                    onClick={prevHoliday}
-                    className="text-white hover:text-blue-200 transition-colors p-2 rounded-full hover:bg-white/10"
-                    aria-label="Previous holiday"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                    </svg>
-                  </button>
-                  
-                  {/* Dots indicator */}
-                  <div className="flex space-x-2">
-                    {holidayMeals.map((_, index) => (
-                      <button
-                        key={index}
-                        onClick={() => setCurrentHoliday(index)}
-                        className={`w-2 h-2 rounded-full transition-colors ${
-                          index === currentHoliday ? 'bg-white' : 'bg-white/40'
-                        }`}
-                        aria-label={`Go to ${holidayMeals[index].name}`}
-                      />
-                    ))}
-                  </div>
-                  
-                  <button 
-                    onClick={nextHoliday}
-                    className="text-white hover:text-blue-200 transition-colors p-2 rounded-full hover:bg-white/10"
-                    aria-label="Next holiday"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-            
-            {/* Sukkah Project */}
-            <div className="bg-gradient-to-br from-green-600 to-green-700 rounded-2xl p-8 text-white shadow-2xl">
-              <div className="text-center">
-                <div className="text-4xl mb-4">🏠</div>
-                <h4 className="text-2xl font-bold mb-3">Community Sukkah Project</h4>
-                <p className="text-green-100 mb-6">
-                  We're building a large Sukkah that can accommodate 20-30 people for community celebrations
-                </p>
-                <div className="bg-white/20 rounded-lg p-6">
-                  <p className="text-sm text-green-100 mb-2">Goal Amount</p>
-                  <p className="text-3xl font-bold">$3,000</p>
-                  <p className="text-xs text-green-200 mt-2">For Sukkah materials and setup</p>
-                </div>
-                <div className="mt-6 text-center">
-                  <p className="text-green-100 text-sm">Total Campaign Goal</p>
-                  <p className="text-2xl font-bold">$10,000</p>
-                  <p className="text-xs text-green-200">For Tishrei holidays + Sukkah project + ongoing Shabbos support</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Events Section */}
       <section id="events" className="py-16 bg-gradient-to-br from-blue-700 via-blue-600 to-blue-800 text-white relative overflow-hidden">
@@ -524,6 +384,7 @@ function App() {
                 <div className="bg-white/20 rounded-lg p-4">
                   <h4 className="font-semibold mb-2">Optional Contribution</h4>
                   <p className="text-blue-100 text-sm mb-3">Help cover event costs with an optional $15 contribution</p>
+                  <p className="text-blue-200 text-xs mb-3">Send money to Moshe Mash - 412-626-1676</p>
                   <div className="flex flex-col sm:flex-row gap-3">
                     <a 
                       href="https://venmo.com/code?user_id=2798159784837120312&created=1757903028" 
@@ -533,13 +394,26 @@ function App() {
                     >
                       💚 Venmo
                     </a>
-                    <a 
-                      href="#" 
+                    <button 
                       className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors"
-                      title="Zelle QR code coming soon"
+                      onClick={() => {
+                        const modal = document.createElement('div');
+                        modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+                        modal.innerHTML = `
+                          <div class="bg-white rounded-lg p-6 max-w-sm mx-4">
+                            <div class="text-center">
+                              <h3 class="text-lg font-bold mb-4">Zelle QR Code</h3>
+                              <img src="./zell_qr.jpg" alt="Zelle QR Code" class="w-64 h-64 mx-auto mb-4 rounded-lg" />
+                              <p class="text-sm text-gray-600 mb-4">Scan with your banking app</p>
+                              <button onclick="this.closest('.fixed').remove()" class="bg-blue-600 text-white px-4 py-2 rounded-lg">Close</button>
+                            </div>
+                          </div>
+                        `;
+                        document.body.appendChild(modal);
+                      }}
                     >
-                      💙 Zelle
-                    </a>
+                      💙 Zelle QR
+                    </button>
                   </div>
                 </div>
                 
@@ -572,6 +446,7 @@ function App() {
                 <div className="bg-white/20 rounded-lg p-4">
                   <h4 className="font-semibold mb-2">Optional Contribution</h4>
                   <p className="text-blue-100 text-sm mb-3">Help cover event costs with an optional $15 contribution</p>
+                  <p className="text-blue-200 text-xs mb-3">Send money to Moshe Mash - 412-626-1676</p>
                   <div className="flex flex-col sm:flex-row gap-3">
                     <a 
                       href="https://venmo.com/code?user_id=2798159784837120312&created=1757903028" 
@@ -581,13 +456,26 @@ function App() {
                     >
                       💚 Venmo
                     </a>
-                    <a 
-                      href="#" 
+                    <button 
                       className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors"
-                      title="Zelle QR code coming soon"
+                      onClick={() => {
+                        const modal = document.createElement('div');
+                        modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+                        modal.innerHTML = `
+                          <div class="bg-white rounded-lg p-6 max-w-sm mx-4">
+                            <div class="text-center">
+                              <h3 class="text-lg font-bold mb-4">Zelle QR Code</h3>
+                              <img src="./zell_qr.jpg" alt="Zelle QR Code" class="w-64 h-64 mx-auto mb-4 rounded-lg" />
+                              <p class="text-sm text-gray-600 mb-4">Scan with your banking app</p>
+                              <button onclick="this.closest('.fixed').remove()" class="bg-blue-600 text-white px-4 py-2 rounded-lg">Close</button>
+                            </div>
+                          </div>
+                        `;
+                        document.body.appendChild(modal);
+                      }}
                     >
-                      💙 Zelle
-                    </a>
+                      💙 Zelle QR
+                    </button>
                   </div>
                 </div>
                 
@@ -721,7 +609,7 @@ function App() {
             <h4 className="text-sm font-semibold text-blue-100 mb-2">Legal Disclaimers</h4>
             <div className="text-xs text-blue-200 space-y-1">
               <p>• Lev Echad is a community and personal-friendly organization operating on a not-for-profit basis</p>
-              <p>• All services are provided in a personal, informal capacity and are not professional services</p>
+              <p>• All help provided is friendly and not professional</p>
               <p>• We are committed to serving our community through personal connections and support</p>
             </div>
           </div>
