@@ -204,12 +204,12 @@ function App() {
             <a href="#about" className="hover:text-blue-700 transition-colors">About</a>
             <a href="#programs" className="hover:text-blue-700 transition-colors">Programs</a>
             <a href="#goals" className="hover:text-blue-700 transition-colors">Upcoming Goals</a>
-            <a href="#donate" className="hover:text-blue-700 transition-colors">Donate</a>
+            <a href="#events" className="hover:text-blue-700 transition-colors">Events</a>
             <a href="#contact" className="hover:text-blue-700 transition-colors">Contact</a>
           </nav>
           <div className="flex items-center gap-2">
-            <a href="#donate" className="rounded-2xl bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 inline-block text-center">
-              Donate
+            <a href="#events" className="rounded-2xl bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 inline-block text-center">
+              Join Events
             </a>
           </div>
         </div>
@@ -248,10 +248,10 @@ function App() {
             </div>
             <div className="mt-8 flex flex-wrap gap-3">
               <a 
-                href="#donate"
+                href="#events"
                 className="rounded-2xl border border-white text-white hover:bg-white/10 px-8 py-3 font-medium inline-block text-center"
               >
-                Donate Now →
+                Join Events →
               </a>
             </div>
           </div>
@@ -323,6 +323,11 @@ function App() {
               <p className="text-lg">
                 Through intimate Shabbat dinners, we create space for connection, emotional support, cultural identity, and lasting friendships.
               </p>
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-6">
+                <p className="text-sm text-blue-800 font-medium">
+                  <strong>Legal Notice:</strong> Lev Echad is a community and personal-friendly organization that operates on a not-for-profit basis. We are committed to serving our community through personal connections and support.
+                </p>
+              </div>
             </div>
             <div className="space-y-4">
               <h3 className="text-xl font-semibold">Our Services</h3>
@@ -353,6 +358,11 @@ function App() {
       <section id="programs" className="py-16 bg-gradient-to-b from-white to-gray-50">
         <div className="mx-auto max-w-6xl px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Our Programs</h2>
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-8">
+            <p className="text-sm text-amber-800 font-medium text-center">
+              <strong>Important Notice:</strong> All services provided by Lev Echad are personal-friendly and community-based. We do not provide professional services and our support is offered in a personal, informal capacity.
+            </p>
+          </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-blue-200">
               <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-4">
@@ -480,128 +490,115 @@ function App() {
         </div>
       </section>
 
-      {/* Donate Section */}
-      <section id="donate" className="py-16 bg-gradient-to-br from-blue-700 via-blue-600 to-blue-800 text-white relative overflow-hidden">
+      {/* Events Section */}
+      <section id="events" className="py-16 bg-gradient-to-br from-blue-700 via-blue-600 to-blue-800 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="absolute top-0 left-0 w-full h-full">
           <div className="absolute top-10 right-10 w-24 h-24 bg-white/5 rounded-full blur-xl"></div>
           <div className="absolute bottom-10 left-10 w-32 h-32 bg-white/5 rounded-full blur-xl"></div>
         </div>
-        <div className="mx-auto max-w-6xl px-4">
+        <div className="mx-auto max-w-6xl px-4 relative z-10">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-6">Support Lev Echad</h2>
+            <h2 className="text-3xl font-bold mb-6">Upcoming Events</h2>
             <p className="text-xl text-blue-100 mb-4 max-w-3xl mx-auto">
-              At this stage, Shosh personally covers all the costs associated with each Shabbat dinner — including food, supplies, preparation, and cleaning services. 
-              Help us reach our $10,000 goal to support Tishrei holidays, the Sukkah project, and ongoing Shabbos dinners for our community.
-            </p>
-            <p className="text-sm text-blue-200 mb-8 max-w-3xl mx-auto">
-              All donations are tax deductible
+              Join us for meaningful community gatherings and celebrations. All events are open to the community.
             </p>
           </div>
 
-          {/* Ways to Help and Form Section */}
-          <div className="grid lg:grid-cols-2 gap-8 items-start">
-            {/* Left Side - Ways to Help */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-              <h3 className="text-xl font-bold mb-4 text-center">Ways to Help</h3>
-              <div 
-                className="overflow-y-auto pr-2"
-                style={{ height: '450px' }}
-              >
-                <div className="space-y-3">
-                  <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-3 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                    <div className="flex items-center gap-3">
-                      <div className="text-2xl">🍷</div>
-                      <div>
-                        <h4 className="text-lg font-bold">$15</h4>
-                        <p className="text-blue-100 text-sm">Cover a bottle of wine for Shabbat</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-3 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                    <div className="flex items-center gap-3">
-                      <div className="text-2xl">🍞</div>
-                      <div>
-                        <h4 className="text-lg font-bold">$20</h4>
-                        <p className="text-blue-100 text-sm">Cover challah for Shabbat dinner</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-3 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                    <div className="flex items-center gap-3">
-                      <div className="text-2xl">👤</div>
-                      <div>
-                        <h4 className="text-lg font-bold">$25</h4>
-                        <p className="text-blue-100 text-sm">Cover one person for Shabbat dinner</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-3 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                    <div className="flex items-center gap-3">
-                      <div className="text-2xl">🍸</div>
-                      <div>
-                        <h4 className="text-lg font-bold">$60</h4>
-                        <p className="text-blue-100 text-sm">Cover a bottle of vodka</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-3 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                    <div className="flex items-center gap-3">
-                      <div className="text-2xl">🥃</div>
-                      <div>
-                        <h4 className="text-lg font-bold">$80</h4>
-                        <p className="text-blue-100 text-sm">Cover a bottle of whiskey</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-3 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                    <div className="flex items-center gap-3">
-                      <div className="text-2xl">👨‍👩‍👧‍👦</div>
-                      <div>
-                        <h4 className="text-lg font-bold">$100</h4>
-                        <p className="text-blue-100 text-sm">Cover a family for Shabbat dinner</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-3 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                    <div className="flex items-center gap-3">
-                      <div className="text-2xl">🛒</div>
-                      <div>
-                        <h4 className="text-lg font-bold">$300</h4>
-                        <p className="text-blue-100 text-sm">Cover weekly groceries for Shabbat dinner</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="bg-gradient-to-br from-green-500 to-green-600 p-3 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                    <div className="flex items-center gap-3">
-                      <div className="text-2xl">🏠</div>
-                      <div>
-                        <h4 className="text-lg font-bold">$50-$300</h4>
-                        <p className="text-green-100 text-sm">Help build our community Sukkah</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="bg-gradient-to-br from-purple-500 to-purple-600 p-3 rounded-xl border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                    <div className="flex items-center gap-3">
-                      <div className="text-2xl">💝</div>
-                      <div>
-                        <h4 className="text-lg font-bold">Custom</h4>
-                        <p className="text-purple-100 text-sm">Any amount to be part of our mission</p>
-                      </div>
-                    </div>
+          <div className="grid lg:grid-cols-2 gap-8">
+            {/* Shabbat Dinner Event */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+              <div className="text-center mb-6">
+                <div className="text-4xl mb-4">🕯️</div>
+                <h3 className="text-2xl font-bold mb-2">Shabbat Dinner</h3>
+                <p className="text-blue-100 text-lg">September 19, 2025</p>
+                <p className="text-blue-200 text-sm">Elul כו, Parashat KiTvo</p>
+              </div>
+              
+              <div className="space-y-4">
+                <div className="bg-white/20 rounded-lg p-4">
+                  <h4 className="font-semibold mb-2">Event Details</h4>
+                  <p className="text-blue-100 text-sm">Join us for a warm, intimate Shabbat dinner in our community home. All are welcome to experience the joy of Shabbat together.</p>
+                </div>
+                
+                <div className="bg-white/20 rounded-lg p-4">
+                  <h4 className="font-semibold mb-2">Optional Contribution</h4>
+                  <p className="text-blue-100 text-sm mb-3">Help cover event costs with an optional $15 contribution</p>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <a 
+                      href="https://venmo.com/code?user_id=2798159784837120312&created=1757903028" 
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors"
+                    >
+                      💚 Venmo
+                    </a>
+                    <a 
+                      href="#" 
+                      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors"
+                      title="Zelle QR code coming soon"
+                    >
+                      💙 Zelle
+                    </a>
                   </div>
                 </div>
+                
+                <a 
+                  href="https://dinners.onetable.org/events/d3cafe58-df31-4891-b43b-93eeb2654971/details?shared=true" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full bg-white text-blue-600 hover:bg-blue-50 px-6 py-3 rounded-lg text-center font-semibold transition-colors"
+                >
+                  Join Event →
+                </a>
               </div>
             </div>
 
-            {/* Right Side - Donation Temporarily Unavailable */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 flex items-center justify-center h-[450px]">
-              <div className="text-center max-w-md">
-                <h3 className="text-xl font-bold mb-3">Donations Temporarily Unavailable</h3>
-                <p className="text-blue-100">
-                  We’re not accepting donations right now. Please check back soon or
-                  <a href="#contact" className="underline ml-1">contact us</a> if you have questions.
-                </p>
+            {/* Erev Rosh Hashana Event */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+              <div className="text-center mb-6">
+                <div className="text-4xl mb-4">🍎</div>
+                <h3 className="text-2xl font-bold mb-2">Erev Rosh Hashana</h3>
+                <p className="text-blue-100 text-lg">September 22, 2025</p>
+                <p className="text-blue-200 text-sm">Elul בט</p>
+              </div>
+              
+              <div className="space-y-4">
+                <div className="bg-white/20 rounded-lg p-4">
+                  <h4 className="font-semibold mb-2">Event Details</h4>
+                  <p className="text-blue-100 text-sm">Welcome the Jewish New Year with our community. A special evening of reflection, celebration, and traditional Rosh Hashana foods.</p>
+                </div>
+                
+                <div className="bg-white/20 rounded-lg p-4">
+                  <h4 className="font-semibold mb-2">Optional Contribution</h4>
+                  <p className="text-blue-100 text-sm mb-3">Help cover event costs with an optional $15 contribution</p>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <a 
+                      href="https://venmo.com/code?user_id=2798159784837120312&created=1757903028" 
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors"
+                    >
+                      💚 Venmo
+                    </a>
+                    <a 
+                      href="#" 
+                      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors"
+                      title="Zelle QR code coming soon"
+                    >
+                      💙 Zelle
+                    </a>
+                  </div>
+                </div>
+                
+                <a 
+                  href="https://forms.gle/dbEdFtQvTmFXBpSS6" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full bg-white text-blue-600 hover:bg-blue-50 px-6 py-3 rounded-lg text-center font-semibold transition-colors"
+                >
+                  Join Event →
+                </a>
               </div>
             </div>
           </div>
@@ -718,6 +715,17 @@ function App() {
             <span className="text-lg font-bold">Lev Echad</span>
           </div>
           <p className="text-blue-200 mb-4">A Home Away from Home for Jewish and Israeli Pittsburghers</p>
+          
+          {/* Legal Disclaimers */}
+          <div className="bg-blue-800/50 rounded-lg p-4 mb-4 max-w-4xl mx-auto">
+            <h4 className="text-sm font-semibold text-blue-100 mb-2">Legal Disclaimers</h4>
+            <div className="text-xs text-blue-200 space-y-1">
+              <p>• Lev Echad is a community and personal-friendly organization operating on a not-for-profit basis</p>
+              <p>• All services are provided in a personal, informal capacity and are not professional services</p>
+              <p>• We are committed to serving our community through personal connections and support</p>
+            </div>
+          </div>
+          
           <p className="text-blue-300 text-sm">© {new Date().getFullYear()} Lev Echad. All rights reserved.</p>
         </div>
       </footer>
