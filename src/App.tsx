@@ -372,7 +372,7 @@ function App() {
                 <div className="text-4xl mb-4">🕯️</div>
                 <h3 className="text-2xl font-bold mb-2">Shabbat Dinner</h3>
                 <p className="text-blue-100 text-lg">September 19, 2025</p>
-                <p className="text-blue-200 text-sm">Elul כו, Parashat KiTvo</p>
+                <p className="text-blue-200 text-sm">כו אלול, פרשת כי תבוא</p>
               </div>
               
               <div className="space-y-4">
@@ -434,7 +434,7 @@ function App() {
                 <div className="text-4xl mb-4">🍎</div>
                 <h3 className="text-2xl font-bold mb-2">Erev Rosh Hashana</h3>
                 <p className="text-blue-100 text-lg">September 22, 2025</p>
-                <p className="text-blue-200 text-sm">Elul בט</p>
+                <p className="text-blue-200 text-sm">כט אלול</p>
               </div>
               
               <div className="space-y-4">
