@@ -202,9 +202,15 @@ function App() {
             <div className="mt-8 flex flex-wrap gap-3">
               <a 
                 href="#events"
-                className="rounded-2xl border border-white text-white hover:bg-white/10 px-8 py-3 font-medium inline-block text-center"
+                className="rounded-2xl border border-white text-white hover:bg-white/10 px-8 py-3 font-medium inline-block text-center transition-colors"
               >
                 Join Events →
+              </a>
+              <a 
+                href="#events"
+                className="rounded-2xl bg-white text-blue-600 hover:bg-blue-50 px-8 py-3 font-medium inline-block text-center transition-colors"
+              >
+                View Events
               </a>
             </div>
           </div>
