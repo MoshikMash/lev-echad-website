@@ -204,6 +204,11 @@ function App() {
                 Postpartum Meals
               </span>
             </div>
+            <div className="mt-6 bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+              <p className="text-sm text-white font-medium text-left">
+                <strong>Important Notice:</strong> Lev Echad is a community and personal-friendly organization that operates on a not-for-profit basis. All help provided is friendly and not professional. We are committed to serving our community through personal connections and support.
+              </p>
+            </div>
           </div>
           <div className="flex justify-center">
             <div className="max-w-lg w-full">
@@ -262,7 +267,7 @@ function App() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-16 bg-gradient-to-b from-gray-50 to-white">
+      <section id="about" className="py-12 bg-gradient-to-b from-gray-50 to-white">
         <div className="mx-auto max-w-6xl px-4">
           <h2 className="text-3xl font-bold text-center mb-8">About Lev Echad</h2>
           <div className="grid md:grid-cols-2 gap-8">
@@ -273,11 +278,6 @@ function App() {
               <p className="text-lg">
                 Through intimate Shabbat dinners, we create space for connection, emotional support, cultural identity, and lasting friendships.
               </p>
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-6">
-                <p className="text-sm text-blue-800 font-medium">
-                  <strong>Legal Notice:</strong> Lev Echad is a community and personal-friendly organization that operates on a not-for-profit basis. All help provided is friendly and not professional. We are committed to serving our community through personal connections and support.
-                </p>
-              </div>
             </div>
             <div className="space-y-4">
               <h3 className="text-xl font-semibold">Our Services</h3>
@@ -305,14 +305,9 @@ function App() {
       </section>
 
       {/* Programs Section */}
-      <section id="programs" className="py-16 bg-gradient-to-b from-white to-gray-50">
+      <section id="programs" className="py-12 bg-gradient-to-b from-white to-gray-50">
         <div className="mx-auto max-w-6xl px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Our Programs</h2>
-          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-8">
-            <p className="text-sm text-amber-800 font-medium text-center">
-              <strong>Important Notice:</strong> All help provided by Lev Echad is friendly and not professional. We are a community-based organization offering personal support in an informal capacity.
-            </p>
-          </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-blue-200">
               <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-4">
@@ -602,17 +597,6 @@ function App() {
             <span className="text-lg font-bold">Lev Echad</span>
           </div>
           <p className="text-blue-200 mb-4">A Home Away from Home for Jewish and Israeli Pittsburghers</p>
-          
-          {/* Legal Disclaimers */}
-          <div className="bg-blue-800/50 rounded-lg p-4 mb-4 max-w-4xl mx-auto">
-            <h4 className="text-sm font-semibold text-blue-100 mb-2">Legal Disclaimers</h4>
-            <div className="text-xs text-blue-200 space-y-1">
-              <p>• Lev Echad is a community and personal-friendly organization operating on a not-for-profit basis</p>
-              <p>• All help provided is friendly and not professional</p>
-              <p>• We are committed to serving our community through personal connections and support</p>
-            </div>
-          </div>
-          
           <p className="text-blue-300 text-sm">© {new Date().getFullYear()} Lev Echad. All rights reserved.</p>
         </div>
       </footer>
