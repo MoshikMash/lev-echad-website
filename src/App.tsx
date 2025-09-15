@@ -165,6 +165,11 @@ function App() {
             <a href="#events" className="hover:text-blue-700 transition-colors">Events</a>
             <a href="#contact" className="hover:text-blue-700 transition-colors">Contact</a>
           </nav>
+          <div className="flex items-center gap-2">
+            <a href="#events" className="rounded-2xl bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 inline-block text-center transition-colors">
+              Join Events
+            </a>
+          </div>
         </div>
       </header>
 
@@ -390,36 +395,22 @@ function App() {
                 <div className="bg-white/20 rounded-lg p-4">
                   <h4 className="font-semibold mb-2">Optional Contribution</h4>
                   <p className="text-blue-100 text-sm mb-3">Help cover event costs with an optional $15 contribution</p>
-                  <p className="text-blue-200 text-xs mb-3">Send money to Moshe Mash - 412-626-1676</p>
-                  <div className="flex flex-col sm:flex-row gap-3">
+                  <p className="text-blue-200 text-sm mb-4 font-medium">Send money to Moshe Mash - 412-626-1676 by Venmo or Zelle</p>
+                  
+                  <div className="flex flex-col sm:flex-row gap-4 items-center">
                     <a 
                       href="https://venmo.com/code?user_id=2798159784837120312&created=1757903028" 
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors"
+                      className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg text-center font-medium transition-colors flex-1"
                     >
                       💚 Venmo
                     </a>
-                    <button 
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors"
-                      onClick={() => {
-                        const modal = document.createElement('div');
-                        modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-                        modal.innerHTML = `
-                          <div class="bg-white rounded-lg p-6 max-w-sm mx-4">
-                            <div class="text-center">
-                              <h3 class="text-lg font-bold mb-4">Zelle QR Code</h3>
-                              <img src="./zell_qr.jpg" alt="Zelle QR Code" class="w-64 h-64 mx-auto mb-4 rounded-lg" />
-                              <p class="text-sm text-gray-600 mb-4">Scan with your banking app</p>
-                              <button onclick="this.closest('.fixed').remove()" class="bg-blue-600 text-white px-4 py-2 rounded-lg">Close</button>
-                            </div>
-                          </div>
-                        `;
-                        document.body.appendChild(modal);
-                      }}
-                    >
-                      💙 Zelle QR
-                    </button>
+                    <div className="text-center">
+                      <p className="text-blue-200 text-xs mb-2">Zelle QR Code</p>
+                      <img src="./zell_qr.jpg" alt="Zelle QR Code" className="w-24 h-24 mx-auto rounded-lg border-2 border-white/30" />
+                      <p className="text-blue-200 text-xs mt-1">Scan with banking app</p>
+                    </div>
                   </div>
                 </div>
                 
@@ -452,36 +443,22 @@ function App() {
                 <div className="bg-white/20 rounded-lg p-4">
                   <h4 className="font-semibold mb-2">Optional Contribution</h4>
                   <p className="text-blue-100 text-sm mb-3">Help cover event costs with an optional $15 contribution</p>
-                  <p className="text-blue-200 text-xs mb-3">Send money to Moshe Mash - 412-626-1676</p>
-                  <div className="flex flex-col sm:flex-row gap-3">
+                  <p className="text-blue-200 text-sm mb-4 font-medium">Send money to Moshe Mash - 412-626-1676 by Venmo or Zelle</p>
+                  
+                  <div className="flex flex-col sm:flex-row gap-4 items-center">
                     <a 
                       href="https://venmo.com/code?user_id=2798159784837120312&created=1757903028" 
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors"
+                      className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg text-center font-medium transition-colors flex-1"
                     >
                       💚 Venmo
                     </a>
-                    <button 
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors"
-                      onClick={() => {
-                        const modal = document.createElement('div');
-                        modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-                        modal.innerHTML = `
-                          <div class="bg-white rounded-lg p-6 max-w-sm mx-4">
-                            <div class="text-center">
-                              <h3 class="text-lg font-bold mb-4">Zelle QR Code</h3>
-                              <img src="./zell_qr.jpg" alt="Zelle QR Code" class="w-64 h-64 mx-auto mb-4 rounded-lg" />
-                              <p class="text-sm text-gray-600 mb-4">Scan with your banking app</p>
-                              <button onclick="this.closest('.fixed').remove()" class="bg-blue-600 text-white px-4 py-2 rounded-lg">Close</button>
-                            </div>
-                          </div>
-                        `;
-                        document.body.appendChild(modal);
-                      }}
-                    >
-                      💙 Zelle QR
-                    </button>
+                    <div className="text-center">
+                      <p className="text-blue-200 text-xs mb-2">Zelle QR Code</p>
+                      <img src="./zell_qr.jpg" alt="Zelle QR Code" className="w-24 h-24 mx-auto rounded-lg border-2 border-white/30" />
+                      <p className="text-blue-200 text-xs mt-1">Scan with banking app</p>
+                    </div>
                   </div>
                 </div>
                 
