@@ -191,6 +191,7 @@ function App() {
             <a href="#get-information" className="hover:text-blue-700 transition-colors">Get Information</a>
             <a href="#programs" className="hover:text-blue-700 transition-colors">Programs</a>
             <a href="#events" className="hover:text-blue-700 transition-colors">Events</a>
+            <a href="#about" className="hover:text-blue-700 transition-colors">About</a>
             <a href="#contact" className="hover:text-blue-700 transition-colors">Contact</a>
           </nav>
           <div className="flex items-center gap-2">
@@ -1549,6 +1550,35 @@ function App() {
                 >
                   Join Event →
                 </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* About Us Section */}
+      <section id="about" className="py-16 bg-white relative">
+        <div className="mx-auto max-w-4xl px-4">
+          <h2 className="text-4xl font-bold text-center mb-12 text-gray-900">About Us – Lev Echad</h2>
+          
+          <div className="bg-blue-50 rounded-3xl p-10 border border-blue-200 shadow-lg">
+            <div className="text-center mb-8">
+              <div className="text-6xl mb-4">💙</div>
+            </div>
+            
+            <div className="space-y-6 text-lg text-blue-900 leading-relaxed">
+              <p className="text-xl font-medium text-blue-800">
+                Seven years ago, we arrived in Pittsburgh with a baby in our arms, completely alone—without family, without friends, and without anyone to rely on. The beginning was hard and often frustrating. Every small task felt overwhelming, and the sense of isolation was real.
+              </p>
+              
+              <p className="text-xl font-medium text-blue-800">
+                From that struggle, however, something powerful began to take shape. We realized that no one should ever have to face those challenges on their own. Out of our experience grew a vision: to create a place where newcomers would immediately feel embraced, supported, and part of a community.
+              </p>
+              
+              <div className="bg-blue-100 rounded-2xl p-8 border-l-4 border-blue-500 mt-8">
+                <p className="text-2xl font-bold text-blue-900 text-center italic">
+                  Our struggle became our mission: to turn loneliness into belonging and isolation into community.
+                </p>
               </div>
             </div>
           </div>
