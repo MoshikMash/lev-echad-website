@@ -228,13 +228,13 @@ function App() {
           </div>
           <div className="flex justify-center">
             <div className="max-w-lg w-full">
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 shadow-2xl border border-white/20">
+              <div className="bg-white rounded-2xl p-8 shadow-2xl border border-blue-200">
                 <div className="text-center">
-                  <div className="text-4xl text-white mb-4">💙</div>
-                  <blockquote className="text-lg text-white italic mb-6 leading-relaxed">
+                  <div className="text-4xl text-blue-600 mb-4">💙</div>
+                  <blockquote className="text-lg text-blue-900 italic mb-6 leading-relaxed">
                     "{testimonials[currentTestimonial].text}"
                   </blockquote>
-                  <div className="text-blue-100">
+                  <div className="text-blue-800">
                     <p className="font-semibold">{testimonials[currentTestimonial].author}</p>
                     <p className="text-sm opacity-80">{testimonials[currentTestimonial].role}</p>
                   </div>
@@ -244,7 +244,7 @@ function App() {
                 <div className="flex justify-between items-center mt-6">
                   <button 
                     onClick={prevTestimonial}
-                    className="text-white hover:text-blue-200 transition-colors p-2 rounded-full hover:bg-white/10"
+                    className="text-blue-600 hover:text-blue-800 transition-colors p-2 rounded-full hover:bg-blue-50"
                     aria-label="Previous testimonial"
                   >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -259,7 +259,7 @@ function App() {
                         key={index}
                         onClick={() => setCurrentTestimonial(index)}
                         className={`w-2 h-2 rounded-full transition-colors ${
-                          index === currentTestimonial ? 'bg-white' : 'bg-white/40'
+                          index === currentTestimonial ? 'bg-blue-600' : 'bg-blue-300'
                         }`}
                         aria-label={`Go to testimonial ${index + 1}`}
                       />
@@ -268,7 +268,7 @@ function App() {
                   
                   <button 
                     onClick={nextTestimonial}
-                    className="text-white hover:text-blue-200 transition-colors p-2 rounded-full hover:bg-white/10"
+                    className="text-blue-600 hover:text-blue-800 transition-colors p-2 rounded-full hover:bg-blue-50"
                     aria-label="Next testimonial"
                   >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -559,14 +559,14 @@ function App() {
                           <p className="text-lg text-purple-700 mb-3">Beautiful Chabad synagogue run by Rabbi Rosenblum (Yeshiva Schools CEO) with warm community and engaging programs for all ages</p>
                         </div>
                         <div className="bg-white rounded-lg p-6 shadow-sm">
-                          <h5 className="text-xl font-semibold text-purple-800 mb-3">Baal Shem Tov Shul</h5>
-                          <p className="text-lg text-purple-700 mb-3">6328 Forbes Ave, Pittsburgh, PA 15217 - Welcoming Chabad community</p>
-                        </div>
-                        <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-purple-800 mb-3">
                             <a href="https://www.bechabad.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">B'nai Emunoh (Greenfield)</a>
                           </h5>
                           <p className="text-lg text-purple-700 mb-3">Main Jewish center in Greenfield with daily services, adult education, women's & children's programs</p>
+                        </div>
+                        <div className="bg-white rounded-lg p-6 shadow-sm">
+                          <h5 className="text-xl font-semibold text-purple-800 mb-3">Baal Shem Tov Shul</h5>
+                          <p className="text-lg text-purple-700 mb-3">A small shul with a shtibel vibe - very welcoming and warm Chabad shul with an intimate, homey atmosphere</p>
                         </div>
                       </div>
                     </div>
@@ -762,14 +762,22 @@ function App() {
                           <p className="text-lg text-red-700 mb-3">Kosher dairy restaurant serving pizza, pasta, falafel, and other family-friendly meals</p>
                         </div>
                         <div className="bg-white rounded-lg p-6 shadow-sm">
-                          <h5 className="text-xl font-semibold text-red-800 mb-3">Eighteen (Meat)</h5>
+                          <h5 className="text-xl font-semibold text-red-800 mb-3">
+                            <a href="https://cafeeighteen.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Eighteen (Meat)</a>
+                          </h5>
                           <p className="text-lg text-red-700 mb-3">Strictly kosher meat restaurant, also offering sushi and grill options</p>
                         </div>
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-red-800 mb-3">
-                            <a href="https://www.bunnybakes.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Bunny Bakes & Specialty Coffee</a>
+                            <a href="https://bunnybakes.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Bunny Bakes & Specialty Coffee</a>
                           </h5>
                           <p className="text-lg text-red-700 mb-3">Kosher bakery-café offering pastries, baked goods, and specialty coffee drinks</p>
+                        </div>
+                        <div className="bg-white rounded-lg p-6 shadow-sm">
+                          <h5 className="text-xl font-semibold text-red-800 mb-3">
+                            <a href="https://eedgecatering.square.site/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Edge Catering</a>
+                          </h5>
+                          <p className="text-lg text-red-700 mb-3">Kosher catering and restaurant near CMU - convenient for university students and staff</p>
                         </div>
                       </div>
                     </div>
@@ -980,6 +988,12 @@ function App() {
                         </div>
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-green-800 mb-3">
+                            <a href="https://www.upmc.com/locations/hospitals/magee?utm_source=google&utm_medium=organic&utm_campaign=business-profile&utm_content=hospital-swpa-upmc-magee-womens-hospital" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">UPMC Magee-Womens Hospital</a>
+                          </h5>
+                          <p className="text-lg text-green-700 mb-3">National Center of Excellence in Women's Health specializing in obstetrics, gynecology, and comprehensive women's care</p>
+                        </div>
+                        <div className="bg-white rounded-lg p-6 shadow-sm">
+                          <h5 className="text-xl font-semibold text-green-800 mb-3">
                             <a href="https://www.ahn.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">West Penn Hospital</a>
                           </h5>
                           <p className="text-lg text-green-700 mb-3">Part of Allegheny Health Network</p>
@@ -1000,16 +1014,84 @@ function App() {
                         <span className="text-3xl mr-3">💊</span>
                         Pharmacies Near Squirrel Hill / Greenfield
                       </h4>
-                      <div className="space-y-4">
-                        <div className="bg-white rounded-lg p-6 shadow-sm">
-                          <div className="grid md:grid-cols-2 gap-4">
-                            <div>
-                              <p className="text-lg text-purple-700 font-medium">Walgreens</p>
-                              <p className="text-base text-purple-600">5956 Centre Ave • 7628 Penn Ave</p>
+                      <div className="space-y-6">
+                        <div className="bg-green-50 rounded-lg p-6 border-2 border-green-400">
+                          <h5 className="text-xl font-semibold text-green-800 mb-4">🕐 24/7 Emergency Pharmacies</h5>
+                          <div className="bg-white rounded-lg p-4 shadow-sm">
+                            <p className="text-lg text-green-700 font-medium mb-2">⚠️ Important Note</p>
+                            <p className="text-base text-green-600 mb-2">Most pharmacies in Squirrel Hill/Greenfield area operate standard hours (8 AM - 10 PM).</p>
+                            <p className="text-base text-green-600 mb-2">For 24/7 pharmacy needs, you may need to travel to nearby areas:</p>
+                            <div className="text-sm text-green-600 space-y-1 ml-4">
+                              <p>• Some CVS locations in Pittsburgh metro area are 24/7</p>
+                              <p>• Some Rite Aid locations may have extended hours</p>
+                              <p>• Hospital pharmacies for emergencies</p>
+                              <p className="font-medium text-green-700">📞 Call ahead to confirm current 24/7 availability</p>
                             </div>
-                            <div>
-                              <p className="text-lg text-purple-700 font-medium">CVS Pharmacy</p>
-                              <p className="text-base text-purple-600">5600 Wilkins Ave • 4664 Browns Hill Rd</p>
+                          </div>
+                        </div>
+                        
+                        <div className="bg-purple-50 rounded-lg p-6 border border-purple-200">
+                          <h5 className="text-xl font-semibold text-purple-800 mb-4">🏪 Major Chain Pharmacies</h5>
+                          <div className="grid md:grid-cols-2 gap-4">
+                            <div className="bg-white rounded-lg p-4 shadow-sm">
+                              <p className="text-lg text-purple-700 font-medium mb-2">Walgreens</p>
+                              <div className="text-base text-purple-600 space-y-1">
+                                <p>📍 5956 Centre Ave, Pittsburgh, PA 15206</p>
+                                <p className="text-sm text-gray-600">⏰ Standard hours (8 AM - 10 PM)</p>
+                                <p>📍 7628 Penn Ave, Pittsburgh, PA 15221</p>
+                                <p className="text-sm text-gray-600">⏰ Standard hours (8 AM - 10 PM)</p>
+                              </div>
+                            </div>
+                            <div className="bg-white rounded-lg p-4 shadow-sm">
+                              <p className="text-lg text-purple-700 font-medium mb-2">CVS Pharmacy</p>
+                              <div className="text-base text-purple-600 space-y-1">
+                                <p>📍 5600 Wilkins Ave, Pittsburgh, PA 15217</p>
+                                <p className="text-sm text-gray-600">⏰ Standard hours (8 AM - 10 PM)</p>
+                                <p>📍 4664 Browns Hill Rd, Pittsburgh, PA 15217</p>
+                                <p className="text-sm text-gray-600">⏰ Standard hours (8 AM - 10 PM)</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="bg-purple-50 rounded-lg p-6 border border-purple-200">
+                          <h5 className="text-xl font-semibold text-purple-800 mb-4">🏥 Specialty & Independent Pharmacies</h5>
+                          <div className="grid md:grid-cols-2 gap-4">
+                            <div className="bg-white rounded-lg p-4 shadow-sm">
+                              <p className="text-lg text-purple-700 font-medium mb-2">Murray Avenue Apothecary</p>
+                              <p className="text-base text-purple-600">📍 4227 Murray Ave, Pittsburgh, PA 15217</p>
+                              <p className="text-sm text-purple-500">Holistic health & compounding pharmacy</p>
+                              <p className="text-sm text-gray-600">⏰ Standard business hours</p>
+                            </div>
+                            <div className="bg-white rounded-lg p-4 shadow-sm">
+                              <p className="text-lg text-purple-700 font-medium mb-2">Forbes Pharmacy</p>
+                              <p className="text-base text-purple-600">📍 3501 Forbes Ave, Pittsburgh, PA 15213</p>
+                              <p className="text-sm text-purple-500">Near Oakland/Pitt campus</p>
+                              <p className="text-sm text-gray-600">⏰ Standard business hours</p>
+                            </div>
+                            <div className="bg-white rounded-lg p-4 shadow-sm">
+                              <p className="text-lg text-purple-700 font-medium mb-2">Hillman Pharmacy</p>
+                              <p className="text-base text-purple-600">📍 5115 Centre Ave, Pittsburgh, PA 15232</p>
+                              <p className="text-sm text-purple-500">Shadyside area</p>
+                              <p className="text-sm text-gray-600">⏰ Standard business hours</p>
+                            </div>
+                            <div className="bg-white rounded-lg p-4 shadow-sm">
+                              <p className="text-lg text-purple-700 font-medium mb-2">UPMC Magee Outpatient Pharmacy</p>
+                              <p className="text-base text-purple-600">📍 300 Halket St, Pittsburgh, PA 15213</p>
+                              <p className="text-sm text-purple-500">Hospital-based pharmacy</p>
+                              <p className="text-sm text-gray-600">⏰ Mon-Fri: 8 AM - 6 PM</p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="bg-purple-50 rounded-lg p-6 border border-purple-200">
+                          <h5 className="text-xl font-semibold text-purple-800 mb-4">🛒 Grocery Store Pharmacies</h5>
+                          <div className="bg-white rounded-lg p-4 shadow-sm">
+                            <p className="text-lg text-purple-700 font-medium mb-2">Giant Eagle Pharmacies</p>
+                            <div className="text-base text-purple-600 space-y-1">
+                              <p>📍 Multiple locations in Squirrel Hill and surrounding areas</p>
+                              <p className="text-sm text-gray-600">⏰ Typical hours: 9 AM - 9 PM (varies by location)</p>
+                              <p className="text-sm text-purple-500">❌ Not 24/7 - Check individual store locations for specific pharmacy hours</p>
                             </div>
                           </div>
                         </div>
@@ -1247,34 +1329,82 @@ function App() {
         <div className="mx-auto max-w-6xl px-4">
           <h2 className="text-4xl font-bold text-center mb-12">Our Programs</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-blue-200">
+            <button 
+              onClick={() => {
+                const eventsSection = document.getElementById('events');
+                if (eventsSection) {
+                  eventsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+              }}
+              className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-blue-200 text-left w-full cursor-pointer hover:from-blue-100 hover:to-blue-150"
+            >
               <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-4">
                 <div className="text-white text-xl">🏠</div>
               </div>
               <h3 className="text-lg font-bold text-blue-900 mb-3">Weekly Shabbat Dinners</h3>
               <p className="text-blue-700 text-base">Intimate Friday night gatherings that provide a sense of family, belonging, and Jewish connection.</p>
+              <div className="mt-3 text-blue-600 text-sm font-medium flex items-center">
+                <span>Learn more about our events</span>
+                <span className="ml-2">→</span>
             </div>
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-blue-200">
+            </button>
+            <button 
+              onClick={() => {
+                const getInfoSection = document.getElementById('get-information');
+                if (getInfoSection) {
+                  getInfoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+              }}
+              className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-blue-200 text-left w-full cursor-pointer hover:from-blue-100 hover:to-blue-150"
+            >
               <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-4">
                 <div className="text-white text-xl">🚚</div>
               </div>
               <h3 className="text-lg font-bold text-blue-900 mb-3">Relocation Support</h3>
               <p className="text-blue-700 text-base">Help with housing, schools, summer camps, and navigating local systems like DMV and medical insurance.</p>
+              <div className="mt-3 text-blue-600 text-sm font-medium flex items-center">
+                <span>Get detailed information</span>
+                <span className="ml-2">→</span>
             </div>
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-blue-200">
+            </button>
+            <button 
+              onClick={() => {
+                const contactSection = document.getElementById('contact');
+                if (contactSection) {
+                  contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+              }}
+              className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-blue-200 text-left w-full cursor-pointer hover:from-blue-100 hover:to-blue-150"
+            >
               <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-4">
                 <div className="text-white text-xl">🚑</div>
               </div>
-              <h3 className="text-lg font-bold text-blue-900 mb-3">Medical Treatment</h3>
+              <h3 className="text-lg font-bold text-blue-900 mb-3">Medical Treatment Support</h3>
               <p className="text-blue-700 text-base">Temporary housing, meals, and emotional companionship for Israeli families during medical emergencies.</p>
+              <div className="mt-3 text-blue-600 text-sm font-medium flex items-center">
+                <span>Contact us for support</span>
+                <span className="ml-2">→</span>
             </div>
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-blue-200">
+            </button>
+            <button 
+              onClick={() => {
+                const contactSection = document.getElementById('contact');
+                if (contactSection) {
+                  contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+              }}
+              className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-blue-200 text-left w-full cursor-pointer hover:from-blue-100 hover:to-blue-150"
+            >
               <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-4">
                 <div className="text-white text-xl">👶</div>
               </div>
               <h3 className="text-lg font-bold text-blue-900 mb-3">Postpartum Support</h3>
               <p className="text-blue-700 text-base">Home-cooked Israeli meals delivered to new mothers with no local family support.</p>
+              <div className="mt-3 text-blue-600 text-sm font-medium flex items-center">
+                <span>Contact us for support</span>
+                <span className="ml-2">→</span>
             </div>
+            </button>
           </div>
         </div>
       </section>
