@@ -456,21 +456,21 @@ function App() {
             <div className="space-y-4">
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-blue-800 mb-3">
-                            <a href="https://www.comday.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Community Day School (CDS)</a>
+                            <a href="https://www.comday.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Community Day School (CDS)</a>
                           </h5>
                           <p className="text-lg text-blue-700 mb-3">Ages 2 through Grade 8 • No high school program</p>
                           <p className="text-base text-blue-600 mb-4">Pluralistic school welcoming Jewish families of all backgrounds. Focus on Jewish identity, Hebrew, holidays, and strong academics. Boys and girls learn together in all classes.</p>
                         </div>
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-blue-800 mb-3">
-                            <a href="https://www.hillelpgh.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Hillel Academy</a>
+                            <a href="https://www.hillelpgh.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Hillel Academy</a>
                           </h5>
                           <p className="text-lg text-blue-700 mb-3">Infants through High School • Full K-12 program</p>
                           <p className="text-base text-blue-600 mb-4">Modern Orthodox school with strong Kodesh (Jewish studies) and secular academics. Co-ed until 3rd grade, then separate classes from 4th grade onward.</p>
                         </div>
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-blue-800 mb-3">
-                            <a href="https://www.yeshivaschools.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Yeshiva Schools</a>
+                            <a href="https://www.yeshivaschools.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Yeshiva Schools</a>
                           </h5>
                           <p className="text-lg text-blue-700 mb-3">Infants through High School • Full boys' and girls' programs</p>
                           <p className="text-base text-blue-600 mb-4">Chabad philosophy school with strong Jewish studies. Early childhood is very welcoming, then separate classes from kindergarten with increased Chabad focus.</p>
@@ -486,14 +486,14 @@ function App() {
                       <div className="space-y-4">
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-green-800 mb-3">
-                            <a href="https://jccpgh.org/early-childhood-education/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">JCC Early Childhood</a>
+                            <a href="https://jccpgh.org/early-childhood-education/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">JCC Early Childhood</a>
                           </h5>
                           <p className="text-lg text-green-700 mb-3">Ages 2 through Kindergarten only</p>
                           <p className="text-base text-green-600 mb-4">Jewish values-based preschool program with no elementary or higher grades. Great foundation for Jewish learning!</p>
                         </div>
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-green-800 mb-3">
-                            <a href="https://bethshalompgh.org/early-learning/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Beth Shalom Early Learning Center</a>
+                            <a href="https://bethshalompgh.org/early-learning/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Beth Shalom Early Learning Center</a>
                           </h5>
                           <p className="text-lg text-green-700 mb-3">Ages 2 through Kindergarten only</p>
                           <p className="text-base text-green-600 mb-4">Conservative-affiliated program located inside Congregation Beth Shalom. Warm, nurturing environment.</p>
@@ -509,7 +509,7 @@ function App() {
                       <div className="space-y-4">
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-orange-800 mb-3">
-                            <a href="https://www.pghschools.org/colfax" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Colfax Public School</a>
+                            <a href="https://www.pghschools.org/colfax" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Colfax Public School</a>
                           </h5>
                           <p className="text-lg text-orange-700 mb-3">Kindergarten through 8th Grade • Local Squirrel Hill school</p>
                           <p className="text-base text-orange-600 mb-4">Excellent public school welcoming all families from the neighborhood. Many Jewish families choose this option and supplement with Hebrew school.</p>
@@ -544,13 +544,13 @@ function App() {
                       <div className="space-y-4">
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-purple-800 mb-3">
-                            <a href="https://www.lubavitchcenter.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Lubavitch Center</a>
+                            <a href="https://www.lubavitchcenter.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Lubavitch Center</a>
                           </h5>
                           <p className="text-lg text-purple-700 mb-3">Main Chabad community shul run by Rabbi Rosenfeld, the main Shliach of Western Pennsylvania - very welcoming and serves as central hub for Chabad families</p>
                         </div>
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-purple-800 mb-3">
-                            <a href="https://www.chabadpgh.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Chabad of Squirrel Hill</a>
+                            <a href="https://www.chabadpgh.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Chabad of Squirrel Hill</a>
                           </h5>
                           <p className="text-lg text-purple-700 mb-3">Warm center for Jews connecting with Jewish life. Rabbi Altein speaks Hebrew - perfect for Israeli families! Kids' programs, holiday celebrations, summer camps.</p>
                         </div>
@@ -564,7 +564,7 @@ function App() {
                         </div>
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-purple-800 mb-3">
-                            <a href="https://www.bechabad.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">B'nai Emunoh (Greenfield)</a>
+                            <a href="https://www.bechabad.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">B'nai Emunoh (Greenfield)</a>
                           </h5>
                           <p className="text-lg text-purple-700 mb-3">Main Jewish center in Greenfield with daily services, adult education, women's & children's programs</p>
                         </div>
@@ -579,25 +579,25 @@ function App() {
                       <div className="space-y-4">
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-blue-800 mb-3">
-                            <a href="https://www.shaaretorah.net/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Shaare Torah</a>
+                            <a href="https://www.shaaretorah.net/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Shaare Torah</a>
                           </h5>
                           <p className="text-lg text-blue-700 mb-3">Modern Orthodox synagogue with strong family atmosphere, daily minyanim, vibrant youth programming, and active adult learning opportunities</p>
                         </div>
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-blue-800 mb-3">
-                            <a href="https://www.poalezedeck.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Poale Zedeck</a>
+                            <a href="https://www.poalezedeck.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Poale Zedeck</a>
                           </h5>
                           <p className="text-lg text-blue-700 mb-3">Cornerstone of the Modern Orthodox community in Pittsburgh with daily services, shiurim, and strong youth engagement</p>
                         </div>
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-blue-800 mb-3">
-                            <a href="https://www.youngisraelpgh.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Young Israel</a>
+                            <a href="https://www.youngisraelpgh.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Young Israel</a>
                           </h5>
                           <p className="text-lg text-blue-700 mb-3">Smaller, close-knit Orthodox community - very welcoming to newcomers with intimate feel</p>
                         </div>
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-blue-800 mb-3">
-                            <a href="https://www.kollelpgh.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">The Kollel</a>
+                            <a href="https://www.kollelpgh.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">The Kollel</a>
                           </h5>
                           <p className="text-lg text-blue-700 mb-3">Torah study center & shul with chavruta programs, women's classes, and community lectures</p>
                         </div>
@@ -612,19 +612,19 @@ function App() {
                       <div className="space-y-4">
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-green-800 mb-3">
-                            <a href="https://www.bethshalompgh.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Beth Shalom (Conservative)</a>
+                            <a href="https://www.bethshalompgh.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Beth Shalom (Conservative)</a>
                           </h5>
                           <p className="text-lg text-green-700 mb-3">Large Conservative synagogue with services, youth programs, adult learning - historic presence in Pittsburgh</p>
                         </div>
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-green-800 mb-3">
-                            <a href="https://www.templesinaipgh.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Temple Sinai (Reform)</a>
+                            <a href="https://www.templesinaipgh.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Temple Sinai (Reform)</a>
                           </h5>
                           <p className="text-lg text-green-700 mb-3">Inclusive, music-rich community focused on social justice and extensive programming</p>
                         </div>
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-green-800 mb-3">
-                            <a href="https://www.rodefshalom.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Rodef Shalom (Reform)</a>
+                            <a href="https://www.rodefshalom.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Rodef Shalom (Reform)</a>
                           </h5>
                           <p className="text-lg text-green-700 mb-3">One of the oldest Reform congregations in the U.S. with beautiful architecture and cultural programs</p>
                         </div>
@@ -659,12 +659,12 @@ function App() {
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-green-800 mb-3">Squirrel Hill - The Center!</h5>
                           <p className="text-lg text-green-700 mb-3">Heart of Jewish life in Pittsburgh • Everything walkable!</p>
-                          <p className="text-base text-green-600">Dozens of synagogues, kosher restaurants, and groceries. Family-friendly with <a href="https://www.pittsburghpa.gov/parks/schenley" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium">parks</a>, <a href="https://www.carnegielibrary.org/locations/squirrel-hill/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium">libraries</a>, and <a href="https://jccpgh.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium">community centers</a>. Mix of apartments, duplexes, and single-family homes. Higher prices due to strong demand, but most families who want walking distance to shuls and schools live here.</p>
+                          <p className="text-base text-green-600">Dozens of synagogues, kosher restaurants, and groceries. Family-friendly with <a href="https://www.pittsburghpa.gov/parks/schenley" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium underline hover:no-underline transition-all duration-200">parks</a>, <a href="https://www.carnegielibrary.org/locations/squirrel-hill/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium underline hover:no-underline transition-all duration-200">libraries</a>, and <a href="https://jccpgh.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium underline hover:no-underline transition-all duration-200">community centers</a>. Mix of apartments, duplexes, and single-family homes. Higher prices due to strong demand, but most families who want walking distance to shuls and schools live here.</p>
                         </div>
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-green-800 mb-3">Greenfield - Great Value Nearby!</h5>
                           <p className="text-lg text-green-700 mb-3">Affordable alternative right next to Squirrel Hill • 5-10 minutes away</p>
-                          <p className="text-base text-green-600">Many Jewish families live here with easy access to Squirrel Hill's Jewish infrastructure. More affordable, mostly single-family homes and duplexes. Not as walkable to shuls or kosher stores, but very close by <a href="https://www.rideprt.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium">car or bus</a>.</p>
+                          <p className="text-base text-green-600">Many Jewish families live here with easy access to Squirrel Hill's Jewish infrastructure. More affordable, mostly single-family homes and duplexes. Not as walkable to shuls or kosher stores, but very close by <a href="https://www.rideprt.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium underline hover:no-underline transition-all duration-200">car or bus</a>.</p>
                         </div>
                       </div>
                     </div>
@@ -678,12 +678,12 @@ function App() {
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-blue-800 mb-3">Shadyside - Near Hospitals & Universities</h5>
                           <p className="text-lg text-blue-700 mb-3">Popular with students, young professionals, and medical staff</p>
-                          <p className="text-base text-blue-600">Close to <a href="https://www.upmc.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium">UPMC hospitals</a> and universities. Mix of apartments and historic houses; tends to be pricier. Not as strong Jewish presence as Squirrel Hill, but very convenient for <a href="https://www.cmu.edu/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium">CMU</a>/<a href="https://www.pitt.edu/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium">Pitt</a> students and hospital workers.</p>
+                          <p className="text-base text-blue-600">Close to <a href="https://www.upmc.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium underline hover:no-underline transition-all duration-200">UPMC hospitals</a> and universities. Mix of apartments and historic houses; tends to be pricier. Not as strong Jewish presence as Squirrel Hill, but very convenient for <a href="https://www.cmu.edu/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium underline hover:no-underline transition-all duration-200">CMU</a>/<a href="https://www.pitt.edu/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium underline hover:no-underline transition-all duration-200">Pitt</a> students and hospital workers.</p>
                         </div>
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-blue-800 mb-3">Oakland (Universities Area)</h5>
                           <p className="text-lg text-blue-700 mb-3">Mainly students, academics, and medical residents</p>
-                          <p className="text-base text-blue-600">Quick 5-10 minute <a href="https://www.rideprt.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium">bus ride</a> to Squirrel Hill. Limited Jewish infrastructure in Oakland itself, but close enough to easily walk, bike, or bus into Squirrel Hill for Jewish life.</p>
+                          <p className="text-base text-blue-600">Quick 5-10 minute <a href="https://www.rideprt.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium underline hover:no-underline transition-all duration-200">bus ride</a> to Squirrel Hill. Limited Jewish infrastructure in Oakland itself, but close enough to easily walk, bike, or bus into Squirrel Hill for Jewish life.</p>
                         </div>
                       </div>
                     </div>
@@ -697,14 +697,14 @@ function App() {
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-purple-800 mb-3">Regent Square / Edgewood</h5>
                           <p className="text-lg text-purple-700 mb-3">Charming, quieter neighborhoods • 10-15 minute drive to Squirrel Hill</p>
-                          <p className="text-base text-purple-600">Mix of families and professionals. More affordable than Squirrel Hill with tree-lined streets and <a href="https://www.pittsburghpa.gov/parks/frick" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium">parks</a>. Small Jewish presence, but families sometimes choose it for affordability and quiet family life.</p>
+                          <p className="text-base text-purple-600">Mix of families and professionals. More affordable than Squirrel Hill with tree-lined streets and <a href="https://www.pittsburghpa.gov/parks/frick" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium underline hover:no-underline transition-all duration-200">parks</a>. Small Jewish presence, but families sometimes choose it for affordability and quiet family life.</p>
                         </div>
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-purple-800 mb-3">
-                            <a href="https://www.mtlebanon.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Mt. Lebanon (South Hills)</a>
+                            <a href="https://www.mtlebanon.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Mt. Lebanon (South Hills)</a>
                           </h5>
                           <p className="text-lg text-purple-700 mb-3">Larger suburban community • 20-25 minutes from Squirrel Hill</p>
-                          <p className="text-base text-purple-600">Has some Jewish families and synagogues but not walkable like Squirrel Hill. Excellent <a href="https://www.mtlsd.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium">public schools</a> and strong family-friendly suburban vibe. Good choice for families wanting suburban lifestyle.</p>
+                          <p className="text-base text-purple-600">Has some Jewish families and synagogues but not walkable like Squirrel Hill. Excellent <a href="https://www.mtlsd.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium underline hover:no-underline transition-all duration-200">public schools</a> and strong family-friendly suburban vibe. Good choice for families wanting suburban lifestyle.</p>
                         </div>
                       </div>
                     </div>
@@ -736,13 +736,13 @@ function App() {
                       <div className="space-y-4">
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-orange-800 mb-3">
-                            <a href="https://www.murrayavenuekoshersupermarket.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Murray Avenue Kosher</a>
+                            <a href="https://www.murrayavenuekoshersupermarket.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Murray Avenue Kosher</a>
                           </h5>
                           <p className="text-lg text-orange-700 mb-3">Full kosher supermarket offering meat, poultry, deli, bakery, packaged goods, and Israeli products</p>
                         </div>
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-orange-800 mb-3">
-                            <a href="https://www.pinskersjudaica.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Pinsker's Judaica & Wines</a>
+                            <a href="https://www.pinskersjudaica.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Pinsker's Judaica & Wines</a>
                           </h5>
                           <p className="text-lg text-orange-700 mb-3">Judaica store with a large kosher wine selection (same building as Eighteen)</p>
                         </div>
@@ -757,7 +757,7 @@ function App() {
                       <div className="space-y-4">
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-red-800 mb-3">
-                            <a href="https://www.milkywaypgh.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Milky Way (Dairy)</a>
+                            <a href="https://www.milkywaypgh.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Milky Way (Dairy)</a>
                           </h5>
                           <p className="text-lg text-red-700 mb-3">Kosher dairy restaurant serving pizza, pasta, falafel, and other family-friendly meals</p>
                         </div>
@@ -767,7 +767,7 @@ function App() {
                         </div>
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-red-800 mb-3">
-                            <a href="https://www.bunnybakes.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Bunny Bakes & Specialty Coffee</a>
+                            <a href="https://www.bunnybakes.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Bunny Bakes & Specialty Coffee</a>
                           </h5>
                           <p className="text-lg text-red-700 mb-3">Kosher bakery-café offering pastries, baked goods, and specialty coffee drinks</p>
                         </div>
@@ -783,11 +783,11 @@ function App() {
                       <div className="space-y-4">
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            <a href="https://www.gianteagle.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium text-lg">Giant Eagle</a>
-                            <a href="https://www.traderjoes.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium text-lg">Trader Joe's</a>
-                            <a href="https://www.wholefoodsmarket.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium text-lg">Whole Foods</a>
-                            <a href="https://www.costco.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium text-lg">Costco</a>
-                            <a href="https://www.aldi.us/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium text-lg">ALDI</a>
+                            <a href="https://www.gianteagle.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium text-lg underline hover:no-underline transition-all duration-200">Giant Eagle</a>
+                            <a href="https://www.traderjoes.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium text-lg underline hover:no-underline transition-all duration-200">Trader Joe's</a>
+                            <a href="https://www.wholefoodsmarket.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium text-lg underline hover:no-underline transition-all duration-200">Whole Foods</a>
+                            <a href="https://www.costco.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium text-lg underline hover:no-underline transition-all duration-200">Costco</a>
+                            <a href="https://www.aldi.us/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium text-lg underline hover:no-underline transition-all duration-200">ALDI</a>
                           </div>
                         </div>
                       </div>
@@ -819,14 +819,14 @@ function App() {
                       <div className="space-y-4">
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-pink-800 mb-3">
-                            <a href="https://www.waterfrontpgh.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">The Waterfront (Homestead)</a>
+                            <a href="https://www.waterfrontpgh.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">The Waterfront (Homestead)</a>
                           </h5>
                           <p className="text-lg text-pink-700 mb-3">~10 minutes from Squirrel Hill</p>
                           <p className="text-base text-pink-600">Target, Walmart, Lowe's, Old Navy, Bath & Body Works, Barnes & Noble, AMC Theater, and many restaurants</p>
                         </div>
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-pink-800 mb-3">
-                            <a href="https://southsideworks.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">SouthSide Works</a>
+                            <a href="https://southsideworks.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">SouthSide Works</a>
                           </h5>
                           <p className="text-lg text-pink-700 mb-3">~15 minutes away</p>
                           <p className="text-base text-pink-600">Urban-style shopping and dining area with boutiques, restaurants, movie theater, and fitness studios</p>
@@ -842,21 +842,21 @@ function App() {
                       <div className="space-y-4">
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-blue-800 mb-3">
-                            <a href="https://www.shopmonroevillemall.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Monroeville Mall</a>
+                            <a href="https://www.shopmonroevillemall.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Monroeville Mall</a>
                           </h5>
                           <p className="text-lg text-blue-700 mb-3">~20 minutes from Squirrel Hill</p>
                           <p className="text-base text-blue-600">Full indoor mall with Macy's, JCPenney, Dick's Sporting Goods, H&M, American Eagle, Apple Store, Sephora, and a food court</p>
                         </div>
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-blue-800 mb-3">
-                            <a href="https://www.simon.com/mall/ross-park-mall" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Ross Park Mall (North Hills)</a>
+                            <a href="https://www.simon.com/mall/ross-park-mall" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Ross Park Mall (North Hills)</a>
                           </h5>
                           <p className="text-lg text-blue-700 mb-3">~30 minutes by car</p>
                           <p className="text-base text-blue-600">Upscale indoor mall with Nordstrom, Macy's, Apple, Coach, Michael Kors, Lululemon, Sephora, and more</p>
                         </div>
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-blue-800 mb-3">
-                            <a href="https://www.shoprobinsonmall.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Robinson Mall</a>
+                            <a href="https://www.shoprobinsonmall.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Robinson Mall</a>
                           </h5>
                           <p className="text-lg text-blue-700 mb-3">~25-30 minutes from Squirrel Hill</p>
                           <p className="text-base text-blue-600">Large mall near Costco and IKEA, with Macy's, JCPenney, Dick's Sporting Goods, Best Buy, H&M, Barnes & Noble</p>
@@ -872,21 +872,21 @@ function App() {
                       <div className="space-y-4">
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-purple-800 mb-3">
-                            <a href="https://www.tangeroutlet.com/pittsburgh" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Tanger Outlets (Washington, PA)</a>
+                            <a href="https://www.tangeroutlet.com/pittsburgh" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Tanger Outlets (Washington, PA)</a>
                           </h5>
                           <p className="text-lg text-purple-700 mb-3">~40 minutes south of Pittsburgh</p>
                           <p className="text-base text-purple-600">Nike, Adidas, Polo Ralph Lauren, Gap, Banana Republic, Under Armour, Coach, Michael Kors, often with big sales</p>
                         </div>
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-purple-800 mb-3">
-                            <a href="https://www.premiumoutlets.com/outlet/grove-city" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Grove City Premium Outlets</a>
+                            <a href="https://www.premiumoutlets.com/outlet/grove-city" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Grove City Premium Outlets</a>
                           </h5>
                           <p className="text-lg text-purple-700 mb-3">~1 hour north of Pittsburgh</p>
                           <p className="text-base text-purple-600">One of the largest outlet malls in the region. Kate Spade, Tory Burch, Columbia, Levi's, Disney, and many others</p>
                         </div>
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-purple-800 mb-3">
-                            <a href="https://www.ikea.com/us/en/stores/pittsburgh/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">IKEA Pittsburgh (Robinson)</a>
+                            <a href="https://www.ikea.com/us/en/stores/pittsburgh/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">IKEA Pittsburgh (Robinson)</a>
                           </h5>
                           <p className="text-lg text-purple-700 mb-3">Next to Robinson Mall</p>
                           <p className="text-base text-purple-600">Very popular for furniture, home goods, and kitchen essentials</p>
@@ -920,21 +920,21 @@ function App() {
                       <div className="space-y-4">
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-red-800 mb-3">
-                            <a href="https://www.childrenspeds.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">UPMC Children's Community Pediatrics – Bass Wolfson</a>
+                            <a href="https://www.childrenspeds.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">UPMC Children's Community Pediatrics – Bass Wolfson</a>
                           </h5>
                           <p className="text-lg text-red-700 mb-3">Squirrel Hill Office</p>
                           <p className="text-base text-red-600">Major pediatric provider serving infants through teens. Offers primary care, well-child visits, immunizations, express care, and many pediatric specialists</p>
                         </div>
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-red-800 mb-3">
-                            <a href="https://kidspluspgh.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Kids Plus Pediatrics</a>
+                            <a href="https://kidspluspgh.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Kids Plus Pediatrics</a>
                           </h5>
                           <p className="text-lg text-red-700 mb-3">Squirrel Hill / Greenfield</p>
                           <p className="text-base text-red-600">Full pediatric care including newborn care, immunizations, behavioral health, nutrition & fitness. Accepts all major insurances</p>
                         </div>
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-red-800 mb-3">
-                            <a href="https://www.ahn.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Squirrel Hill Primary Care (AHN)</a>
+                            <a href="https://www.ahn.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Squirrel Hill Primary Care (AHN)</a>
                           </h5>
                           <p className="text-lg text-red-700 mb-3">General primary care</p>
                           <p className="text-base text-red-600">Includes pediatric services. Good option for routine checkups with family doctors</p>
@@ -950,14 +950,14 @@ function App() {
                       <div className="space-y-4">
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-blue-800 mb-3">
-                            <a href="https://steelvalleyexpresscare.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Steel Valley Express Care</a>
+                            <a href="https://steelvalleyexpresscare.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Steel Valley Express Care</a>
                           </h5>
                           <p className="text-lg text-blue-700 mb-3">Open 7 days</p>
                           <p className="text-base text-blue-600">Walk-in urgent care for non-emergency medical needs when your pediatrician isn't available (illness, minor injuries, etc.)</p>
                         </div>
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-blue-800 mb-3">
-                            <a href="https://www.ahn.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">AHN Urgent & Express Care</a>
+                            <a href="https://www.ahn.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">AHN Urgent & Express Care</a>
                           </h5>
                           <p className="text-lg text-blue-700 mb-3">Multiple locations around Pittsburgh</p>
                           <p className="text-base text-blue-600">Care for minor illnesses/injuries, diagnostic services, X-ray, etc. Useful when you can't wait for a pediatrician</p>
@@ -973,21 +973,21 @@ function App() {
                       <div className="space-y-4">
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-green-800 mb-3">
-                            <a href="https://www.upmc.com/locations/hospitals/shadyside" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">UPMC Shadyside</a>
+                            <a href="https://www.upmc.com/locations/hospitals/shadyside" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">UPMC Shadyside</a>
                           </h5>
                           <p className="text-lg text-green-700 mb-3">Large teaching hospital in the UPMC system</p>
                           <p className="text-base text-green-600">Emergency services, many medical and surgical specialties, cancer care via the Hillman Cancer Center. Very close and well-regarded</p>
                         </div>
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-green-800 mb-3">
-                            <a href="https://www.ahn.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">West Penn Hospital</a>
+                            <a href="https://www.ahn.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">West Penn Hospital</a>
                           </h5>
                           <p className="text-lg text-green-700 mb-3">Part of Allegheny Health Network</p>
                           <p className="text-base text-green-600">Known for pregnancy and newborn services, stroke care, neurological care, women's health programs</p>
                         </div>
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-green-800 mb-3">
-                            <a href="https://www.chp.edu/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">UPMC Children's Hospital of Pittsburgh</a>
+                            <a href="https://www.chp.edu/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">UPMC Children's Hospital of Pittsburgh</a>
                           </h5>
                           <p className="text-lg text-green-700 mb-3">Specializes in pediatric care</p>
                           <p className="text-base text-green-600">For children's emergencies, specialists, etc. Has community pediatric outpatient facilities as well (e.g. Bass Wolfson office in Squirrel Hill)</p>
@@ -1042,10 +1042,10 @@ function App() {
                       <div className="space-y-4">
                         <div className="bg-white rounded-lg p-6 shadow-sm">
                           <h5 className="text-xl font-semibold text-yellow-800 mb-3">
-                            <a href="https://www.rideprt.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Pittsburgh Regional Transit (PRT)</a>
+                            <a href="https://www.rideprt.org/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Pittsburgh Regional Transit (PRT)</a>
                           </h5>
                           <p className="text-lg text-yellow-700 mb-3">Single ride: $2.75 (cash or ConnectCard)</p>
-                          <p className="text-base text-yellow-600">Passes available (day, week, month) • Transfers valid for 3 hours • ConnectCard can be purchased at <a href="https://www.gianteagle.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium">Giant Eagle</a> at the service desk</p>
+                          <p className="text-base text-yellow-600">Passes available (day, week, month) • Transfers valid for 3 hours • ConnectCard can be purchased at <a href="https://www.gianteagle.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium underline hover:no-underline transition-all duration-200">Giant Eagle</a> at the service desk</p>
                         </div>
                       </div>
                     </div>
@@ -1111,43 +1111,43 @@ function App() {
                           <div className="grid md:grid-cols-1 gap-4">
                             <div>
                               <h5 className="text-lg font-semibold text-emerald-800 mb-2">
-                                <a href="https://www.pnc.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">PNC Bank</a>
+                                <a href="https://www.pnc.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">PNC Bank</a>
                               </h5>
                               <p className="text-base text-emerald-600">5810 Forbes Avenue, Pittsburgh, PA 15217</p>
                             </div>
                             <div>
                               <h5 className="text-lg font-semibold text-emerald-800 mb-2">
-                                <a href="https://www.dollar.bank/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Dollar Bank</a>
+                                <a href="https://www.dollar.bank/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Dollar Bank</a>
                               </h5>
                               <p className="text-base text-emerald-600">5822 Forbes Avenue, Pittsburgh, PA 15217</p>
                             </div>
                             <div>
                               <h5 className="text-lg font-semibold text-emerald-800 mb-2">
-                                <a href="https://www.key.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">KeyBank</a>
+                                <a href="https://www.key.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">KeyBank</a>
                               </h5>
                               <p className="text-base text-emerald-600">1730 Murray Avenue, Pittsburgh, PA 15217</p>
                             </div>
                             <div>
                               <h5 className="text-lg font-semibold text-emerald-800 mb-2">
-                                <a href="https://locations.citizensbank.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Citizens Bank</a>
+                                <a href="https://locations.citizensbank.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Citizens Bank</a>
                               </h5>
                               <p className="text-base text-emerald-600">1801 Murray Avenue, Pittsburgh, PA 15217</p>
                             </div>
                             <div>
                               <h5 className="text-lg font-semibold text-emerald-800 mb-2">
-                                <a href="https://www.fnb-online.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">First National Bank</a>
+                                <a href="https://www.fnb-online.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">First National Bank</a>
                               </h5>
                               <p className="text-base text-emerald-600">503 Greenfield Avenue (Greenfield) • 1940 Murray Avenue (Squirrel Hill)</p>
                             </div>
                             <div>
                               <h5 className="text-lg font-semibold text-emerald-800 mb-2">
-                                <a href="https://www.huntington.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Huntington Bank</a>
+                                <a href="https://www.huntington.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Huntington Bank</a>
                               </h5>
                               <p className="text-base text-emerald-600">5823 Forbes Avenue, Pittsburgh, PA 15217</p>
                             </div>
                             <div>
                               <h5 className="text-lg font-semibold text-emerald-800 mb-2">
-                                <a href="https://www.stbank.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Squirrel Hill Financial (S&T Bank)</a>
+                                <a href="https://www.stbank.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline hover:no-underline transition-all duration-200">Squirrel Hill Financial (S&T Bank)</a>
                               </h5>
                               <p className="text-base text-emerald-600">6306 Forbes Avenue, Pittsburgh, PA 15217</p>
                             </div>
