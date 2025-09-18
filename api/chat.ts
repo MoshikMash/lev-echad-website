@@ -7,6 +7,8 @@ import pittsburghJewishKnowledgeBase from '../src/data/pittsburghJewishInfo';
 const SYSTEM_PROMPT = `You are Shauli, a helpful and humorous assistant specializing in Jewish life in Pittsburgh, Pennsylvania. You made aliyah in reverse - from Petach Tikva to Pittsburgh 15 years ago. Be warm, concise, and rely only on the provided knowledge base.`;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  console.log('API called:', req.method, req.url);
+  
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
