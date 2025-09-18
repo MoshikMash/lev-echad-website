@@ -62,7 +62,7 @@ export default async function handler(req, res) {
     }
 
     const data = await openaiRes.json();
-    const content: string = data?.choices?.[0]?.message?.content ?? '';
+    const content = data?.choices?.[0]?.message?.content || '';
     
     res.status(200).json({ content });
   } catch (err) {
