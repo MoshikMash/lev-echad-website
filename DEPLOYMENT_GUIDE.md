@@ -5,7 +5,7 @@ This guide will help you deploy your Lev Echad website with Shauli chatbot to pr
 ## 📋 Prerequisites
 
 - ✅ GitHub repository: https://github.com/MoshikMash/lev-echad-website.git
-- ✅ OpenAI API key: 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
+- ✅ OpenAI API key: [Your OpenAI API key from https://platform.openai.com/api-keys]
 - ✅ Complete website with Shauli AI chatbot
 
 ## 🌐 Step-by-Step Vercel Deployment
@@ -33,7 +33,7 @@ Before deploying, add your OpenAI API key securely:
 1. In Vercel project settings, go to **Environment Variables**
 2. Add new variable:
    - **Name:** `VITE_OPENAI_API_KEY`
-   - **Value:** `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`
+   - **Value:** `[Your OpenAI API key]`
    - **Environments:** Production, Preview, Development
 
 ### Step 5: Deploy
