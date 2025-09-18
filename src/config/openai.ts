@@ -5,7 +5,7 @@
 // 3. Or replace the import.meta.env.VITE_OPENAI_API_KEY with your key directly (not recommended for production)
 
 export const OPENAI_CONFIG = {
-  apiKey: import.meta.env.VITE_OPENAI_API_KEY || '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',
+  apiKey: import.meta.env.VITE_OPENAI_API_KEY || '',
   model: 'gpt-3.5-turbo',
   maxTokens: 500,
   temperature: 0.3, // Lower temperature for more consistent, factual responses
