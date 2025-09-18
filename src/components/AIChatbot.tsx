@@ -15,7 +15,7 @@ const AIChatbot: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: "Hi! I'm Shauli your Pittsburgh Jewish community assistant from Lev Echad. I can help you with detailed information about schools, synagogues, neighborhoods, kosher food, healthcare, immigration, and much more. Ask me anything about Jewish life in Pittsburgh!",
+      text: "Shalom! I'm Shauli. I made aliyah… in reverse 🤷‍♂️ — from Petach Tikva all the way to Pittsburgh. Fifteen years later, I know the community here like I know the price of cottage cheese back in Israel. Need to find a school, shul, kosher pizza, or just figure out how to survive a Pittsburgh winter without crying to your ima? Ask me anything—I'm here to help, with answers and maybe even a joke. 😄",
       isUser: false,
       timestamp: new Date()
     }
@@ -234,20 +234,22 @@ What transportation questions do you have?`;
     }
 
     // About Lev Echad questions
-    if (lowerQuestion.includes('lev echad') || lowerQuestion.includes('about') || lowerQuestion.includes('shosh') || lowerQuestion.includes('programs') || lowerQuestion.includes('help')) {
-      return `**About Lev Echad:**
+    if (lowerQuestion.includes('lev echad') || lowerQuestion.includes('about') || lowerQuestion.includes('shosh') || lowerQuestion.includes('programs') || lowerQuestion.includes('help') || lowerQuestion.includes('shauli')) {
+      return `**About Lev Echad (and me, Shauli!):**
 
-Founded by Shosh Mash, an Israeli mother who arrived in Pittsburgh seven years ago with a baby, completely alone. From that struggle came the mission: **to turn loneliness into belonging and isolation into community.**
+So, Shosh Mash founded Lev Echad after arriving from Israel seven years ago with a baby, completely alone. Sound familiar? 😅 I did the same thing 15 years ago from Petach Tikva - let me tell you, those first Pittsburgh winters were... educational.
 
-**🏠 Our Programs:**
-• **Weekly Shabbat Dinners** - Intimate Friday night gatherings
-• **Relocation Support** - Help with housing, schools, local systems
-• **Medical Treatment Support** - Housing and companionship during emergencies
-• **Postpartum Support** - Home-cooked Israeli meals for new mothers
+From that struggle came our mission: **to turn loneliness into belonging and isolation into community.**
 
-We're a friendly, not-for-profit community organization providing help through genuine relationships. Our goal is to make Pittsburgh feel like home for Jewish and Israeli families.
+**🏠 What we do:**
+• **Weekly Shabbat Dinners** - Because everyone needs a place for Friday night (and good food!)
+• **Relocation Support** - I'll help you figure out everything from schools to where to buy the best hummus
+• **Medical Treatment Support** - When life gets complicated, we've got your back
+• **Postpartum Support** - Home-cooked Israeli meals (yes, real Israeli food!)
 
-How can we help you settle into Pittsburgh?`;
+Trust me, after 15 years here, I know which pizza is actually worth it and which shul has the best kiddush. 😄
+
+What can I help you figure out about Pittsburgh?`;
     }
 
     // Immigration/relocation questions
@@ -289,6 +291,7 @@ Need help with any specific documents?`;
 **🎯 Attractions** - Museums, parks, family activities
 
 Please ask me something specific, like:
+• "Tell me about yourself" → Get Shauli's funny backstory
 • "What Jewish schools have high school programs?"
 • "Which neighborhoods are most affordable?"
 • "Where can I find kosher meat restaurants?"
@@ -334,37 +337,57 @@ What would you like to know about Jewish life in Pittsburgh?`;
   // Error boundary for the component
   if (error && error === 'System temporarily unavailable') {
     return (
-      <button
-        onClick={() => {
-          setError(null);
-          setIsOpen(true);
-        }}
-        className="fixed bottom-6 right-6 bg-red-600 hover:bg-red-700 text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 z-50"
-        aria-label="Chat assistant (temporarily unavailable)"
-      >
-        <div className="relative">
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
-          </svg>
+      <div className="fixed bottom-6 right-6 z-50">
+        {/* Error text */}
+        <div className="mb-3 mr-2">
+          <div className="bg-red-50 text-red-800 px-4 py-2 rounded-full shadow-lg border border-red-200 text-sm font-medium">
+            Connection issue - Click to retry
+          </div>
         </div>
-      </button>
+        
+        {/* Error button */}
+        <button
+          onClick={() => {
+            setError(null);
+            setIsOpen(true);
+          }}
+          className="bg-white hover:bg-red-50 text-red-600 p-6 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 border-2 border-red-200 hover:border-red-400"
+          aria-label="Chat assistant (temporarily unavailable)"
+        >
+          <div className="relative">
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+            </svg>
+          </div>
+        </button>
+      </div>
     );
   }
 
   if (!isOpen) {
     return (
-      <button
-        onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 z-50"
-        aria-label="Open chat assistant"
-      >
-        <div className="relative">
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-          </svg>
-          <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+      <div className="fixed bottom-6 right-6 z-50">
+        {/* Help text */}
+        <div className="mb-3 mr-2">
+          <div className="bg-white text-gray-800 px-4 py-2 rounded-full shadow-lg border border-gray-200 text-sm font-medium">
+            How could I help?
+          </div>
         </div>
-      </button>
+        
+        {/* Chat button */}
+        <button
+          onClick={() => setIsOpen(true)}
+          className="bg-white hover:bg-gray-50 text-blue-600 p-6 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 border-2 border-blue-200 hover:border-blue-400"
+          aria-label="Open chat assistant"
+        >
+          <div className="relative">
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+            <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full animate-pulse"></div>
+          </div>
+        </button>
+      </div>
     );
   }
 
@@ -373,16 +396,16 @@ What would you like to know about Jewish life in Pittsburgh?`;
       {/* Header */}
       <div className="bg-blue-600 text-white p-4 rounded-t-2xl flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center overflow-hidden">
+          <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center overflow-hidden">
             <img 
-              src="./shauli-photo.jpg" 
+              src="./shauli.png" 
               alt="Shauli - Pittsburgh Jewish Assistant" 
               className="w-full h-full object-cover rounded-full"
               onError={(e) => {
                 // Fallback to emoji if image doesn't load
                 const target = e.target as HTMLImageElement;
                 target.style.display = 'none';
-                target.parentElement!.innerHTML = '<span class="text-lg">👨‍💻</span>';
+                target.parentElement!.innerHTML = '<span class="text-xl">👨‍💻</span>';
               }}
             />
           </div>
