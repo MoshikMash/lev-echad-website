@@ -20,13 +20,16 @@ export default async function handler(req, res) {
     return;
   }
 
-  if (req.method !== 'POST') {
+  // Support GET temporarily for debugging
+  if (req.method !== 'POST' && req.method !== 'GET') {
     res.status(405).json({ error: 'Method Not Allowed' });
     return;
   }
 
   try {
-    const { question } = req.body || {};
+    const { question } = req.method === 'GET'
+      ? (req.query || {})
+      : (req.body || {});
     
     if (!question || typeof question !== 'string') {
       res.status(400).json({ error: 'Missing question' });
