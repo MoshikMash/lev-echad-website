@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import emailjs from '@emailjs/browser'
+import AIChatbot from './components/AIChatbot'
 // Updated donation section with scrollable options
 
 function App() {
@@ -1698,6 +1699,9 @@ function App() {
           <p className="text-blue-300 text-sm">© {new Date().getFullYear()} Lev Echad. All rights reserved.</p>
         </div>
       </footer>
+      
+      {/* AI Chatbot */}
+      <AIChatbot />
     </div>
   )
 }

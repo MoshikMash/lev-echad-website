@@ -14,8 +14,10 @@
     "@emailjs/browser": "^4.4.1",
     "framer-motion": "^11.0.0",
     "lucide-react": "^0.400.0",
+    "openai": "^5.21.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-markdown": "^10.1.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
