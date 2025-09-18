@@ -1,4 +1,4 @@
-// Vercel Serverless Function: /api/chat
+// Vercel Serverless Function: /api/chat - Updated
 // Calls OpenAI securely using server-side secret OPENAI_API_KEY
 
 import { VercelRequest, VercelResponse } from '@vercel/node';
