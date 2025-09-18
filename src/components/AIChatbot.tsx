@@ -1,3 +1,4 @@
+// Shauli AI Chatbot Component - Fixed for production build
 import React, { useState, useRef, useEffect } from 'react';
 import pittsburghJewishKnowledgeBase from '../data/pittsburghJewishInfo';
 import { OPENAI_CONFIG, SYSTEM_PROMPT } from '../config/openai';
