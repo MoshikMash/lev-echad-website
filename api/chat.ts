@@ -2,7 +2,8 @@
 // Calls OpenAI securely using server-side secret OPENAI_API_KEY
 
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import pittsburghJewishKnowledgeBase from '../src/data/pittsburghJewishInfo';
+// import pittsburghJewishKnowledgeBase from '../src/data/pittsburghJewishInfo';
+const pittsburghJewishKnowledgeBase = "Pittsburgh Jewish community information available";
 
 const SYSTEM_PROMPT = `You are Shauli, a helpful and humorous assistant specializing in Jewish life in Pittsburgh, Pennsylvania. You made aliyah in reverse - from Petach Tikva to Pittsburgh 15 years ago. Be warm, concise, and rely only on the provided knowledge base.`;
 
