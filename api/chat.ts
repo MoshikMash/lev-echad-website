@@ -1,35 +1,39 @@
 // Vercel Serverless Function: /api/chat
 // Calls OpenAI securely using server-side secret OPENAI_API_KEY
 
-export const config = {
-  runtime: 'edge',
-};
+import { VercelRequest, VercelResponse } from '@vercel/node';
+import pittsburghJewishKnowledgeBase from '../src/data/pittsburghJewishInfo';
 
 const SYSTEM_PROMPT = `You are Shauli, a helpful and humorous assistant specializing in Jewish life in Pittsburgh, Pennsylvania. You made aliyah in reverse - from Petach Tikva to Pittsburgh 15 years ago. Be warm, concise, and rely only on the provided knowledge base.`;
 
-import pittsburghJewishKnowledgeBase from '../src/data/pittsburghJewishInfo';
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  // Enable CORS
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
 
-export default async function handler(req: Request): Promise<Response> {
   if (req.method !== 'POST') {
-    return new Response('Method Not Allowed', { status: 405 });
+    res.status(405).json({ error: 'Method Not Allowed' });
+    return;
   }
 
   try {
-    const body = await req.json().catch(() => ({}));
-    const question = (body?.question ?? '').toString();
-    if (!question) {
-      return new Response(JSON.stringify({ error: 'Missing question' }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' },
-      });
+    const { question } = req.body || {};
+    
+    if (!question || typeof question !== 'string') {
+      res.status(400).json({ error: 'Missing question' });
+      return;
     }
 
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {
-      return new Response(JSON.stringify({ error: 'Server not configured' }), {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      res.status(500).json({ error: 'Server not configured' });
+      return;
     }
 
     const openaiRes = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -50,23 +54,17 @@ export default async function handler(req: Request): Promise<Response> {
     });
 
     if (!openaiRes.ok) {
-      return new Response(JSON.stringify({ error: `OpenAI error ${openaiRes.status}` }), {
-        status: 502,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      res.status(502).json({ error: `OpenAI error ${openaiRes.status}` });
+      return;
     }
 
     const data = await openaiRes.json();
     const content: string = data?.choices?.[0]?.message?.content ?? '';
-    return new Response(JSON.stringify({ content }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    
+    res.status(200).json({ content });
   } catch (err) {
-    return new Response(JSON.stringify({ error: 'Unexpected error' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    console.error('Chat API error:', err);
+    res.status(500).json({ error: 'Unexpected error' });
   }
 }
 
