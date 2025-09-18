@@ -1,4 +1,4 @@
-// OpenAI Configuration
+// OpenAI Configuration - Updated for production deployment
 // To use this, you'll need to:
 // 1. Get an API key from https://platform.openai.com/api-keys
 // 2. Set VITE_OPENAI_API_KEY in your .env.local file
