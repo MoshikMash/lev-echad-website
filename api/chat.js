@@ -1,47 +1,38 @@
-// Vercel Serverless Function: /api/chat - Updated
-// Calls OpenAI securely using server-side secret OPENAI_API_KEY
-
-// import { VercelRequest, VercelResponse } from '@vercel/node';
-// import pittsburghJewishKnowledgeBase from '../src/data/pittsburghJewishInfo';
-const pittsburghJewishKnowledgeBase = "Pittsburgh Jewish community information available";
-
-const SYSTEM_PROMPT = `You are Shauli, a helpful and humorous assistant specializing in Jewish life in Pittsburgh, Pennsylvania. You made aliyah in reverse - from Petach Tikva to Pittsburgh 15 years ago. Be warm, concise, and rely only on the provided knowledge base.`;
-
+// Vercel Serverless Function: /api/chat - Simplified
 export default async function handler(req, res) {
   console.log('API called:', req.method, req.url);
   
-  // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   
   if (req.method === 'OPTIONS') {
     res.status(200).end();
     return;
   }
-
-  // Support GET temporarily for debugging
-  if (req.method !== 'POST' && req.method !== 'GET') {
-    res.status(405).json({ error: 'Method Not Allowed' });
-    return;
-  }
-
+  
   try {
-    const { question } = req.method === 'GET'
-      ? (req.query || {})
-      : (req.body || {});
+    console.log('Getting question...');
+    const question = req.method === 'GET' ? req.query?.question : req.body?.question;
     
-    if (!question || typeof question !== 'string') {
+    if (!question) {
+      console.log('No question provided');
       res.status(400).json({ error: 'Missing question' });
       return;
     }
-
+    
+    console.log('Question:', question);
+    console.log('Checking API key...');
+    
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {
+      console.log('No API key found');
       res.status(500).json({ error: 'Server not configured' });
       return;
     }
-
+    
+    console.log('API key exists, calling OpenAI...');
+    
     const openaiRes = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -50,28 +41,34 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         model: 'gpt-3.5-turbo',
-        max_tokens: 500,
-        temperature: 0.3,
+        max_tokens: 300,
+        temperature: 0.7,
         messages: [
-          { role: 'system', content: `${SYSTEM_PROMPT}\n\nKNOWLEDGE BASE:\n${pittsburghJewishKnowledgeBase}` },
-          { role: 'user', content: question },
+          { 
+            role: 'system', 
+            content: 'You are Shauli, a helpful assistant for Jewish life in Pittsburgh. Be warm and conversational.' 
+          },
+          { role: 'user', content: question }
         ],
       }),
     });
 
+    console.log('OpenAI response status:', openaiRes.status);
+    
     if (!openaiRes.ok) {
+      console.log('OpenAI error:', openaiRes.status);
       res.status(502).json({ error: `OpenAI error ${openaiRes.status}` });
       return;
     }
 
     const data = await openaiRes.json();
-    const content = data?.choices?.[0]?.message?.content || '';
+    console.log('OpenAI success');
+    
+    const content = data?.choices?.[0]?.message?.content || 'No response generated';
     
     res.status(200).json({ content });
   } catch (err) {
-    console.error('Chat API error:', err);
-    res.status(500).json({ error: 'Unexpected error' });
+    console.error('Function error:', err);
+    res.status(500).json({ error: 'Function crashed', details: err.message });
   }
 }
-
-
