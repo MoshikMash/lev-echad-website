@@ -36,13 +36,19 @@ const AIChatbot: React.FC = () => {
   const generateResponse = async (userQuestion: string): Promise<string> => {
     try {
       setError(null);
-      // Try OpenAI API first if API key is available
+      // In production, always use the secure backend regardless of frontend env
+      const isProd = typeof window !== 'undefined' && (window.location.hostname.endsWith('.vercel.app') || window.location.hostname.endsWith('.org') || window.location.hostname.endsWith('.com'));
+      if (isProd) {
+        return await callOpenAI(userQuestion);
+      }
+
+      // Local dev: use direct OpenAI only if key exists; otherwise fallback
       if (OPENAI_CONFIG.apiKey && OPENAI_CONFIG.apiKey !== '') {
         return await callOpenAI(userQuestion);
-      } else {
-        // Fallback to keyword-based responses if no API key
-        return await callKeywordBasedResponse(userQuestion);
       }
+
+      // Fallback to keyword-based responses if no API available
+      return await callKeywordBasedResponse(userQuestion);
     } catch (error) {
       console.error('Error generating response:', error);
       setError('Connection issue - using fallback response');
