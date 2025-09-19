@@ -36,14 +36,14 @@ const AIChatbot: React.FC = () => {
   const generateResponse = async (userQuestion: string): Promise<string> => {
     try {
       setError(null);
-      // In production, always use the secure backend regardless of frontend env
-      const isProd = typeof window !== 'undefined' && (window.location.hostname.endsWith('.vercel.app') || window.location.hostname.endsWith('.org') || window.location.hostname.endsWith('.com'));
-      if (isProd) {
-        return await callOpenAI(userQuestion);
-      }
-
-      // Local dev: use direct OpenAI only if key exists; otherwise fallback
+      // Debug logging
+      console.log('Hostname:', window.location.hostname);
+      console.log('API Key available:', !!OPENAI_CONFIG.apiKey);
+      console.log('API Key length:', OPENAI_CONFIG.apiKey?.length || 0);
+      
+      // Always try direct OpenAI if key exists (works locally and on Vercel with VITE_ env vars)
       if (OPENAI_CONFIG.apiKey && OPENAI_CONFIG.apiKey !== '') {
+        console.log('Using direct OpenAI call');
         return await callOpenAI(userQuestion);
       }
 
