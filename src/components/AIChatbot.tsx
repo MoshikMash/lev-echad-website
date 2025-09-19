@@ -64,22 +64,7 @@ const AIChatbot: React.FC = () => {
   };
 
   const callOpenAI = async (question: string): Promise<string> => {
-    // In production, use secure serverless endpoint
-    const isProd = typeof window !== 'undefined' && window.location.hostname.endsWith('.vercel.app') || window.location.hostname.endsWith('.org') || window.location.hostname.endsWith('.com');
-    if (isProd) {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question }),
-      });
-      if (!response.ok) {
-        throw new Error(`Chat API error: ${response.status}`);
-      }
-      const data = await response.json();
-      return data.content || "I'm sorry, I couldn't generate a response.";
-    }
-
-    // Local development: direct call using local .env (OK for dev only)
+    // Direct OpenAI call (works everywhere with VITE_ env vars)
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
