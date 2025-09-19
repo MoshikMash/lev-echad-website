@@ -1,9 +1,7 @@
-// Vercel Serverless Function: /api/chat - Simplified
+// Secure Vercel Serverless Function
 export default async function handler(req, res) {
-  console.log('API called:', req.method, req.url);
-  
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   
   if (req.method === 'OPTIONS') {
@@ -11,29 +9,26 @@ export default async function handler(req, res) {
     return;
   }
   
+  if (req.method !== 'POST') {
+    res.status(405).json({ error: 'Method Not Allowed' });
+    return;
+  }
+  
   try {
-    console.log('Getting question...');
-    const question = req.method === 'GET' ? req.query?.question : req.body?.question;
+    const { question } = req.body || {};
     
     if (!question) {
-      console.log('No question provided');
       res.status(400).json({ error: 'Missing question' });
       return;
     }
     
-    console.log('Question:', question);
-    console.log('Checking API key...');
-    
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {
-      console.log('No API key found');
       res.status(500).json({ error: 'Server not configured' });
       return;
     }
     
-    console.log('API key exists, calling OpenAI...');
-    
-    const openaiRes = await fetch('https://api.openai.com/v1/chat/completions', {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
@@ -41,34 +36,31 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         model: 'gpt-3.5-turbo',
-        max_tokens: 300,
-        temperature: 0.7,
+        max_tokens: 500,
+        temperature: 0.3,
         messages: [
-          { 
-            role: 'system', 
-            content: 'You are Shauli, a helpful assistant for Jewish life in Pittsburgh. Be warm and conversational.' 
+          {
+            role: 'system',
+            content: 'You are Shauli, a helpful and humorous assistant specializing in Jewish life in Pittsburgh, Pennsylvania. You made aliyah in reverse - from Petach Tikva to Pittsburgh 15 years ago. Be warm, conversational, and helpful with information about Jewish schools, synagogues, neighborhoods, kosher food, healthcare, and community life in Pittsburgh.'
           },
-          { role: 'user', content: question }
+          {
+            role: 'user',
+            content: question
+          }
         ],
       }),
     });
 
-    console.log('OpenAI response status:', openaiRes.status);
-    
-    if (!openaiRes.ok) {
-      console.log('OpenAI error:', openaiRes.status);
-      res.status(502).json({ error: `OpenAI error ${openaiRes.status}` });
+    if (!response.ok) {
+      res.status(502).json({ error: `OpenAI error ${response.status}` });
       return;
     }
 
-    const data = await openaiRes.json();
-    console.log('OpenAI success');
-    
-    const content = data?.choices?.[0]?.message?.content || 'No response generated';
+    const data = await response.json();
+    const content = data?.choices?.[0]?.message?.content || '';
     
     res.status(200).json({ content });
   } catch (err) {
-    console.error('Function error:', err);
-    res.status(500).json({ error: 'Function crashed', details: err.message });
+    res.status(500).json({ error: 'Unexpected error' });
   }
 }
