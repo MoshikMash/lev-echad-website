@@ -1466,7 +1466,7 @@ function App() {
                           <div class="bg-white rounded-lg p-6 max-w-sm mx-4">
                             <div class="text-center">
                               <h3 class="text-lg font-bold mb-4">Zelle QR Code</h3>
-                              <img src="./zell_qr.jpg" alt="Zelle QR Code" class="w-64 h-64 mx-auto mb-4 rounded-lg" />
+                              <img src="./zell_qr.jpeg" alt="Zelle QR Code" class="w-64 h-64 mx-auto mb-4 rounded-lg" />
                               <p class="text-sm text-gray-600 mb-4">Scan with your banking app</p>
                               <button onclick="this.closest('.fixed').remove()" class="bg-blue-600 text-white px-4 py-2 rounded-lg">Close</button>
                             </div>
@@ -1529,7 +1529,7 @@ function App() {
                           <div class="bg-white rounded-lg p-6 max-w-sm mx-4">
                             <div class="text-center">
                               <h3 class="text-lg font-bold mb-4">Zelle QR Code</h3>
-                              <img src="./zell_qr.jpg" alt="Zelle QR Code" class="w-64 h-64 mx-auto mb-4 rounded-lg" />
+                              <img src="./zell_qr.jpeg" alt="Zelle QR Code" class="w-64 h-64 mx-auto mb-4 rounded-lg" />
                               <p class="text-sm text-gray-600 mb-4">Scan with your banking app</p>
                               <button onclick="this.closest('.fixed').remove()" class="bg-blue-600 text-white px-4 py-2 rounded-lg">Close</button>
                             </div>
