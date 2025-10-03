@@ -1427,83 +1427,20 @@ function App() {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-8">
-            {/* Shabbat Dinner Event */}
+          <div className="flex justify-center">
+            {/* Sukkot Event */}
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
               <div className="text-center mb-6">
-                <div className="text-4xl mb-4">🕯️</div>
-                <h3 className="text-2xl font-bold mb-2">Shabbat Dinner</h3>
-                <p className="text-blue-100 text-lg">September 19, 2025</p>
-                <p className="text-blue-200 text-sm">כו אלול, פרשת ניצבים</p>
+                <div className="text-4xl mb-4">🏕️</div>
+                <h3 className="text-2xl font-bold mb-2">Sukkot</h3>
+                <p className="text-blue-100 text-lg">October 6, 2025</p>
+                <p className="text-blue-200 text-sm">יד תשרי</p>
               </div>
               
               <div className="space-y-4">
                 <div className="bg-white/20 rounded-lg p-4">
                   <h4 className="font-semibold mb-2">Event Details</h4>
-                  <p className="text-blue-100 text-sm">Join us for a warm, intimate Shabbat dinner in our community home. All are welcome to experience the joy of Shabbat together.</p>
-                </div>
-                
-                <div className="bg-white/20 rounded-lg p-4">
-                  <h4 className="font-semibold mb-2">Optional Contribution</h4>
-                  <p className="text-blue-100 text-sm mb-3">Help cover event costs with an optional $15 contribution</p>
-                  <p className="text-blue-200 text-sm mb-4 font-medium">Send money to Moshe Mash (412-626-1676) via Venmo, Zelle, or by using the buttons below.</p>
-                  
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    <a 
-                      href="https://venmo.com/code?user_id=2798159784837120312&created=1757903028" 
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors"
-                    >
-                      💙 Venmo
-                    </a>
-                    <button 
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors"
-                      onClick={() => {
-                        const modal = document.createElement('div');
-                        modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-                        modal.innerHTML = `
-                          <div class="bg-white rounded-lg p-6 max-w-sm mx-4">
-                            <div class="text-center">
-                              <h3 class="text-lg font-bold mb-4">Zelle QR Code</h3>
-                              <img src="./zell_qr.jpeg" alt="Zelle QR Code" class="w-64 h-64 mx-auto mb-4 rounded-lg" />
-                              <p class="text-sm text-gray-600 mb-4">Scan with your banking app</p>
-                              <button onclick="this.closest('.fixed').remove()" class="bg-blue-600 text-white px-4 py-2 rounded-lg">Close</button>
-                            </div>
-                          </div>
-                        `;
-                        document.body.appendChild(modal);
-                      }}
-                    >
-                      💙 Zelle QR
-                    </button>
-                  </div>
-                </div>
-                
-                <a 
-                  href="https://dinners.onetable.org/events/d3cafe58-df31-4891-b43b-93eeb2654971/details?shared=true" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full bg-white text-blue-600 hover:bg-blue-50 px-6 py-3 rounded-lg text-center font-semibold transition-colors"
-                >
-                  Join Event →
-                </a>
-              </div>
-            </div>
-
-            {/* Erev Rosh Hashana Event */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
-              <div className="text-center mb-6">
-                <div className="text-4xl mb-4">🍎</div>
-                <h3 className="text-2xl font-bold mb-2">Erev Rosh Hashana</h3>
-                <p className="text-blue-100 text-lg">September 22, 2025</p>
-                <p className="text-blue-200 text-sm">כט אלול</p>
-              </div>
-              
-              <div className="space-y-4">
-                <div className="bg-white/20 rounded-lg p-4">
-                  <h4 className="font-semibold mb-2">Event Details</h4>
-                  <p className="text-blue-100 text-sm">Welcome the Jewish New Year with our community. A special evening of reflection, celebration, and traditional Rosh Hashana foods.</p>
+                  <p className="text-blue-100 text-sm">Join us for Sukkot celebration with our community. A special evening of joy, celebration, and traditional Sukkot foods in our sukkah.</p>
                 </div>
                 
                 <div className="bg-white/20 rounded-lg p-4">
@@ -1553,8 +1490,8 @@ function App() {
                 </a>
               </div>
             </div>
-          </div>
-        </div>
+              </div>
+                </div>
       </section>
 
       {/* About Us Section */}
@@ -1565,8 +1502,8 @@ function App() {
           <div className="bg-blue-50 rounded-3xl p-10 border border-blue-200 shadow-lg">
             <div className="text-center mb-8">
               <div className="text-6xl mb-4">💙</div>
-            </div>
-            
+                </div>
+                
             <div className="space-y-6 text-lg text-blue-900 leading-relaxed">
               <p className="text-xl font-medium text-blue-800">
                 Seven years ago, we arrived in Pittsburgh with a baby in our arms, completely alone—without family, without friends, and without anyone to rely on. The beginning was hard and often frustrating. Every small task felt overwhelming, and the sense of isolation was real.
