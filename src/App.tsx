@@ -1440,7 +1440,7 @@ function App() {
               <div className="space-y-4">
                 <div className="bg-white/20 rounded-lg p-4">
                   <h4 className="font-semibold mb-2">Event Details</h4>
-                  <p className="text-blue-100 text-sm">Join us for Sukkot celebration with our community.<br />A special evening of joy, celebration, and traditional Chag Celebration in our Suka in the backyard.</p>
+                  <p className="text-blue-100 text-sm">Join us for Sukkot celebration with our community.<br />A special evening of joy, celebration, and traditional Chag Celebration in our Suka.</p>
                 </div>
                 
                 <div className="bg-white/20 rounded-lg p-4">
