@@ -1402,6 +1402,7 @@ function App() {
               </div>
               <h3 className="text-lg font-bold text-blue-900 mb-3">Postpartum Support</h3>
               <p className="text-blue-700 text-base">Home-cooked Israeli meals delivered to new mothers with no local family support.</p>
+              <p className="text-blue-700 text-base mt-2">BikurCholim of Pittsburgh, run by Nina Butler, helps many people. We can connect you to her.</p>
               <div className="mt-3 text-blue-600 text-sm font-medium flex items-center">
                 <span>Contact us for support</span>
                 <span className="ml-2">→</span>
@@ -1427,70 +1428,79 @@ function App() {
             </p>
           </div>
 
-          <div className="flex justify-center">
-            {/* Sukkot Event */}
+          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            {/* Shmini Atzeret Event */}
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
               <div className="text-center mb-6">
-                <div className="text-4xl mb-4">🏕️</div>
-                <h3 className="text-2xl font-bold mb-2">Sukkot</h3>
-                <p className="text-blue-100 text-lg">October 6, 2025</p>
-                <p className="text-blue-200 text-sm">יד תשרי</p>
+                <div className="text-4xl mb-4">🕍</div>
+                <h3 className="text-2xl font-bold mb-2">Shmini Atzeret</h3>
+                <p className="text-blue-100 text-lg">Monday Evening, October 13</p>
+                <p className="text-blue-200 text-sm">21 Tishrei</p>
               </div>
               
               <div className="space-y-4">
                 <div className="bg-white/20 rounded-lg p-4">
-                  <h4 className="font-semibold mb-2">Event Details</h4>
-                  <p className="text-blue-100 text-sm">Join us for Sukkot celebration with our community.<br />A special evening of joy, celebration, and traditional Chag Celebration in our Suka.</p>
-                </div>
-                
-                <div className="bg-white/20 rounded-lg p-4">
-                  <h4 className="font-semibold mb-2">Optional Contribution</h4>
-                  <p className="text-blue-100 text-sm mb-3">Help cover event costs with an optional $15 contribution</p>
-                  <p className="text-blue-200 text-sm mb-4 font-medium">Send money to Moshe Mash (412-626-1676) via Venmo, Zelle, or by using the buttons below.</p>
-                  
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    <a 
-                      href="https://venmo.com/code?user_id=2798159784837120312&created=1757903028" 
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors"
-                    >
-                      💙 Venmo
-                    </a>
-                    <button 
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors"
-                      onClick={() => {
-                        const modal = document.createElement('div');
-                        modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-                        modal.innerHTML = `
-                          <div class="bg-white rounded-lg p-6 max-w-sm mx-4">
-                            <div class="text-center">
-                              <h3 class="text-lg font-bold mb-4">Zelle QR Code</h3>
-                              <img src="./zell_qr.jpeg" alt="Zelle QR Code" class="w-64 h-64 mx-auto mb-4 rounded-lg" />
-                              <p class="text-sm text-gray-600 mb-4">Scan with your banking app</p>
-                              <button onclick="this.closest('.fixed').remove()" class="bg-blue-600 text-white px-4 py-2 rounded-lg">Close</button>
-                            </div>
-                          </div>
-                        `;
-                        document.body.appendChild(modal);
-                      }}
-                    >
-                      💙 Zelle QR
-                    </button>
+                  <h4 className="font-semibold mb-3">Hakafot Times</h4>
+                  <div className="space-y-2 text-blue-100">
+                    <div className="flex justify-between items-center">
+                      <span>Bnei Emunah</span>
+                      <span className="font-semibold">8:15 PM</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span>Lubavitch Center</span>
+                      <span className="font-semibold">8:45 PM</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span>Keser Torah</span>
+                      <span className="font-semibold">9:00 PM</span>
+                    </div>
                   </div>
                 </div>
-                
-                <a 
-                  href="https://forms.gle/dbEdFtQvTmFXBpSS6" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full bg-white text-blue-600 hover:bg-blue-50 px-6 py-3 rounded-lg text-center font-semibold transition-colors"
-                >
-                  Join Event →
-                </a>
               </div>
             </div>
+
+            {/* Simchat Torah Event */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+              <div className="text-center mb-6">
+                <div className="text-4xl mb-4">📖</div>
+                <h3 className="text-2xl font-bold mb-2">Simchat Torah</h3>
+                <p className="text-blue-100 text-lg">Tuesday Evening, October 14</p>
+                <p className="text-blue-200 text-sm">22 Tishrei</p>
               </div>
+              
+              <div className="space-y-4">
+                <div className="bg-white/20 rounded-lg p-4">
+                  <h4 className="font-semibold mb-3">Hakafot Times</h4>
+                  <div className="space-y-2 text-blue-100">
+                    <div className="flex justify-between items-center">
+                      <span>Lubavitch Center</span>
+                      <span className="font-semibold">12:30 PM</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span>Keser Torah</span>
+                      <span className="font-semibold">11:00 PM</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span>Beth Shalom</span>
+                      <span className="font-semibold">6:30 PM</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span>Shaare Torah</span>
+                      <span className="font-semibold">7:15 PM</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span>Chabad of Squirrel Hill</span>
+                      <span className="font-semibold">7:30 PM</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span>Poalei Tzedek</span>
+                      <span className="font-semibold">7:30 PM</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
                 </div>
       </section>
 
