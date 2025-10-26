@@ -1428,76 +1428,21 @@ function App() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-            {/* Shmini Atzeret Event */}
+          <div className="grid md:grid-cols-1 gap-6 max-w-3xl mx-auto">
+            {/* Shabbat Dinner Event */}
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
               <div className="text-center mb-6">
-                <div className="text-4xl mb-4">🕍</div>
-                <h3 className="text-2xl font-bold mb-2">Shmini Atzeret</h3>
-                <p className="text-blue-100 text-lg">Monday Evening, October 13</p>
-                <p className="text-blue-200 text-sm">21 Tishrei</p>
+                <div className="text-4xl mb-4">🍽️</div>
+                <h3 className="text-2xl font-bold mb-2">Shabbat Dinner</h3>
+                <p className="text-blue-100 text-lg">Friday Evening, October 31</p>
+                <p className="text-blue-200 text-sm">Chesvan 9, Parshat Lech Lecha</p>
+                <p className="text-blue-100 text-base mt-3 font-semibold">7:30 PM</p>
               </div>
               
-              <div className="space-y-4">
-                <div className="bg-white/20 rounded-lg p-4">
-                  <h4 className="font-semibold mb-3">Hakafot Times</h4>
-                  <div className="space-y-2 text-blue-100">
-                    <div className="flex justify-between items-center">
-                      <span>Bnei Emunah</span>
-                      <span className="font-semibold">8:15 PM</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span>Lubavitch Center</span>
-                      <span className="font-semibold">8:45 PM</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span>Keser Torah</span>
-                      <span className="font-semibold">9:00 PM</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Simchat Torah Event */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
-              <div className="text-center mb-6">
-                <div className="text-4xl mb-4">📖</div>
-                <h3 className="text-2xl font-bold mb-2">Simchat Torah</h3>
-                <p className="text-blue-100 text-lg">Tuesday Evening, October 14</p>
-                <p className="text-blue-200 text-sm">22 Tishrei</p>
-              </div>
-              
-              <div className="space-y-4">
-                <div className="bg-white/20 rounded-lg p-4">
-                  <h4 className="font-semibold mb-3">Hakafot Times</h4>
-                  <div className="space-y-2 text-blue-100">
-                    <div className="flex justify-between items-center">
-                      <span>Lubavitch Center</span>
-                      <span className="font-semibold">12:30 PM</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span>Keser Torah</span>
-                      <span className="font-semibold">11:00 PM</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span>Beth Shalom</span>
-                      <span className="font-semibold">6:30 PM</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span>Shaare Torah</span>
-                      <span className="font-semibold">7:15 PM</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span>Chabad of Squirrel Hill</span>
-                      <span className="font-semibold">7:30 PM</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span>Poalei Tzedek</span>
-                      <span className="font-semibold">7:30 PM</span>
-                    </div>
-                  </div>
-                </div>
+              <div className="mt-6">
+                <p className="text-blue-100 text-center">
+                  Join us for a warm, intimate Shabbat dinner in our home. Experience the warmth of community, delicious Israeli food, and meaningful connection.
+                </p>
               </div>
             </div>
           </div>
