@@ -1421,6 +1421,35 @@ function App() {
           <div className="absolute bottom-10 left-10 w-32 h-32 bg-white/5 rounded-full blur-xl"></div>
         </div>
         <div className="mx-auto max-w-6xl px-4 relative z-10">
+          {/* Parasha and Date Section */}
+          <div className="mb-12 max-w-2xl mx-auto">
+            <div className="bg-white/15 backdrop-blur-sm rounded-2xl p-8 border border-white/30 shadow-xl">
+              <div className="text-center">
+                <div className="text-5xl mb-4">📖</div>
+                <h3 className="text-3xl font-bold mb-4">Weekly Torah Portion</h3>
+                <div className="text-4xl font-bold mb-6 text-yellow-200" dir="rtl">
+                  חיי שרה
+                </div>
+                <div className="space-y-3">
+                  <div className="bg-white/20 rounded-lg p-4">
+                    <p className="text-blue-100 text-lg font-medium">Chayei Sarah</p>
+                  </div>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="bg-white/20 rounded-lg p-4">
+                      <p className="text-blue-200 text-sm mb-1">English Date</p>
+                      <p className="text-white text-lg font-semibold">November 22, 2024</p>
+                    </div>
+                    <div className="bg-white/20 rounded-lg p-4">
+                      <p className="text-blue-200 text-sm mb-1">Hebrew Date</p>
+                      <p className="text-white text-lg font-semibold" dir="rtl">כ״א בחשוון תשפ״ה</p>
+                      <p className="text-blue-100 text-sm mt-1">21 Cheshvan 5785</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold mb-6">Upcoming Events</h2>
             <p className="text-xl text-blue-100 mb-4 max-w-3xl mx-auto">
