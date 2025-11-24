@@ -1434,8 +1434,8 @@ function App() {
               <div className="text-center mb-6">
                 <div className="text-4xl mb-4">🍽️</div>
                 <h3 className="text-2xl font-bold mb-2">Shabbat Dinner</h3>
-                <p className="text-blue-100 text-lg">Friday Evening, November 22</p>
-                <p className="text-blue-200 text-sm">21 Cheshvan, Parshat Chayei Sarah</p>
+                <p className="text-blue-100 text-lg">Friday Evening, November 29</p>
+                <p className="text-blue-200 text-sm">28 Cheshvan, Parshat Vayeitzei</p>
                 <p className="text-blue-100 text-base mt-3 font-semibold">6:00 PM</p>
               </div>
               
@@ -1588,7 +1588,22 @@ function App() {
             <span className="text-lg font-bold">Lev Echad</span>
           </div>
           <p className="text-blue-200 mb-4">A Home Away from Home for Jewish and Israeli Pittsburghers</p>
-          <p className="text-blue-300 text-sm">© {new Date().getFullYear()} Lev Echad. All rights reserved.</p>
+          <p className="text-blue-300 text-sm mb-6">© {new Date().getFullYear()} Lev Echad. All rights reserved.</p>
+          
+          {/* Developer Credit */}
+          <div className="border-t border-blue-700 pt-6 mt-6">
+            <p className="text-blue-300 text-sm text-center">
+              Developed by{' '}
+              <a 
+                href="https://mashinnovateai.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-blue-100 hover:text-white underline transition-colors"
+              >
+                MashInnovateAI.com
+              </a>
+            </p>
+          </div>
         </div>
       </footer>
       
