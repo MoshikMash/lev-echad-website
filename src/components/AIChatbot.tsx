@@ -10,12 +10,39 @@ interface Message {
   timestamp: Date;
 }
 
-const AIChatbot: React.FC = () => {
+interface AIChatbotProps {
+  language?: 'en' | 'he';
+}
+
+const chatbotStarters = {
+  en: "Shalom! I'm Shauli. I made aliyah… in reverse 🤷‍♂️ — from Petach Tikva all the way to Pittsburgh. Fifteen years later, I know the community here like I know the price of cottage cheese back in Israel. Need to find a school, shul, kosher pizza, or just figure out how to survive a Pittsburgh winter without crying to your ima? Ask me anything—I'm here to help, with answers and maybe even a joke. 😄",
+  he: "שלום! אני שאולי. עשיתי עלייה... הפוכה 🤷‍♂️ — מפתח תקווה עד פיטסבורג. אחרי חמש עשרה שנים, אני מכיר את הקהילה כאן כמו שאני מכיר את מחיר הגבינה הלבנה בישראל. צריך למצוא בית ספר, שול, פיצה כשרה, או פשוט להבין איך לשרוד חורף בפיטסבורג בלי לבכות לאמא? תשאלו אותי כל דבר—אני כאן לעזור, עם תשובות ואולי אפילו בדיחה. 😄"
+};
+
+const chatbotTranslations = {
+  en: {
+    howCouldIHelp: "How could I help?",
+    title: "Shauli - Pittsburgh Jewish Assistant",
+    poweredBy: "Powered by Lev Echad",
+    askMeAbout: "Ask me about Jewish schools, synagogues, neighborhoods, kosher food, healthcare & more!",
+    placeholder: "Ask about schools, synagogues, neighborhoods..."
+  },
+  he: {
+    howCouldIHelp: "איך אני יכול לעזור?",
+    title: "שאולי - עוזר יהודי בפיטסבורג",
+    poweredBy: "מופעל על ידי לב אחד",
+    askMeAbout: "שאל אותי על בתי ספר יהודיים, בתי כנסת, שכונות, אוכל כשר, בריאות ועוד!",
+    placeholder: "שאל על בתי ספר, בתי כנסת, שכונות..."
+  }
+};
+
+const AIChatbot: React.FC<AIChatbotProps> = ({ language = 'en' }) => {
+
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: "Shalom! I'm Shauli. I made aliyah… in reverse 🤷‍♂️ — from Petach Tikva all the way to Pittsburgh. Fifteen years later, I know the community here like I know the price of cottage cheese back in Israel. Need to find a school, shul, kosher pizza, or just figure out how to survive a Pittsburgh winter without crying to your ima? Ask me anything—I'm here to help, with answers and maybe even a joke. 😄",
+      text: chatbotStarters[language],
       isUser: false,
       timestamp: new Date()
     }
@@ -32,6 +59,18 @@ const AIChatbot: React.FC = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  useEffect(() => {
+    // Update starter message when language changes
+    setMessages([
+      {
+        id: '1',
+        text: chatbotStarters[language],
+        isUser: false,
+        timestamp: new Date()
+      }
+    ]);
+  }, [language]);
 
   const generateResponse = async (userQuestion: string): Promise<string> => {
     try {
@@ -388,8 +427,8 @@ What would you like to know about Jewish life in Pittsburgh?`;
       <div className="fixed bottom-6 right-6 z-50">
         {/* Help text */}
         <div className="mb-3 mr-2">
-          <div className="bg-white text-gray-800 px-4 py-2 rounded-full shadow-lg border border-gray-200 text-sm font-medium">
-            How could I help?
+          <div className="bg-white text-gray-800 px-4 py-2 rounded-full shadow-lg border border-gray-200 text-sm font-medium" dir={language === 'he' ? 'rtl' : 'ltr'}>
+            {chatbotTranslations[language].howCouldIHelp}
           </div>
         </div>
         
@@ -418,7 +457,7 @@ What would you like to know about Jewish life in Pittsburgh?`;
           <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center overflow-hidden">
             <img 
               src="./shauli.png" 
-              alt="Shauli - Pittsburgh Jewish Assistant" 
+              alt={chatbotTranslations[language].title} 
               className="w-full h-full object-cover rounded-full"
               onError={(e) => {
                 // Fallback to emoji if image doesn't load
@@ -429,9 +468,9 @@ What would you like to know about Jewish life in Pittsburgh?`;
             />
           </div>
           <div>
-            <h3 className="font-semibold">Shauli - Pittsburgh Jewish Assistant</h3>
-            <p className="text-xs text-blue-100">
-              {error ? `${error} - Powered by Lev Echad` : 'Powered by Lev Echad'}
+            <h3 className="font-semibold" dir={language === 'he' ? 'rtl' : 'ltr'}>{chatbotTranslations[language].title}</h3>
+            <p className="text-xs text-blue-100" dir={language === 'he' ? 'rtl' : 'ltr'}>
+              {error ? `${error} - ${chatbotTranslations[language].poweredBy}` : chatbotTranslations[language].poweredBy}
             </p>
           </div>
         </div>
@@ -503,7 +542,7 @@ What would you like to know about Jewish life in Pittsburgh?`;
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="Ask about schools, synagogues, neighborhoods..."
+            placeholder={chatbotTranslations[language].placeholder}
             className="flex-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
             disabled={isLoading}
           />
@@ -517,8 +556,8 @@ What would you like to know about Jewish life in Pittsburgh?`;
             </svg>
           </button>
         </div>
-        <p className="text-xs text-gray-500 mt-2 text-center">
-          Ask me about Jewish schools, synagogues, neighborhoods, kosher food, healthcare & more!
+        <p className="text-xs text-gray-500 mt-2 text-center" dir={language === 'he' ? 'rtl' : 'ltr'}>
+          {chatbotTranslations[language].askMeAbout}
         </p>
       </div>
     </div>

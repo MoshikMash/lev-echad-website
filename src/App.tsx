@@ -4,6 +4,9 @@ import AIChatbot from './components/AIChatbot'
 // Updated donation section with scrollable options
 
 function App() {
+  // Language state
+  const [language, setLanguage] = useState<'en' | 'he'>('en');
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -12,6 +15,230 @@ function App() {
 
   // State for accordion sections
   const [expandedSubSections, setExpandedSubSections] = useState<{ [key: string]: boolean }>({});
+
+  // Translations
+  const t = {
+    en: {
+      // Header
+      levEchad: "Lev Echad",
+      tagline: "A Home Away from Home",
+      nav: {
+        getInformation: "Get Information",
+        programs: "Programs",
+        events: "Events",
+        interestingContent: "Interesting Content",
+        about: "About",
+        donations: "Donations",
+        contact: "Contact"
+      },
+      joinEvents: "Join Events",
+      // Hero
+      heroTitle: "A Home Away from Home for Jewish and Israeli Pittsburghers",
+      heroText1: "Founded by Shosh Mash, an Israeli mother, educator, and community builder, Lev Echad reflects the power of feeling truly welcomed.",
+      heroText2: "Through intimate Shabbat dinners, we create space for connection, emotional support, cultural identity, and lasting friendships.",
+      importantNotice: "Important Notice: Lev Echad is a community and personal-friendly organization that operates on a not-for-profit basis. All help provided is friendly and not professional. We are committed to serving our community through personal connections and support.",
+      // Sections
+      welcomeTitle: "Welcome to Pittsburgh!",
+      welcomeSubtitle: "Your friendly guide to Jewish life in Pittsburgh. Click on any topic below to explore detailed information!",
+      chooseTopic: "Choose a Topic to Explore",
+      clickCategory: "Click on any category below to see detailed, helpful information",
+      // Categories
+      jewishSchools: "Jewish Schools",
+      findSchool: "Find the perfect school for your children",
+      neighborhoods: "Neighborhoods",
+      discoverNeighborhoods: "Discover where to live and what to expect",
+      synagogues: "Synagogues (Shuls)",
+      findShul: "Find your spiritual community home",
+      kosherFood: "Kosher Food",
+      restaurants: "Restaurants, groceries, and dining options",
+      shopping: "Shopping & Malls",
+      malls: "Malls, outlets, and shopping centers",
+      healthcare: "Healthcare",
+      doctors: "Doctors, hospitals, and medical care",
+      transportation: "Transportation",
+      transit: "Public transit, parking, ride-share",
+      banking: "Banking",
+      bankingInfo: "Local branches and services",
+      immigration: "Immigration & Relocation",
+      immigrationInfo: "DMV, Social Security, required documents",
+      attractions: "Attractions & Parks",
+      attractionsInfo: "Museums, parks, family activities",
+      // Programs
+      ourPrograms: "Our Programs",
+      weeklyShabbat: "Weekly Shabbat Dinners",
+      weeklyShabbatDesc: "Intimate Friday night gatherings that provide a sense of family, belonging, and Jewish connection.",
+      weeklyShabbatLink: "Learn more about our events",
+      relocationSupport: "Relocation Support",
+      relocationDesc: "Help with housing, schools, summer camps, and navigating local systems like DMV and medical insurance.",
+      relocationLink: "Get detailed information",
+      medicalSupport: "Medical Treatment Support",
+      medicalDesc: "Temporary housing, meals, and emotional companionship for Israeli families during medical emergencies.",
+      medicalLink: "Contact us for support",
+      postpartumSupport: "Postpartum Support",
+      postpartumDesc: "Home-cooked Israeli meals delivered to new mothers with no local family support.",
+      postpartumDesc2: "BikurCholim of Pittsburgh, run by Nina Butler, helps many people. We can connect you to her.",
+      postpartumLink: "Contact us for support",
+      // Events
+      upcomingEvents: "Upcoming Events",
+      eventsSubtitle: "Join us for meaningful community gatherings and celebrations. All events are open to the community.",
+      shabbatDinner: "Shabbat Dinner",
+      fridayEvening: "Friday Evening",
+      joinUs: "Join us for a warm, intimate Shabbat dinner in our home. Experience the warmth of community, delicious Israeli food, and meaningful connection.",
+      // Interesting Content
+      interestingContent: "Interesting Content",
+      exploreContent: "Explore thought-provoking discussions and insights",
+      aboutPodcast: "About This Podcast",
+      podcastDesc: "This episode explores one of the most profound and influential essays of Rabbi Dr. Joseph B. Soloveitchik – \"The Lonely Man of Faith\" (1965).",
+      lonelyManOfFaith: "The Lonely Man of Faith",
+      podcastSubtitle: "A deep exploration of Rabbi Dr. Joseph B. Soloveitchik's profound essay (1965) about faith, meaning, and identity in the modern world.",
+      whyMatters: "Why This Matters Today:",
+      rapidTech: "Rapid technological change",
+      warsInstability: "Wars and global instability",
+      socialPolarization: "Social polarization",
+      innerSearch: "The inner search for meaning, identity, connection, and purpose",
+      podcastConclusion: "As we revisit this essay, we realize how it hasn't just remained relevant—it may have become even more meaningful today, amid the complexity of our modern reality.",
+      exploringFaith: "Exploring faith, meaning, and identity in our modern reality: rapid technological change, global instability, social polarization, and the inner search for purpose.",
+      // About
+      aboutUs: "About Us",
+      aboutText1: "Seven years ago, we arrived in Pittsburgh with a baby in our arms, completely alone—without family, without friends, and without anyone to rely on. The beginning was hard and often frustrating. Every small task felt overwhelming, and the sense of isolation was real.",
+      aboutText2: "From that struggle, however, something powerful began to take shape. We realized that no one should ever have to face those challenges on their own. Out of our experience grew a vision: to create a place where newcomers would immediately feel embraced, supported, and part of a community.",
+      ourMission: "Our struggle became our mission: to turn loneliness into belonging and isolation into community.",
+      // Donations
+      donations: "Donations",
+      donationsTitle: "Support Our Community",
+      donationsText: "If you want to help us cover the events expenses, please message me (SMS or WhatsApp):",
+      donationsContact: "Shosh: 412-626-1676",
+      // Chatbot
+      chatbotStarter: "Shalom! I'm Shauli. I made aliyah… in reverse 🤷‍♂️ — from Petach Tikva all the way to Pittsburgh. Fifteen years later, I know the community here like I know the price of cottage cheese back in Israel. Need to find a school, shul, kosher pizza, or just figure out how to survive a Pittsburgh winter without crying to your ima? Ask me anything—I'm here to help, with answers and maybe even a joke. 😄",
+      // Contact
+      getInTouch: "Get In Touch",
+      email: "Email",
+      phone: "Phone",
+      location: "Location",
+      sendMessage: "Send us a message",
+      yourName: "Your name",
+      yourEmail: "Your email",
+      yourMessage: "Your message",
+      sendButton: "Send Message",
+      sending: "Sending...",
+      messageSent: "Message Sent!",
+      thankYou: "Thank you for contacting us. We'll get back to you soon!",
+      copySent: "A copy of your message has been sent to your email.",
+      // Footer
+      allRightsReserved: "All rights reserved.",
+      developedBy: "Developed by"
+    },
+    he: {
+      // Header
+      levEchad: "לב אחד",
+      tagline: "בית רחוק מהבית",
+      nav: {
+        getInformation: "קבל מידע",
+        programs: "תוכניות",
+        events: "אירועים",
+        interestingContent: "תוכן מעניין",
+        about: "אודות",
+        donations: "תרומות",
+        contact: "צור קשר"
+      },
+      joinEvents: "הצטרף לאירועים",
+      // Hero
+      heroTitle: "בית רחוק מהבית עבור יהודים וישראלים בפיטסבורג",
+      heroText1: "נוסד על ידי שוש, אם ישראלית, מחנכת ובונה קהילה, לב אחד משקף את הכוח של להרגיש באמת רצוי.",
+      heroText2: "דרך ארוחות שבת אינטימיות, אנו יוצרים מקום לחיבור, תמיכה רגשית, זהות תרבותית וידידויות מתמשכות.",
+      importantNotice: "הודעה חשובה: לב אחד הוא ארגון קהילתי וידידותי אישית הפועל על בסיס ללא מטרות רווח. כל העזרה הניתנת היא ידידותית ולא מקצועית. אנו מחויבים לשרת את הקהילה שלנו דרך קשרים אישיים ותמיכה.",
+      // Sections
+      welcomeTitle: "ברוכים הבאים לפיטסבורג!",
+      welcomeSubtitle: "המדריך הידידותי שלכם לחיים יהודיים בפיטסבורג. לחצו על כל נושא למטה כדי לחקור מידע מפורט!",
+      chooseTopic: "בחר נושא לחקור",
+      clickCategory: "לחץ על כל קטגוריה למטה כדי לראות מידע מפורט ומועיל",
+      // Categories
+      jewishSchools: "בתי ספר יהודיים",
+      findSchool: "מצא את בית הספר המושלם לילדים שלך",
+      neighborhoods: "שכונות",
+      discoverNeighborhoods: "גלה איפה לגור ומה לצפות",
+      synagogues: "בתי כנסת (שולס)",
+      findShul: "מצא את בית הקהילה הרוחני שלך",
+      kosherFood: "אוכל כשר",
+      restaurants: "מסעדות, מכולות ואפשרויות אוכל",
+      shopping: "קניות וקניונים",
+      malls: "קניונים, אאוטלטים ומרכזי קניות",
+      healthcare: "בריאות",
+      doctors: "רופאים, בתי חולים וטיפול רפואי",
+      transportation: "תחבורה",
+      transit: "תחבורה ציבורית, חניה, נסיעות משותפות",
+      banking: "בנקאות",
+      bankingInfo: "סניפים מקומיים ושירותים",
+      immigration: "הגירה והתיישבות",
+      immigrationInfo: "משרד הרישוי, ביטוח לאומי, מסמכים נדרשים",
+      attractions: "אטרקציות ופארקים",
+      attractionsInfo: "מוזיאונים, פארקים, פעילויות משפחתיות",
+      // Programs
+      ourPrograms: "התוכניות שלנו",
+      weeklyShabbat: "ארוחות שבת שבועיות",
+      weeklyShabbatDesc: "מפגשים אינטימיים בליל שישי שמעניקים תחושת משפחה, שייכות וחיבור יהודי.",
+      weeklyShabbatLink: "למד עוד על האירועים שלנו",
+      relocationSupport: "תמיכה בהתיישבות",
+      relocationDesc: "עזרה עם דיור, בתי ספר, מחנות קיץ וניווט במערכות מקומיות כמו משרד הרישוי וביטוח רפואי.",
+      relocationLink: "קבל מידע מפורט",
+      medicalSupport: "תמיכה בטיפול רפואי",
+      medicalDesc: "דיור זמני, ארוחות וליווי רגשי למשפחות ישראליות במהלך חירומות רפואיות.",
+      medicalLink: "צור קשר לתמיכה",
+      postpartumSupport: "תמיכה לאחר לידה",
+      postpartumDesc: "ארוחות ישראליות מבושלות בית שנמסרות לאמהות חדשות ללא תמיכה משפחתית מקומית.",
+      postpartumDesc2: "ביקור חולים של פיטסבורג, בניהול נינה באטלר, עוזרת לאנשים רבים. אנחנו יכולים לחבר אותך אליה.",
+      postpartumLink: "צור קשר לתמיכה",
+      // Events
+      upcomingEvents: "אירועים קרובים",
+      eventsSubtitle: "הצטרפו אלינו למפגשי קהילה משמעותיים וחגיגות. כל האירועים פתוחים לקהילה.",
+      shabbatDinner: "ארוחת שבת",
+      fridayEvening: "ערב שישי",
+      joinUs: "הצטרפו אלינו לארוחת שבת חמה ואינטימית בבית שלנו. חוו את החום של הקהילה, אוכל ישראלי טעים וחיבור משמעותי.",
+      // Interesting Content
+      interestingContent: "תוכן מעניין",
+      exploreContent: "חקור דיונים מעוררי מחשבה ותובנות",
+      aboutPodcast: "אודות הפודקסט",
+      podcastDesc: "הפרק עוסק באחד המאמרים העמוקים והמשפיעים של הרב ד\"ר יוסף דב סולובייצ'יק – \"איש האמונה הבודד\" (1965).",
+      lonelyManOfFaith: "איש האמונה הבודד",
+      podcastSubtitle: "חקירה מעמיקה של המאמר העמוק של הרב ד\"ר יוסף דב סולובייצ'יק (1965) על אמונה, משמעות וזהות בעולם המודרני.",
+      whyMatters: "למה זה חשוב היום:",
+      rapidTech: "השינויים הטכנולוגיים המהירים",
+      warsInstability: "המלחמות והאי־יציבות",
+      socialPolarization: "הפילוג החברתי",
+      innerSearch: "ולצדם החיפוש הפנימי של כל אחד מאיתנו — משמעות, זהות, חיבור, ותחושת ייעוד",
+      podcastConclusion: "ככל שנכנסתי מחדש למאמר, הבנתי עד כמה הוא לא רק לא איבד מהרלוונטיות שלו -- אלא אולי אף הפך למשמעותי יותר דווקא היום, בתוך כל המורכבות של המציאות המודרנית.",
+      exploringFaith: "חקירת אמונה, משמעות וזהות במציאות המודרנית שלנו: שינויים טכנולוגיים מהירים, אי-יציבות גלובלית, קיטוב חברתי, והחיפוש הפנימי אחר מטרה.",
+      // About
+      aboutUs: "אודותינו",
+      aboutText1: "לפני שבע שנים, הגענו לפיטסבורג עם תינוק בזרועותינו, לגמרי לבד—בלי משפחה, בלי חברים, ובלי אף אחד לסמוך עליו. ההתחלה הייתה קשה ולעתים קרובות מתסכלת. כל משימה קטנה הרגישה מכריעה, ותחושת הבידוד הייתה אמיתית.",
+      aboutText2: "מאבק הזה, עם זאת, משהו חזק החל להתעצב. הבנו שאף אחד לא צריך להתמודד עם האתגרים האלה לבד. מהניסיון שלנו צמחה חזון: ליצור מקום שבו חדשים ירגישו מיד אהובים, נתמכים וחלק מקהילה.",
+      ourMission: "המאבק שלנו הפך למשימה שלנו: להפוך בדידות לשייכות ובידוד לקהילה.",
+      // Donations
+      donations: "תרומות",
+      donationsTitle: "תמכו בקהילה שלנו",
+      donationsText: "אם אתם רוצים לעזור לנו לכסות את הוצאות האירועים, אנא שלחו לי הודעה (SMS או WhatsApp):",
+      donationsContact: "שוש: 412-626-1676",
+      // Chatbot
+      chatbotStarter: "שלום! אני שאולי. עשיתי עלייה... הפוכה 🤷‍♂️ — מפתח תקווה עד פיטסבורג. אחרי חמש עשרה שנים, אני מכיר את הקהילה כאן כמו שאני מכיר את מחיר הגבינה הלבנה בישראל. צריך למצוא בית ספר, שול, פיצה כשרה, או פשוט להבין איך לשרוד חורף בפיטסבורג בלי לבכות לאמא? תשאלו אותי כל דבר—אני כאן לעזור, עם תשובות ואולי אפילו בדיחה. 😄",
+      // Contact
+      getInTouch: "צור קשר",
+      email: "אימייל",
+      phone: "טלפון",
+      location: "מיקום",
+      sendMessage: "שלח לנו הודעה",
+      yourName: "השם שלך",
+      yourEmail: "האימייל שלך",
+      yourMessage: "ההודעה שלך",
+      sendButton: "שלח הודעה",
+      sending: "שולח...",
+      messageSent: "הודעה נשלחה!",
+      thankYou: "תודה שפנית אלינו. נחזור אליך בקרוב!",
+      copySent: "עותק של ההודעה שלך נשלח לאימייל שלך.",
+      // Footer
+      allRightsReserved: "כל הזכויות שמורות.",
+      developedBy: "פותח על ידי"
+    }
+  };
 
   // Function to toggle sub-section expansion (only one at a time)
   const toggleSubSection = (subSectionId: string) => {
@@ -177,27 +404,36 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-slate-900">
+    <div className="min-h-screen bg-white text-slate-900" dir={language === 'he' ? 'rtl' : 'ltr'}>
       {/* Header */}
       <header className="sticky top-0 z-50 bg-white/80 border-b border-blue-200">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
           <div className="flex items-center gap-3">
             <img src="./logo.jpg" alt="Lev Echad Logo" className="h-12 w-12 rounded-full object-cover shadow-lg" />
             <div className="leading-tight">
-              <div className="text-lg font-bold text-blue-900">Lev Echad</div>
-              <div className="text-xs text-blue-600">A Home Away from Home</div>
+              <div className="text-lg font-bold text-blue-900" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].levEchad}</div>
+              <div className="text-xs text-blue-600" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].tagline}</div>
             </div>
           </div>
           <nav className="hidden items-center gap-6 md:flex">
-            <a href="#get-information" className="hover:text-blue-700 transition-colors">Get Information</a>
-            <a href="#programs" className="hover:text-blue-700 transition-colors">Programs</a>
-            <a href="#events" className="hover:text-blue-700 transition-colors">Events</a>
-            <a href="#about" className="hover:text-blue-700 transition-colors">About</a>
-            <a href="#contact" className="hover:text-blue-700 transition-colors">Contact</a>
+            <a href="#get-information" className="hover:text-blue-700 transition-colors">{t[language].nav.getInformation}</a>
+            <a href="#programs" className="hover:text-blue-700 transition-colors">{t[language].nav.programs}</a>
+            <a href="#events" className="hover:text-blue-700 transition-colors">{t[language].nav.events}</a>
+            <a href="#interesting-content" className="hover:text-blue-700 transition-colors">{t[language].nav.interestingContent}</a>
+            <a href="#about" className="hover:text-blue-700 transition-colors">{t[language].nav.about}</a>
+            <a href="#donations" className="hover:text-blue-700 transition-colors">{t[language].nav.donations}</a>
+            <a href="#contact" className="hover:text-blue-700 transition-colors">{t[language].nav.contact}</a>
           </nav>
           <div className="flex items-center gap-2">
+            <button
+              onClick={() => setLanguage(language === 'en' ? 'he' : 'en')}
+              className="rounded-lg border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-3 py-1.5 text-sm font-medium transition-colors"
+              dir={language === 'he' ? 'rtl' : 'ltr'}
+            >
+              {language === 'en' ? 'עברית' : 'ENG'}
+            </button>
             <a href="#events" className="rounded-2xl bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 inline-block text-center transition-colors">
-              Join Events
+              {t[language].joinEvents}
             </a>
           </div>
         </div>
@@ -213,18 +449,18 @@ function App() {
         </div>
         <div className="mx-auto grid max-w-6xl items-center gap-8 px-4 py-16 md:grid-cols-2 md:py-24 relative z-10">
           <div className="space-y-6">
-            <h1 className="text-4xl font-extrabold tracking-tight md:text-5xl">
-              A Home Away from Home for Jewish and Israeli Pittsburghers
+            <h1 className="text-4xl font-extrabold tracking-tight md:text-5xl" dir={language === 'he' ? 'rtl' : 'ltr'}>
+              {t[language].heroTitle}
             </h1>
-            <p className="mt-5 text-lg text-blue-100">
-              Founded by Shosh Mash, an Israeli mother, educator, and community builder, Lev Echad reflects the power of feeling truly welcomed.
+            <p className="mt-5 text-lg text-blue-100" dir={language === 'he' ? 'rtl' : 'ltr'}>
+              {t[language].heroText1}
             </p>
-            <p className="mt-4 text-lg text-blue-100">
-              Through intimate Shabbat dinners, we create space for connection, emotional support, cultural identity, and lasting friendships.
+            <p className="mt-4 text-lg text-blue-100" dir={language === 'he' ? 'rtl' : 'ltr'}>
+              {t[language].heroText2}
             </p>
             <div className="mt-6 bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-              <p className="text-sm text-white font-medium text-left">
-                <strong>Important Notice:</strong> Lev Echad is a community and personal-friendly organization that operates on a not-for-profit basis. All help provided is friendly and not professional. We are committed to serving our community through personal connections and support.
+              <p className="text-sm text-white font-medium" dir={language === 'he' ? 'rtl' : 'ltr'} style={{textAlign: language === 'he' ? 'right' : 'left'}}>
+                <strong>{language === 'en' ? 'Important Notice:' : 'הודעה חשובה:'}</strong> {t[language].importantNotice}
               </p>
             </div>
           </div>
@@ -288,17 +524,17 @@ function App() {
       <section id="get-information" className="py-16 bg-gradient-to-b from-gray-50 to-white">
         <div className="mx-auto max-w-6xl px-4">
           <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold text-gray-900 mb-6">Welcome to Pittsburgh!</h2>
-            <p className="text-2xl text-gray-700 max-w-4xl mx-auto leading-relaxed font-medium">
-              Your friendly guide to Jewish life in Pittsburgh. Click on any topic below to explore detailed information!
+            <h2 className="text-5xl font-bold text-gray-900 mb-6" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].welcomeTitle}</h2>
+            <p className="text-2xl text-gray-700 max-w-4xl mx-auto leading-relaxed font-medium" dir={language === 'he' ? 'rtl' : 'ltr'}>
+              {t[language].welcomeSubtitle}
             </p>
           </div>
 
           {/* Single Main Information Card */}
           <div className="bg-white border-2 border-blue-200 rounded-3xl p-10 shadow-2xl">
             <div className="text-center mb-8">
-              <h3 className="text-3xl font-bold text-gray-900 mb-4">Choose a Topic to Explore</h3>
-              <p className="text-lg text-gray-600">Click on any category below to see detailed, helpful information</p>
+              <h3 className="text-3xl font-bold text-gray-900 mb-4" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].chooseTopic}</h3>
+              <p className="text-lg text-gray-600" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].clickCategory}</p>
             </div>
             
             {/* Category Selection Grid */}
@@ -313,8 +549,8 @@ function App() {
               >
                 <div className="text-center">
                   <div className="text-4xl mb-3">🎓</div>
-                  <h4 className="text-xl font-bold text-gray-900 mb-2">Jewish Schools</h4>
-                  <p className="text-sm text-gray-600">Find the perfect school for your children</p>
+                  <h4 className="text-xl font-bold text-gray-900 mb-2" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].jewishSchools}</h4>
+                  <p className="text-sm text-gray-600" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].findSchool}</p>
                 </div>
               </button>
 
@@ -328,8 +564,8 @@ function App() {
               >
                 <div className="text-center">
                   <div className="text-4xl mb-3">🏘️</div>
-                  <h4 className="text-xl font-bold text-gray-900 mb-2">Neighborhoods</h4>
-                  <p className="text-sm text-gray-600">Discover where to live and what to expect</p>
+                  <h4 className="text-xl font-bold text-gray-900 mb-2" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].neighborhoods}</h4>
+                  <p className="text-sm text-gray-600" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].discoverNeighborhoods}</p>
                 </div>
               </button>
 
@@ -343,8 +579,8 @@ function App() {
               >
                 <div className="text-center">
                   <div className="text-4xl mb-3">🕍</div>
-                  <h4 className="text-xl font-bold text-gray-900 mb-2">Synagogues (Shuls)</h4>
-                  <p className="text-sm text-gray-600">Find your spiritual community home</p>
+                  <h4 className="text-xl font-bold text-gray-900 mb-2" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].synagogues}</h4>
+                  <p className="text-sm text-gray-600" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].findShul}</p>
                 </div>
               </button>
 
@@ -358,8 +594,8 @@ function App() {
               >
                 <div className="text-center">
                   <div className="text-4xl mb-3">🍽️</div>
-                  <h4 className="text-xl font-bold text-gray-900 mb-2">Kosher Food</h4>
-                  <p className="text-sm text-gray-600">Restaurants, groceries, and dining options</p>
+                  <h4 className="text-xl font-bold text-gray-900 mb-2" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].kosherFood}</h4>
+                  <p className="text-sm text-gray-600" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].restaurants}</p>
                 </div>
               </button>
 
@@ -373,8 +609,8 @@ function App() {
               >
                 <div className="text-center">
                   <div className="text-4xl mb-3">🛍️</div>
-                  <h4 className="text-xl font-bold text-gray-900 mb-2">Shopping & Malls</h4>
-                  <p className="text-sm text-gray-600">Malls, outlets, and shopping centers</p>
+                  <h4 className="text-xl font-bold text-gray-900 mb-2" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].shopping}</h4>
+                  <p className="text-sm text-gray-600" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].malls}</p>
                 </div>
               </button>
 
@@ -388,8 +624,8 @@ function App() {
               >
                 <div className="text-center">
                   <div className="text-4xl mb-3">🏥</div>
-                  <h4 className="text-xl font-bold text-gray-900 mb-2">Healthcare</h4>
-                  <p className="text-sm text-gray-600">Doctors, hospitals, and medical care</p>
+                  <h4 className="text-xl font-bold text-gray-900 mb-2" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].healthcare}</h4>
+                  <p className="text-sm text-gray-600" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].doctors}</p>
                 </div>
               </button>
 
@@ -403,8 +639,8 @@ function App() {
               >
                 <div className="text-center">
                   <div className="text-4xl mb-3">🚌</div>
-                  <h4 className="text-xl font-bold text-gray-900 mb-2">Transportation</h4>
-                  <p className="text-sm text-gray-600">Getting around Pittsburgh</p>
+                  <h4 className="text-xl font-bold text-gray-900 mb-2" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].transportation}</h4>
+                  <p className="text-sm text-gray-600" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].transit}</p>
                 </div>
               </button>
 
@@ -418,8 +654,8 @@ function App() {
               >
                 <div className="text-center">
                   <div className="text-4xl mb-3">🏦</div>
-                  <h4 className="text-xl font-bold text-gray-900 mb-2">Banking</h4>
-                  <p className="text-sm text-gray-600">Banks and financial services</p>
+                  <h4 className="text-xl font-bold text-gray-900 mb-2" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].banking}</h4>
+                  <p className="text-sm text-gray-600" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].bankingInfo}</p>
                 </div>
               </button>
 
@@ -433,8 +669,8 @@ function App() {
               >
                 <div className="text-center">
                   <div className="text-4xl mb-3">📋</div>
-                  <h4 className="text-xl font-bold text-gray-900 mb-2">Immigration & Relocation</h4>
-                  <p className="text-sm text-gray-600">Government offices and relocation help</p>
+                  <h4 className="text-xl font-bold text-gray-900 mb-2" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].immigration}</h4>
+                  <p className="text-sm text-gray-600" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].immigrationInfo}</p>
                 </div>
               </button>
             </div>
@@ -1329,7 +1565,7 @@ function App() {
       {/* Programs Section */}
       <section id="programs" className="py-12 bg-gradient-to-b from-white to-gray-50">
         <div className="mx-auto max-w-6xl px-4">
-          <h2 className="text-4xl font-bold text-center mb-12">Our Programs</h2>
+          <h2 className="text-4xl font-bold text-center mb-12" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].ourPrograms}</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             <button 
               onClick={() => {
@@ -1338,16 +1574,17 @@ function App() {
                   eventsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
               }}
-              className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-blue-200 text-left w-full cursor-pointer hover:from-blue-100 hover:to-blue-150"
+              className={`bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-blue-200 w-full cursor-pointer hover:from-blue-100 hover:to-blue-150 ${language === 'he' ? 'text-right' : 'text-left'}`}
+              dir={language === 'he' ? 'rtl' : 'ltr'}
             >
               <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-4">
                 <div className="text-white text-xl">🏠</div>
               </div>
-              <h3 className="text-lg font-bold text-blue-900 mb-3">Weekly Shabbat Dinners</h3>
-              <p className="text-blue-700 text-base">Intimate Friday night gatherings that provide a sense of family, belonging, and Jewish connection.</p>
-              <div className="mt-3 text-blue-600 text-sm font-medium flex items-center">
-                <span>Learn more about our events</span>
-                <span className="ml-2">→</span>
+              <h3 className="text-lg font-bold text-blue-900 mb-3" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].weeklyShabbat}</h3>
+              <p className="text-blue-700 text-base" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].weeklyShabbatDesc}</p>
+              <div className="mt-3 text-blue-600 text-sm font-medium flex items-center" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                <span>{t[language].weeklyShabbatLink}</span>
+                <span className={language === 'he' ? 'mr-2' : 'ml-2'}>{language === 'he' ? '←' : '→'}</span>
             </div>
             </button>
             <button 
@@ -1357,16 +1594,17 @@ function App() {
                   getInfoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
               }}
-              className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-blue-200 text-left w-full cursor-pointer hover:from-blue-100 hover:to-blue-150"
+              className={`bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-blue-200 w-full cursor-pointer hover:from-blue-100 hover:to-blue-150 ${language === 'he' ? 'text-right' : 'text-left'}`}
+              dir={language === 'he' ? 'rtl' : 'ltr'}
             >
               <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-4">
                 <div className="text-white text-xl">🚚</div>
               </div>
-              <h3 className="text-lg font-bold text-blue-900 mb-3">Relocation Support</h3>
-              <p className="text-blue-700 text-base">Help with housing, schools, summer camps, and navigating local systems like DMV and medical insurance.</p>
-              <div className="mt-3 text-blue-600 text-sm font-medium flex items-center">
-                <span>Get detailed information</span>
-                <span className="ml-2">→</span>
+              <h3 className="text-lg font-bold text-blue-900 mb-3" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].relocationSupport}</h3>
+              <p className="text-blue-700 text-base" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].relocationDesc}</p>
+              <div className="mt-3 text-blue-600 text-sm font-medium flex items-center" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                <span>{t[language].relocationLink}</span>
+                <span className={language === 'he' ? 'mr-2' : 'ml-2'}>{language === 'he' ? '←' : '→'}</span>
             </div>
             </button>
             <button 
@@ -1376,16 +1614,17 @@ function App() {
                   contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
               }}
-              className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-blue-200 text-left w-full cursor-pointer hover:from-blue-100 hover:to-blue-150"
+              className={`bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-blue-200 w-full cursor-pointer hover:from-blue-100 hover:to-blue-150 ${language === 'he' ? 'text-right' : 'text-left'}`}
+              dir={language === 'he' ? 'rtl' : 'ltr'}
             >
               <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-4">
                 <div className="text-white text-xl">🚑</div>
               </div>
-              <h3 className="text-lg font-bold text-blue-900 mb-3">Medical Treatment Support</h3>
-              <p className="text-blue-700 text-base">Temporary housing, meals, and emotional companionship for Israeli families during medical emergencies.</p>
-              <div className="mt-3 text-blue-600 text-sm font-medium flex items-center">
-                <span>Contact us for support</span>
-                <span className="ml-2">→</span>
+              <h3 className="text-lg font-bold text-blue-900 mb-3" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].medicalSupport}</h3>
+              <p className="text-blue-700 text-base" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].medicalDesc}</p>
+              <div className="mt-3 text-blue-600 text-sm font-medium flex items-center" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                <span>{t[language].medicalLink}</span>
+                <span className={language === 'he' ? 'mr-2' : 'ml-2'}>{language === 'he' ? '←' : '→'}</span>
             </div>
             </button>
             <button 
@@ -1395,17 +1634,18 @@ function App() {
                   contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
               }}
-              className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-blue-200 text-left w-full cursor-pointer hover:from-blue-100 hover:to-blue-150"
+              className={`bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-blue-200 w-full cursor-pointer hover:from-blue-100 hover:to-blue-150 ${language === 'he' ? 'text-right' : 'text-left'}`}
+              dir={language === 'he' ? 'rtl' : 'ltr'}
             >
               <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-4">
                 <div className="text-white text-xl">👶</div>
               </div>
-              <h3 className="text-lg font-bold text-blue-900 mb-3">Postpartum Support</h3>
-              <p className="text-blue-700 text-base">Home-cooked Israeli meals delivered to new mothers with no local family support.</p>
-              <p className="text-blue-700 text-base mt-2">BikurCholim of Pittsburgh, run by Nina Butler, helps many people. We can connect you to her.</p>
-              <div className="mt-3 text-blue-600 text-sm font-medium flex items-center">
-                <span>Contact us for support</span>
-                <span className="ml-2">→</span>
+              <h3 className="text-lg font-bold text-blue-900 mb-3" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].postpartumSupport}</h3>
+              <p className="text-blue-700 text-base" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].postpartumDesc}</p>
+              <p className="text-blue-700 text-base mt-2" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].postpartumDesc2}</p>
+              <div className="mt-3 text-blue-600 text-sm font-medium flex items-center" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                <span>{t[language].postpartumLink}</span>
+                <span className={language === 'he' ? 'mr-2' : 'ml-2'}>{language === 'he' ? '←' : '→'}</span>
             </div>
             </button>
           </div>
@@ -1422,9 +1662,9 @@ function App() {
         </div>
         <div className="mx-auto max-w-6xl px-4 relative z-10">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-6">Upcoming Events</h2>
-            <p className="text-xl text-blue-100 mb-4 max-w-3xl mx-auto">
-              Join us for meaningful community gatherings and celebrations. All events are open to the community.
+            <h2 className="text-4xl font-bold mb-6" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].upcomingEvents}</h2>
+            <p className="text-xl text-blue-100 mb-4 max-w-3xl mx-auto" dir={language === 'he' ? 'rtl' : 'ltr'}>
+              {t[language].eventsSubtitle}
             </p>
           </div>
 
@@ -1433,15 +1673,17 @@ function App() {
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
               <div className="text-center mb-6">
                 <div className="text-4xl mb-4">🍽️</div>
-                <h3 className="text-2xl font-bold mb-2">Shabbat Dinner</h3>
-                <p className="text-blue-100 text-lg">Friday Evening, November 29</p>
-                <p className="text-blue-200 text-sm">28 Cheshvan, Parshat Vayeitzei</p>
+                <h3 className="text-2xl font-bold mb-2" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].shabbatDinner}</h3>
+                <p className="text-blue-100 text-lg" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].fridayEvening}, November 29</p>
+                <p className="text-blue-200 text-sm" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                  {language === 'he' ? 'ח כסלו, פרשת ויצא' : '8 Kislev, Parshat Vayeitzei'}
+                </p>
                 <p className="text-blue-100 text-base mt-3 font-semibold">6:00 PM</p>
               </div>
               
               <div className="mt-6">
-                <p className="text-blue-100 text-center">
-                  Join us for a warm, intimate Shabbat dinner in our home. Experience the warmth of community, delicious Israeli food, and meaningful connection.
+                <p className="text-blue-100 text-center" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                  {t[language].joinUs}
                 </p>
               </div>
             </div>
@@ -1449,10 +1691,112 @@ function App() {
                 </div>
       </section>
 
+      {/* Interesting Content Section */}
+      <section id="interesting-content" className="py-16 bg-gradient-to-b from-white to-gray-50">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-gray-900 mb-6" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].interestingContent}</h2>
+            <p className="text-xl text-gray-700 max-w-3xl mx-auto" dir={language === 'he' ? 'rtl' : 'ltr'}>
+              {t[language].exploreContent}
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {/* Podcast - Hebrew Version */}
+            <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow">
+              <div className="text-center mb-6">
+                <div className="text-5xl mb-4">🎙️</div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-3">איש האמונה הבודד</h3>
+                <p className="text-gray-600 mb-4">The Lonely Man of Faith</p>
+                <p className="text-sm text-gray-500 mb-6">
+                  A deep exploration of Rabbi Dr. Joseph B. Soloveitchik's profound essay (1965) about faith, meaning, and identity in the modern world.
+                </p>
+              </div>
+              
+              <div className="space-y-4">
+                <div className="bg-blue-50 rounded-lg p-4 border border-blue-100">
+                  <p className="text-sm text-gray-600 mb-2">Hebrew Version</p>
+                  <a 
+                    href="https://youtu.be/3OdWWbwqceU" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-semibold transition-colors"
+                  >
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    Watch on YouTube
+                  </a>
+                </div>
+                
+                <div className="bg-green-50 rounded-lg p-4 border border-green-100">
+                  <p className="text-sm text-gray-600 mb-2">English Version</p>
+                  <a 
+                    href="https://youtu.be/3ebUlN6WyIU" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-green-600 hover:text-green-800 font-semibold transition-colors"
+                  >
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    Watch on YouTube
+                  </a>
+                </div>
+              </div>
+
+              <div className="mt-6 pt-6 border-t border-gray-200">
+                <p className="text-xs text-gray-500 text-center" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                  {t[language].exploringFaith}
+                </p>
+              </div>
+            </div>
+
+            {/* Description Card */}
+            <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-8 shadow-lg border border-blue-200">
+              <div className="space-y-4">
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-3" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].aboutPodcast}</h3>
+                  <p className="text-gray-700 leading-relaxed mb-4" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                    {t[language].podcastDesc}
+                  </p>
+                </div>
+                
+                <div className="bg-white/60 rounded-lg p-4">
+                  <p className="text-sm text-gray-700 mb-3 font-semibold" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].whyMatters}</p>
+                  <ul className="space-y-2 text-sm text-gray-600" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                    <li className="flex items-start gap-2">
+                      <span>🌍</span>
+                      <span>{t[language].rapidTech}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span>⚔️</span>
+                      <span>{t[language].warsInstability}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span>💬</span>
+                      <span>{t[language].socialPolarization}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span>🧠</span>
+                      <span>{t[language].innerSearch}</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <p className="text-sm text-gray-600 italic" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                  {t[language].podcastConclusion}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* About Us Section */}
       <section id="about" className="py-16 bg-white relative">
         <div className="mx-auto max-w-4xl px-4">
-          <h2 className="text-4xl font-bold text-center mb-12 text-gray-900">About Us – Lev Echad</h2>
+          <h2 className="text-4xl font-bold text-center mb-12 text-gray-900" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].aboutUs} – {t[language].levEchad}</h2>
           
           <div className="bg-blue-50 rounded-3xl p-10 border border-blue-200 shadow-lg">
             <div className="text-center mb-8">
@@ -1460,18 +1804,68 @@ function App() {
                 </div>
                 
             <div className="space-y-6 text-lg text-blue-900 leading-relaxed">
-              <p className="text-xl font-medium text-blue-800">
-                Seven years ago, we arrived in Pittsburgh with a baby in our arms, completely alone—without family, without friends, and without anyone to rely on. The beginning was hard and often frustrating. Every small task felt overwhelming, and the sense of isolation was real.
+              <p className="text-xl font-medium text-blue-800" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                {t[language].aboutText1}
               </p>
               
-              <p className="text-xl font-medium text-blue-800">
-                From that struggle, however, something powerful began to take shape. We realized that no one should ever have to face those challenges on their own. Out of our experience grew a vision: to create a place where newcomers would immediately feel embraced, supported, and part of a community.
+              <p className="text-xl font-medium text-blue-800" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                {t[language].aboutText2}
               </p>
               
               <div className="bg-blue-100 rounded-2xl p-8 border-l-4 border-blue-500 mt-8">
-                <p className="text-2xl font-bold text-blue-900 text-center italic">
-                  Our struggle became our mission: to turn loneliness into belonging and isolation into community.
+                <p className="text-2xl font-bold text-blue-900 text-center italic" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                  {t[language].ourMission}
                 </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Donations Section */}
+      <section id="donations" className="py-16 bg-gradient-to-br from-green-50 to-blue-50">
+        <div className="mx-auto max-w-4xl px-4">
+          <div className="bg-white rounded-3xl p-10 shadow-xl border border-green-200">
+            <div className="text-center mb-8">
+              <div className="text-6xl mb-4">💚</div>
+              <h2 className="text-4xl font-bold text-gray-900 mb-6" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                {t[language].donationsTitle}
+              </h2>
+            </div>
+            
+            <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
+              <p className="text-xl font-medium text-gray-800 text-center" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                {t[language].donationsText}
+              </p>
+              
+              <div className="bg-gradient-to-br from-green-50 to-blue-50 rounded-2xl p-8 border-2 border-green-300 mt-8">
+                <div className="text-center">
+                  <div className="flex items-center justify-center gap-4 mb-4">
+                    <div className="text-3xl">📱</div>
+                    <div className="text-3xl">💬</div>
+                  </div>
+                  <p className="text-2xl font-bold text-gray-900 mb-2" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                    {t[language].donationsContact}
+                  </p>
+                  <div className="flex justify-center gap-4 mt-4">
+                    <a 
+                      href="sms:+14126261676" 
+                      className="inline-flex items-center gap-2 px-6 py-3 bg-green-100 text-green-700 rounded-full text-lg font-semibold hover:bg-green-200 transition-colors"
+                    >
+                      <span>📱</span>
+                      <span>SMS</span>
+                    </a>
+                    <a 
+                      href="https://wa.me/14126261676" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-6 py-3 bg-green-100 text-green-700 rounded-full text-lg font-semibold hover:bg-green-200 transition-colors"
+                    >
+                      <span>💬</span>
+                      <span>WhatsApp</span>
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1482,13 +1876,13 @@ function App() {
       <section id="contact" className="py-16 bg-gradient-to-b from-gray-50 to-white relative">
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-50/20 to-transparent"></div>
         <div className="mx-auto max-w-6xl px-4 relative z-10">
-          <h2 className="text-4xl font-bold text-center mb-12">Get In Touch</h2>
+          <h2 className="text-4xl font-bold text-center mb-12" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].getInTouch}</h2>
           <div className="grid md:grid-cols-2 gap-8">
             <div className="space-y-6">
               <div className="flex items-center gap-3">
                 <div className="text-blue-600">📧</div>
                 <div>
-                  <p className="font-medium">Email</p>
+                  <p className="font-medium" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].email}</p>
                   <a href="mailto:mashshosh@gmail.com" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">
                     mashshosh@gmail.com
                   </a>
@@ -1497,7 +1891,7 @@ function App() {
               <div className="flex items-center gap-3">
                 <div className="text-blue-600">📞</div>
                 <div>
-                  <p className="font-medium">Phone</p>
+                  <p className="font-medium" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].phone}</p>
                   <a href="tel:+14126261823" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">
                     412-626-1823
                   </a>
@@ -1523,19 +1917,19 @@ function App() {
               <div className="flex items-center gap-3">
                 <div className="text-blue-600">📍</div>
                 <div>
-                  <p className="font-medium">Location</p>
+                  <p className="font-medium" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].location}</p>
                   <p className="text-gray-600">Squirrel Hill, Pittsburgh, PA</p>
                 </div>
               </div>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-lg">
-              <h3 className="text-xl font-semibold mb-4">Send us a message</h3>
+              <h3 className="text-xl font-semibold mb-4" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].sendMessage}</h3>
               {isSubmitted ? (
                 <div className="text-center py-8">
                   <div className="text-green-600 text-4xl mb-4">✓</div>
-                  <h4 className="text-lg font-semibold text-green-600 mb-2">Message Sent!</h4>
-                  <p className="text-gray-600">Thank you for contacting us. We'll get back to you soon!</p>
-                  <p className="text-gray-500 text-sm mt-2">A copy of your message has been sent to your email.</p>
+                  <h4 className="text-lg font-semibold text-green-600 mb-2" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].messageSent}</h4>
+                  <p className="text-gray-600" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].thankYou}</p>
+                  <p className="text-gray-500 text-sm mt-2" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].copySent}</p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -1544,7 +1938,7 @@ function App() {
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
-                    placeholder="Your name" 
+                    placeholder={t[language].yourName} 
                     className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
                     required
                   />
@@ -1553,7 +1947,7 @@ function App() {
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    placeholder="Your email" 
+                    placeholder={t[language].yourEmail} 
                     className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
                     required
                   />
@@ -1561,7 +1955,7 @@ function App() {
                     name="message"
                     value={formData.message}
                     onChange={handleInputChange}
-                    placeholder="Your message" 
+                    placeholder={t[language].yourMessage} 
                     rows={4} 
                     className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     required
@@ -1571,7 +1965,7 @@ function App() {
                     disabled={isLoading}
                     className="w-full bg-blue-600 text-white hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed px-4 py-2 rounded-lg font-medium transition-colors"
                   >
-                    {isLoading ? 'Sending...' : 'Send Message'}
+                    {isLoading ? t[language].sending : t[language].sendButton}
                   </button>
                 </form>
               )}
@@ -1585,15 +1979,15 @@ function App() {
         <div className="mx-auto max-w-6xl px-4 text-center">
           <div className="flex items-center justify-center gap-3 mb-4">
             <img src="./logo.jpg" alt="Lev Echad Logo" className="h-8 w-8 rounded-full object-cover shadow-lg" />
-            <span className="text-lg font-bold">Lev Echad</span>
+            <span className="text-lg font-bold" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].levEchad}</span>
           </div>
-          <p className="text-blue-200 mb-4">A Home Away from Home for Jewish and Israeli Pittsburghers</p>
-          <p className="text-blue-300 text-sm mb-6">© {new Date().getFullYear()} Lev Echad. All rights reserved.</p>
+          <p className="text-blue-200 mb-4" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].tagline}</p>
+          <p className="text-blue-300 text-sm mb-6" dir={language === 'he' ? 'rtl' : 'ltr'}>© {new Date().getFullYear()} {t[language].levEchad}. {t[language].allRightsReserved}</p>
           
           {/* Developer Credit */}
           <div className="border-t border-blue-700 pt-6 mt-6">
-            <p className="text-blue-300 text-sm text-center">
-              Developed by{' '}
+            <p className="text-blue-300 text-sm text-center" dir={language === 'he' ? 'rtl' : 'ltr'}>
+              {t[language].developedBy}{' '}
               <a 
                 href="https://mashinnovateai.com" 
                 target="_blank" 
@@ -1608,7 +2002,7 @@ function App() {
       </footer>
       
       {/* AI Chatbot */}
-      <AIChatbot />
+      <AIChatbot language={language} />
     </div>
   )
 }
