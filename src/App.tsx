@@ -107,7 +107,7 @@ function App() {
       donations: "Donations",
       donationsTitle: "Support Our Community",
       donationsText: "If you want to help us cover the events expenses, please message me (SMS or WhatsApp):",
-      donationsContact: "Shosh: 412-626-1676",
+      donationsContact: "Shosh: 412-626-1823",
       // Chatbot
       chatbotStarter: "Shalom! I'm Shauli. I made aliyah… in reverse 🤷‍♂️ — from Petach Tikva all the way to Pittsburgh. Fifteen years later, I know the community here like I know the price of cottage cheese back in Israel. Need to find a school, shul, kosher pizza, or just figure out how to survive a Pittsburgh winter without crying to your ima? Ask me anything—I'm here to help, with answers and maybe even a joke. 😄",
       // Contact
@@ -217,7 +217,7 @@ function App() {
       donations: "תרומות",
       donationsTitle: "תמכו בקהילה שלנו",
       donationsText: "אם אתם רוצים לעזור לנו לכסות את הוצאות האירועים, אנא שלחו לי הודעה (SMS או WhatsApp):",
-      donationsContact: "שוש: 412-626-1676",
+      donationsContact: "שוש: 412-626-1823",
       // Chatbot
       chatbotStarter: "שלום! אני שאולי. עשיתי עלייה... הפוכה 🤷‍♂️ — מפתח תקווה עד פיטסבורג. אחרי חמש עשרה שנים, אני מכיר את הקהילה כאן כמו שאני מכיר את מחיר הגבינה הלבנה בישראל. צריך למצוא בית ספר, שול, פיצה כשרה, או פשוט להבין איך לשרוד חורף בפיטסבורג בלי לבכות לאמא? תשאלו אותי כל דבר—אני כאן לעזור, עם תשובות ואולי אפילו בדיחה. 😄",
       // Contact
@@ -1849,14 +1849,14 @@ function App() {
                   </p>
                   <div className="flex justify-center gap-4 mt-4">
                     <a 
-                      href="sms:+14126261676" 
+                      href="sms:+14126261823" 
                       className="inline-flex items-center gap-2 px-6 py-3 bg-green-100 text-green-700 rounded-full text-lg font-semibold hover:bg-green-200 transition-colors"
                     >
                       <span>📱</span>
                       <span>SMS</span>
                     </a>
                     <a 
-                      href="https://wa.me/14126261676" 
+                      href="https://wa.me/14126261823" 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 px-6 py-3 bg-green-100 text-green-700 rounded-full text-lg font-semibold hover:bg-green-200 transition-colors"
