@@ -1678,7 +1678,7 @@ function App() {
                 <p className="text-blue-200 text-sm" dir={language === 'he' ? 'rtl' : 'ltr'}>
                   {language === 'he' ? 'ו׳ שבט, פרשת בא' : '6 Shevat, Parshat Bo'}
                 </p>
-                <p className="text-blue-100 text-base mt-3 font-semibold">6:00 PM</p>
+                <p className="text-blue-100 text-base mt-3 font-semibold">6:30 PM</p>
               </div>
               
               <div className="mt-6">
