@@ -1674,9 +1674,9 @@ function App() {
               <div className="text-center mb-6">
                 <div className="text-4xl mb-4">🍽️</div>
                 <h3 className="text-2xl font-bold mb-2" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].shabbatDinner}</h3>
-                <p className="text-blue-100 text-lg" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].fridayEvening}, November 29</p>
+                <p className="text-blue-100 text-lg" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].fridayEvening}, January 24</p>
                 <p className="text-blue-200 text-sm" dir={language === 'he' ? 'rtl' : 'ltr'}>
-                  {language === 'he' ? 'ח כסלו, פרשת ויצא' : '8 Kislev, Parshat Vayeitzei'}
+                  {language === 'he' ? 'ו׳ שבט, פרשת בא' : '6 Shevat, Parshat Bo'}
                 </p>
                 <p className="text-blue-100 text-base mt-3 font-semibold">6:00 PM</p>
               </div>
