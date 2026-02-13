@@ -84,6 +84,8 @@ function App() {
       shabbatDinner: "Shabbat Dinner",
       fridayEvening: "Friday Evening",
       joinUs: "Join us for a warm, intimate Shabbat dinner in our home. Experience the warmth of community, delicious Israeli food, and meaningful connection.",
+      shabbatMevarchimAdar: "Shabbat Mevarchim Chodesh Adar",
+      adarSimcha: "When Adar enters we increase in joy",
       // Interesting Content
       interestingContent: "Interesting Content",
       exploreContent: "Explore thought-provoking discussions and insights",
@@ -194,6 +196,8 @@ function App() {
       shabbatDinner: "ארוחת שבת",
       fridayEvening: "ערב שישי",
       joinUs: "הצטרפו אלינו לארוחת שבת חמה ואינטימית בבית שלנו. חוו את החום של הקהילה, אוכל ישראלי טעים וחיבור משמעותי.",
+      shabbatMevarchimAdar: "שבת מברכין חודש אדר",
+      adarSimcha: "משנכנס אדר מרבין בשמחה",
       // Interesting Content
       interestingContent: "תוכן מעניין",
       exploreContent: "חקור דיונים מעוררי מחשבה ותובנות",
@@ -1674,9 +1678,15 @@ function App() {
               <div className="text-center mb-6">
                 <div className="text-4xl mb-4">🍽️</div>
                 <h3 className="text-2xl font-bold mb-2" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].shabbatDinner}</h3>
-                <p className="text-blue-100 text-lg" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].fridayEvening}, January 24</p>
+                <p className="text-blue-100 text-lg" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].fridayEvening}, February 13</p>
                 <p className="text-blue-200 text-sm" dir={language === 'he' ? 'rtl' : 'ltr'}>
-                  {language === 'he' ? 'ו׳ שבט, פרשת בא' : '6 Shevat, Parshat Bo'}
+                  {language === 'he' ? 'כ״ז שבט, פרשת משפטים' : '27 Shevat, Parshat Mishpatim'}
+                </p>
+                <p className="text-blue-200 text-sm" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                  {t[language].shabbatMevarchimAdar}
+                </p>
+                <p className="text-blue-100 text-sm mt-2 font-medium" dir="rtl">
+                  משנכנס אדר מרבין בשמחה
                 </p>
                 <p className="text-blue-100 text-base mt-3 font-semibold">6:30 PM</p>
               </div>
