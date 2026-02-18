@@ -89,17 +89,17 @@ function App() {
       // Interesting Content
       interestingContent: "Interesting Content",
       exploreContent: "Explore thought-provoking discussions and insights",
-      aboutPodcast: "About This Podcast",
-      podcastDesc: "This episode explores one of the most profound and influential essays of Rabbi Dr. Joseph B. Soloveitchik – \"The Lonely Man of Faith\" (1965).",
-      lonelyManOfFaith: "The Lonely Man of Faith",
-      podcastSubtitle: "A deep exploration of Rabbi Dr. Joseph B. Soloveitchik's profound essay (1965) about faith, meaning, and identity in the modern world.",
-      whyMatters: "Why This Matters Today:",
-      rapidTech: "Rapid technological change",
-      warsInstability: "Wars and global instability",
-      socialPolarization: "Social polarization",
-      innerSearch: "The inner search for meaning, identity, connection, and purpose",
-      podcastConclusion: "As we revisit this essay, we realize how it hasn't just remained relevant—it may have become even more meaningful today, amid the complexity of our modern reality.",
-      exploringFaith: "Exploring faith, meaning, and identity in our modern reality: rapid technological change, global instability, social polarization, and the inner search for purpose.",
+      aboutPodcast: "About This Series",
+      podcastDesc: "A Purim animation story series based on the Purim story according to Chazal and Midrashim. The series has 7 episodes, around 5 minutes each, and is highly recommended for kids and adults.",
+      lonelyManOfFaith: "Purim Animation Story",
+      podcastSubtitle: "A fascinating 7-episode animated journey through the Purim story, based on Chazal and Midrashim.",
+      whyMatters: "Why You'll Love It:",
+      rapidTech: "Based on Chazal and Midrashim",
+      warsInstability: "7 short episodes (about 5 minutes each)",
+      socialPolarization: "Engaging and easy to follow",
+      innerSearch: "Great for kids and adults alike",
+      podcastConclusion: "Start with Episode 1 and enjoy this meaningful and exciting Purim series.",
+      exploringFaith: "7 episodes, about 5 minutes each, based on the Purim story according to Chazal and Midrashim.",
       // About
       aboutUs: "About Us",
       aboutText1: "Seven years ago, we arrived in Pittsburgh with a baby in our arms, completely alone—without family, without friends, and without anyone to rely on. The beginning was hard and often frustrating. Every small task felt overwhelming, and the sense of isolation was real.",
@@ -201,17 +201,17 @@ function App() {
       // Interesting Content
       interestingContent: "תוכן מעניין",
       exploreContent: "חקור דיונים מעוררי מחשבה ותובנות",
-      aboutPodcast: "אודות הפודקסט",
-      podcastDesc: "הפרק עוסק באחד המאמרים העמוקים והמשפיעים של הרב ד\"ר יוסף דב סולובייצ'יק – \"איש האמונה הבודד\" (1965).",
-      lonelyManOfFaith: "איש האמונה הבודד",
-      podcastSubtitle: "חקירה מעמיקה של המאמר העמוק של הרב ד\"ר יוסף דב סולובייצ'יק (1965) על אמונה, משמעות וזהות בעולם המודרני.",
-      whyMatters: "למה זה חשוב היום:",
-      rapidTech: "השינויים הטכנולוגיים המהירים",
-      warsInstability: "המלחמות והאי־יציבות",
-      socialPolarization: "הפילוג החברתי",
-      innerSearch: "ולצדם החיפוש הפנימי של כל אחד מאיתנו — משמעות, זהות, חיבור, ותחושת ייעוד",
-      podcastConclusion: "ככל שנכנסתי מחדש למאמר, הבנתי עד כמה הוא לא רק לא איבד מהרלוונטיות שלו -- אלא אולי אף הפך למשמעותי יותר דווקא היום, בתוך כל המורכבות של המציאות המודרנית.",
-      exploringFaith: "חקירת אמונה, משמעות וזהות במציאות המודרנית שלנו: שינויים טכנולוגיים מהירים, אי-יציבות גלובלית, קיטוב חברתי, והחיפוש הפנימי אחר מטרה.",
+      aboutPodcast: "אודות הסדרה",
+      podcastDesc: "סדרת אנימציה על סיפור פורים המבוססת על סיפור המגילה לפי חז\"ל ועל מדרשים. הסדרה כוללת 7 פרקים, כ-5 דקות לכל פרק, ומומלצת מאוד לילדים ולמבוגרים.",
+      lonelyManOfFaith: "סדרת אנימציה לפורים",
+      podcastSubtitle: "מסע אנימציה מרתק בן 7 פרקים על סיפור פורים, לפי חז\"ל ועל בסיס מדרשים.",
+      whyMatters: "למה כדאי לצפות:",
+      rapidTech: "מבוסס על חז\"ל ועל מדרשים",
+      warsInstability: "7 פרקים קצרים (כ-5 דקות לפרק)",
+      socialPolarization: "מעניין, נגיש וקל להבנה",
+      innerSearch: "מתאים לילדים ולמבוגרים כאחד",
+      podcastConclusion: "התחילו מפרק 1 ותיהנו מסדרה משמעותית ומרתקת לקראת פורים.",
+      exploringFaith: "7 פרקים, כ-5 דקות כל אחד, המבוססים על סיפור פורים לפי חז\"ל ועל מדרשים.",
       // About
       aboutUs: "אודותינו",
       aboutText1: "לפני שבע שנים, הגענו לפיטסבורג עם תינוק בזרועותינו, לגמרי לבד—בלי משפחה, בלי חברים, ובלי אף אחד לסמוך עליו. ההתחלה הייתה קשה ולעתים קרובות מתסכלת. כל משימה קטנה הרגישה מכריעה, ותחושת הבידוד הייתה אמיתית.",
@@ -1712,22 +1712,24 @@ function App() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {/* Podcast - Hebrew Version */}
+            {/* Featured Purim Series */}
             <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200 hover:shadow-xl transition-shadow">
               <div className="text-center mb-6">
-                <div className="text-5xl mb-4">🎙️</div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-3">איש האמונה הבודד</h3>
-                <p className="text-gray-600 mb-4">The Lonely Man of Faith</p>
+                <div className="text-5xl mb-4">🎬</div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-3" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].lonelyManOfFaith}</h3>
+                <p className="text-gray-600 mb-4" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].podcastSubtitle}</p>
                 <p className="text-sm text-gray-500 mb-6">
-                  A deep exploration of Rabbi Dr. Joseph B. Soloveitchik's profound essay (1965) about faith, meaning, and identity in the modern world.
+                  {language === 'he' ? 'פרק 1 זמין לצפייה עכשיו ביוטיוב' : 'Episode 1 is now available on YouTube'}
                 </p>
               </div>
               
               <div className="space-y-4">
-                <div className="bg-blue-50 rounded-lg p-4 border border-blue-100">
-                  <p className="text-sm text-gray-600 mb-2">Hebrew Version</p>
+                <div className="bg-blue-50 rounded-lg p-4 border border-blue-100 text-center">
+                  <p className="text-sm text-gray-600 mb-2" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                    {language === 'he' ? 'פרק 1' : 'Episode 1'}
+                  </p>
                   <a 
-                    href="https://youtu.be/3OdWWbwqceU" 
+                    href="https://youtu.be/KjqwEu3e5cM" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-semibold transition-colors"
@@ -1735,22 +1737,7 @@ function App() {
                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                     </svg>
-                    Watch on YouTube
-                  </a>
-                </div>
-                
-                <div className="bg-green-50 rounded-lg p-4 border border-green-100">
-                  <p className="text-sm text-gray-600 mb-2">English Version</p>
-                  <a 
-                    href="https://youtu.be/3ebUlN6WyIU" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-green-600 hover:text-green-800 font-semibold transition-colors"
-                  >
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                    </svg>
-                    Watch on YouTube
+                    {language === 'he' ? 'צפו ביוטיוב' : 'Watch on YouTube'}
                   </a>
                 </div>
               </div>
