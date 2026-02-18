@@ -90,9 +90,10 @@ function App() {
       interestingContent: "Interesting Content",
       exploreContent: "Explore thought-provoking discussions and insights",
       aboutPodcast: "About This Series",
-      podcastDesc: "A Purim animation story series based on the Purim story according to Chazal and Midrashim. The series has 7 episodes, around 5 minutes each, and is highly recommended for kids and adults.",
+      podcastDesc: "A Purim animation story series created by Shosh Mash (Lev Echad PGH founder), based on the Purim story according to Chazal and Midrashim. The series has 7 episodes, around 5 minutes each, and is highly recommended for kids and adults.",
       lonelyManOfFaith: "Purim Animation Story",
       podcastSubtitle: "A fascinating 7-episode animated journey through the Purim story, based on Chazal and Midrashim.",
+      createdByLine: "Created by Shosh Mash (Lev Echad PGH founder)",
       whyMatters: "Why You'll Love It:",
       rapidTech: "Based on Chazal and Midrashim",
       warsInstability: "7 short episodes (about 5 minutes each)",
@@ -202,9 +203,10 @@ function App() {
       interestingContent: "תוכן מעניין",
       exploreContent: "חקור דיונים מעוררי מחשבה ותובנות",
       aboutPodcast: "אודות הסדרה",
-      podcastDesc: "סדרת אנימציה על סיפור פורים המבוססת על סיפור המגילה לפי חז\"ל ועל מדרשים. הסדרה כוללת 7 פרקים, כ-5 דקות לכל פרק, ומומלצת מאוד לילדים ולמבוגרים.",
+      podcastDesc: "סדרת אנימציה על סיפור פורים שנוצרה על ידי שוש מש (מייסדת Lev Echad PGH), המבוססת על סיפור המגילה לפי חז\"ל ועל מדרשים. הסדרה כוללת 7 פרקים, כ-5 דקות לכל פרק, ומומלצת מאוד לילדים ולמבוגרים.",
       lonelyManOfFaith: "סדרת אנימציה לפורים",
       podcastSubtitle: "מסע אנימציה מרתק בן 7 פרקים על סיפור פורים, לפי חז\"ל ועל בסיס מדרשים.",
+      createdByLine: "נוצר על ידי שוש מש (מייסדת Lev Echad PGH)",
       whyMatters: "למה כדאי לצפות:",
       rapidTech: "מבוסס על חז\"ל ועל מדרשים",
       warsInstability: "7 פרקים קצרים (כ-5 דקות לפרק)",
@@ -243,6 +245,17 @@ function App() {
       developedBy: "פותח על ידי"
     }
   };
+
+  // Function to toggle sub-section expansion (only one at a time)
+  const purimEpisodes = [
+    { number: 1, youtubeId: 'KjqwEu3e5cM' },
+    { number: 2, youtubeId: '7UVDuWTK2Hw' },
+    { number: 3, youtubeId: '5m1IwCoy_MQ' },
+    { number: 4, youtubeId: 'ly4u5_bw5k8' },
+    { number: 5, youtubeId: 'uCdUvKViEdI' },
+    { number: 6, youtubeId: 'AQzOwJa9ROk' },
+    { number: 7, youtubeId: 'WFkRdn6h-IU' }
+  ];
 
   // Function to toggle sub-section expansion (only one at a time)
   const toggleSubSection = (subSectionId: string) => {
@@ -1718,28 +1731,39 @@ function App() {
                 <div className="text-5xl mb-4">🎬</div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-3" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].lonelyManOfFaith}</h3>
                 <p className="text-gray-600 mb-4" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].podcastSubtitle}</p>
-                <p className="text-sm text-gray-500 mb-6">
-                  {language === 'he' ? 'פרק 1 זמין לצפייה עכשיו ביוטיוב' : 'Episode 1 is now available on YouTube'}
+                <p className="text-sm text-gray-500 mb-2" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                  {t[language].createdByLine}
+                </p>
+                <p className="text-sm text-gray-500 mb-6" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                  {language === 'he' ? 'כל 7 הפרקים זמינים לצפייה ביוטיוב' : 'All 7 episodes are available on YouTube'}
                 </p>
               </div>
               
-              <div className="space-y-4">
-                <div className="bg-blue-50 rounded-lg p-4 border border-blue-100 text-center">
-                  <p className="text-sm text-gray-600 mb-2" dir={language === 'he' ? 'rtl' : 'ltr'}>
-                    {language === 'he' ? 'פרק 1' : 'Episode 1'}
-                  </p>
-                  <a 
-                    href="https://youtu.be/KjqwEu3e5cM" 
-                    target="_blank" 
+              <div className="grid sm:grid-cols-2 gap-4">
+                {purimEpisodes.map((episode) => (
+                  <a
+                    key={episode.number}
+                    href={`https://youtu.be/${episode.youtubeId}`}
+                    target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-semibold transition-colors"
+                    className="bg-blue-50 rounded-lg p-3 border border-blue-100 hover:border-blue-300 hover:shadow-md transition-all block"
                   >
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                    </svg>
-                    {language === 'he' ? 'צפו ביוטיוב' : 'Watch on YouTube'}
+                    <img
+                      src={`https://img.youtube.com/vi/${episode.youtubeId}/hqdefault.jpg`}
+                      alt={language === 'he' ? `תמונה ממוזערת לפרק ${episode.number}` : `Episode ${episode.number} thumbnail`}
+                      className="w-full h-28 object-cover rounded-md mb-3"
+                      loading="lazy"
+                    />
+                    <div className="flex items-center justify-between">
+                      <p className="text-sm text-gray-700 font-semibold" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                        {language === 'he' ? `פרק ${episode.number}` : `Episode ${episode.number}`}
+                      </p>
+                      <span className="text-sm text-blue-600 font-semibold">
+                        {language === 'he' ? 'צפו' : 'Watch'}
+                      </span>
+                    </div>
                   </a>
-                </div>
+                ))}
               </div>
 
               <div className="mt-6 pt-6 border-t border-gray-200">
