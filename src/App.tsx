@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import emailjs from '@emailjs/browser'
 import AIChatbot from './components/AIChatbot'
+import { useShabbatInfo } from './hooks/useShabbatInfo'
 // Updated donation section with scrollable options
 
 function App() {
@@ -15,6 +16,8 @@ function App() {
 
   // State for accordion sections
   const [expandedSubSections, setExpandedSubSections] = useState<{ [key: string]: boolean }>({});
+
+  const shabbat = useShabbatInfo();
 
   // Translations
   const t = {
@@ -1691,16 +1694,30 @@ function App() {
               <div className="text-center mb-6">
                 <div className="text-4xl mb-4">🍽️</div>
                 <h3 className="text-2xl font-bold mb-2" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].shabbatDinner}</h3>
-                <p className="text-blue-100 text-lg" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].fridayEvening}, February 13</p>
-                <p className="text-blue-200 text-sm" dir={language === 'he' ? 'rtl' : 'ltr'}>
-                  {language === 'he' ? 'כ״ז שבט, פרשת משפטים' : '27 Shevat, Parshat Mishpatim'}
-                </p>
-                <p className="text-blue-200 text-sm" dir={language === 'he' ? 'rtl' : 'ltr'}>
-                  {t[language].shabbatMevarchimAdar}
-                </p>
-                <p className="text-blue-100 text-sm mt-2 font-medium" dir="rtl">
-                  משנכנס אדר מרבין בשמחה
-                </p>
+                {shabbat.loading ? (
+                  <p className="text-blue-100 text-lg animate-pulse">...</p>
+                ) : (
+                  <>
+                    <p className="text-blue-100 text-lg" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                      {t[language].fridayEvening}, {shabbat.gregorianDate}
+                    </p>
+                    {shabbat.hebrewDate && (
+                      <p className="text-blue-200 text-sm" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                        {language === 'he' ? shabbat.hebrewDateHe : shabbat.hebrewDate}
+                      </p>
+                    )}
+                    {shabbat.parasha && (
+                      <p className="text-blue-200 text-sm font-medium" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                        {language === 'he' ? shabbat.parashaHe : shabbat.parasha}
+                      </p>
+                    )}
+                    {shabbat.candleLighting && (
+                      <p className="text-blue-100 text-xs mt-1" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                        {language === 'he' ? `הדלקת נרות: ${shabbat.candleLighting}` : `Candle lighting: ${shabbat.candleLighting}`}
+                      </p>
+                    )}
+                  </>
+                )}
                 <p className="text-blue-100 text-base mt-3 font-semibold">6:30 PM</p>
               </div>
               
