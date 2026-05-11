@@ -45,8 +45,7 @@ const txt = {
     skip: 'Maybe later',
     finish: "I'm done",
     successTitle: "You're signed up!",
-    successText:
-      "Thank you — we'll see you soon. A confirmation will be sent to your email.",
+    successText: "Thank you — we'll see you soon!",
     close: 'Close',
     errorTitle: 'Something went wrong',
     errorText:
@@ -72,7 +71,7 @@ const txt = {
     skip: 'אולי בפעם אחרת',
     finish: 'סיימתי',
     successTitle: 'נרשמת בהצלחה!',
-    successText: 'תודה — נתראה בקרוב. אישור יישלח לאימייל שלך.',
+    successText: 'תודה — נתראה בקרוב!',
     close: 'סגור',
     errorTitle: 'משהו השתבש',
     errorText:
