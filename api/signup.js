@@ -1,54 +1,148 @@
 // Vercel serverless function — receives sign-ups, writes to Neon Postgres,
-// sends email + WhatsApp notifications.
+// sends email + WhatsApp notifications to the organizer, and a confirmation
+// email to the signing-up user.
 //
 // Required env (auto-set by the Neon Vercel integration):
 //   DATABASE_URL
 //
 // Optional env (set in Vercel dashboard if you want notifications):
-//   NOTIFY_EMAIL_ENDPOINT   — Formspree endpoint, e.g. https://formspree.io/f/mnjwlryl
-//   NOTIFY_EMAIL_TO         — destination email shown in subject/body
-//   WHATSAPP_PHONE          — recipient WhatsApp number with country code, e.g. +14126261823
+//   NOTIFY_EMAIL_ENDPOINT   — Formspree endpoint for organizer notifications,
+//                             e.g. https://formspree.io/f/mnjwlryl
+//   WHATSAPP_PHONE          — recipient WhatsApp number with country code,
+//                             e.g. +14126261823
 //   WHATSAPP_APIKEY         — CallMeBot APIKEY (obtained by messaging their bot)
-//   SIGNUP_SECRET           — if set, requests must include this same value in `secret` field
+//   EMAILJS_SERVICE_ID      — defaults to 'service_l47oh6c' (the contact form one)
+//   EMAILJS_TEMPLATE_ID     — defaults to 'template_3a68j0o' (the contact form one)
+//   EMAILJS_USER_ID         — defaults to '9uN_4d08ybrG6_IhR'  (the contact form one)
+//   EMAILJS_ACCESS_TOKEN    — needed if EmailJS strict mode is on (private key)
+//   SIGNUP_SECRET           — if set, requests must include this same value
+//                             in `secret` field
 
 import { neon } from '@neondatabase/serverless';
 
 const sql = process.env.DATABASE_URL ? neon(process.env.DATABASE_URL) : null;
 
-// Create the signups table on first call. Idempotent.
-let ensured = false;
-async function ensureTable() {
-  if (ensured || !sql) return;
+const VENUE_ADDRESS = '5870 Phillips Ave, Pittsburgh, PA 15217';
+const DEFAULT_TIME = '6:30 PM';
+
+// EmailJS defaults reuse the same account/template the existing contact form
+// already uses. Override via env vars if you create a dedicated signup template.
+const EMAILJS_SERVICE_ID  = process.env.EMAILJS_SERVICE_ID  || 'service_l47oh6c';
+const EMAILJS_TEMPLATE_ID = process.env.EMAILJS_TEMPLATE_ID || 'template_3a68j0o';
+const EMAILJS_USER_ID     = process.env.EMAILJS_USER_ID     || '9uN_4d08ybrG6_IhR';
+const EMAILJS_ACCESS_TOKEN = process.env.EMAILJS_ACCESS_TOKEN;
+
+let schemaReady = false;
+
+async function ensureSchema() {
+  if (schemaReady || !sql) return;
+  // Base table — created on first ever run.
   await sql`
     CREATE TABLE IF NOT EXISTS signups (
-      id          SERIAL PRIMARY KEY,
+      id           SERIAL PRIMARY KEY,
       submitted_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-      event_name  TEXT NOT NULL,
-      event_date  TEXT,
-      name        TEXT NOT NULL,
-      email       TEXT NOT NULL,
-      phone       TEXT NOT NULL,
-      guests      INTEGER NOT NULL DEFAULT 1,
-      notes       TEXT
+      event_name   TEXT NOT NULL,
+      event_date   TEXT,
+      name         TEXT NOT NULL,
+      email        TEXT NOT NULL,
+      phone        TEXT NOT NULL,
+      guests       INTEGER NOT NULL DEFAULT 1,
+      notes        TEXT
     )
   `;
-  ensured = true;
+  // Additive columns — idempotent. Existing rows get NULL defaults.
+  await sql`ALTER TABLE signups ADD COLUMN IF NOT EXISTS language        TEXT`;
+  await sql`ALTER TABLE signups ADD COLUMN IF NOT EXISTS referrer        TEXT`;
+  await sql`ALTER TABLE signups ADD COLUMN IF NOT EXISTS user_agent      TEXT`;
+  await sql`ALTER TABLE signups ADD COLUMN IF NOT EXISTS status          TEXT DEFAULT 'pending'`;
+  await sql`ALTER TABLE signups ADD COLUMN IF NOT EXISTS attended        BOOLEAN DEFAULT FALSE`;
+  await sql`ALTER TABLE signups ADD COLUMN IF NOT EXISTS donation_amount NUMERIC(10,2)`;
+  await sql`ALTER TABLE signups ADD COLUMN IF NOT EXISTS donation_method TEXT`;
+  schemaReady = true;
 }
 
-function buildSummary({ eventName, eventDate, name, email, phone, guests, notes }) {
+function clipText(value, max) {
+  if (value == null) return '';
+  const s = String(value);
+  return s.length > max ? s.slice(0, max) : s;
+}
+
+// Best-effort parse of an event date string into a Date at 6:30 PM ET.
+// Accepts forms like "May 15", "May 15, 2026", "2026-05-15".
+// Returns null if it can't get a sensible date.
+function parseEventStart(eventDate) {
+  if (!eventDate) return null;
+  const year = new Date().getFullYear();
+  // Try as-is first; if no year, append the current one.
+  let d = new Date(eventDate);
+  if (isNaN(d.getTime())) d = new Date(`${eventDate}, ${year}`);
+  if (isNaN(d.getTime())) return null;
+  // Pin to 18:30 local time.
+  d.setHours(18, 30, 0, 0);
+  return d;
+}
+
+// Format a Date as YYYYMMDDTHHMMSSZ (Google/iCal compact UTC form).
+function toCalendarStamp(d) {
+  return d.toISOString().replace(/[-:]|\.\d{3}/g, '');
+}
+
+function buildCalendarLink({ eventName, eventDate }) {
+  const start = parseEventStart(eventDate);
+  const params = new URLSearchParams({
+    action: 'TEMPLATE',
+    text: `${eventName} — Lev Echad`,
+    location: VENUE_ADDRESS,
+    details: `Lev Echad community event. ${VENUE_ADDRESS}. Time: ${DEFAULT_TIME}.`,
+  });
+  if (start) {
+    const end = new Date(start.getTime() + 3 * 60 * 60 * 1000);
+    params.set('dates', `${toCalendarStamp(start)}/${toCalendarStamp(end)}`);
+  }
+  return `https://calendar.google.com/calendar/render?${params.toString()}`;
+}
+
+function buildSummaryText(payload) {
   return [
     'New Lev Echad sign-up:',
     '',
-    `Event: ${eventName}${eventDate ? ` (${eventDate})` : ''}`,
-    `Name: ${name}`,
-    `Email: ${email}`,
-    `Phone: ${phone}`,
-    `Guests: ${guests}`,
-    `Notes: ${notes || '(none)'}`,
+    `Event: ${payload.eventName}${payload.eventDate ? ` (${payload.eventDate})` : ''}`,
+    `Name: ${payload.name}`,
+    `Email: ${payload.email}`,
+    `Phone: ${payload.phone}`,
+    `Guests: ${payload.guests}`,
+    `Notes: ${payload.notes || '(none)'}`,
+    `Language: ${payload.language || 'unknown'}`,
   ].join('\n');
 }
 
-async function notifyEmail(payload) {
+function buildUserConfirmationText(payload) {
+  const dateLine = payload.eventDate
+    ? `Date: ${payload.eventDate}`
+    : `Date: as scheduled`;
+  return [
+    `Hi ${payload.name},`,
+    '',
+    `You're signed up for ${payload.eventName} at Lev Echad. Looking forward to seeing you!`,
+    '',
+    `Event details:`,
+    `  ${dateLine}`,
+    `  Time: ${DEFAULT_TIME}`,
+    `  Address: ${VENUE_ADDRESS}`,
+    `  Guests in your party: ${payload.guests}`,
+    payload.notes ? `  Your notes: ${payload.notes}` : '',
+    '',
+    `Add to your calendar (one click): ${payload.calendarLink}`,
+    '',
+    `Need to change anything? Just reply to this email or text Shosh at 412-626-1823.`,
+    '',
+    `Warmly,`,
+    `Shosh & the Lev Echad team`,
+    `https://www.levechadpgh.org`,
+  ].filter(Boolean).join('\n');
+}
+
+async function notifyOrganizerEmail(payload) {
   const url = process.env.NOTIFY_EMAIL_ENDPOINT;
   if (!url) return;
   try {
@@ -58,15 +152,15 @@ async function notifyEmail(payload) {
       body: JSON.stringify({
         _subject: `🍽️ Lev Echad sign-up: ${payload.name} (${payload.eventName})`,
         ...payload,
-        summary: buildSummary(payload),
+        summary: buildSummaryText(payload),
       }),
     });
   } catch (err) {
-    console.error('Email notify failed:', err);
+    console.error('Organizer email failed:', err);
   }
 }
 
-async function notifyWhatsApp(payload) {
+async function notifyOrganizerWhatsApp(payload) {
   const phone = process.env.WHATSAPP_PHONE;
   const apikey = process.env.WHATSAPP_APIKEY;
   if (!phone || !apikey) return;
@@ -74,11 +168,52 @@ async function notifyWhatsApp(payload) {
     const url =
       'https://api.callmebot.com/whatsapp.php' +
       `?phone=${encodeURIComponent(phone)}` +
-      `&text=${encodeURIComponent(buildSummary(payload))}` +
+      `&text=${encodeURIComponent(buildSummaryText(payload))}` +
       `&apikey=${encodeURIComponent(apikey)}`;
     await fetch(url);
   } catch (err) {
-    console.error('WhatsApp notify failed:', err);
+    console.error('WhatsApp failed:', err);
+  }
+}
+
+async function sendUserConfirmation(payload) {
+  // Don't try if we have no recipient.
+  if (!payload.email) return;
+  const message = buildUserConfirmationText(payload);
+  const subject = `You're signed up — ${payload.eventName} at Lev Echad`;
+
+  try {
+    const body = {
+      service_id: EMAILJS_SERVICE_ID,
+      template_id: EMAILJS_TEMPLATE_ID,
+      user_id: EMAILJS_USER_ID,
+      template_params: {
+        // The existing contact-form template accepts these names; we reuse them
+        // so the user gets *something* even without a dedicated signup template.
+        // Create a dedicated EmailJS template later for nicer formatting.
+        to_name: payload.name,
+        to_email: payload.email,
+        from_name: 'Lev Echad',
+        subject,
+        message,
+        reply_to: 'mashshosh@gmail.com',
+        user_name: payload.name,
+        user_email: payload.email,
+        user_message: message,
+      },
+    };
+    if (EMAILJS_ACCESS_TOKEN) body.accessToken = EMAILJS_ACCESS_TOKEN;
+
+    const res = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) {
+      console.error('User confirmation failed:', res.status, await res.text().catch(() => ''));
+    }
+  } catch (err) {
+    console.error('User confirmation failed:', err);
   }
 }
 
@@ -109,10 +244,10 @@ export default async function handler(req, res) {
       phone = '',
       guests = 1,
       notes = '',
+      language = '',
       secret = '',
     } = req.body || {};
 
-    // Optional anti-spam check — only enforced if SIGNUP_SECRET is set.
     if (process.env.SIGNUP_SECRET && secret !== process.env.SIGNUP_SECRET) {
       res.status(403).json({ error: 'Forbidden' });
       return;
@@ -123,27 +258,42 @@ export default async function handler(req, res) {
       return;
     }
 
-    await ensureTable();
-
-    const guestCount = Math.max(1, Math.min(20, Number(guests) || 1));
-
-    await sql`
-      INSERT INTO signups (event_name, event_date, name, email, phone, guests, notes)
-      VALUES (${eventName}, ${eventDate}, ${name}, ${email}, ${phone}, ${guestCount}, ${notes})
-    `;
-
-    const payload = {
-      eventName,
-      eventDate,
-      name,
-      email,
-      phone,
-      guests: guestCount,
-      notes,
+    // Trim and bound everything before storage / outbound use.
+    const cleaned = {
+      eventName:  clipText(eventName,  120),
+      eventDate:  clipText(eventDate,  120),
+      name:       clipText(name,       120),
+      email:      clipText(email,      200),
+      phone:      clipText(phone,      40),
+      guests:     Math.max(1, Math.min(20, Number(guests) || 1)),
+      notes:      clipText(notes,      1000),
+      language:   clipText(language,   8),
+      referrer:   clipText(req.headers?.referer || req.headers?.referrer || '', 500),
+      userAgent:  clipText(req.headers?.['user-agent'] || '', 500),
     };
 
-    // Fire notifications in parallel; don't block the response on them.
-    await Promise.all([notifyEmail(payload), notifyWhatsApp(payload)]);
+    await ensureSchema();
+
+    await sql`
+      INSERT INTO signups
+        (event_name, event_date, name, email, phone, guests, notes, language, referrer, user_agent)
+      VALUES
+        (${cleaned.eventName}, ${cleaned.eventDate}, ${cleaned.name}, ${cleaned.email},
+         ${cleaned.phone}, ${cleaned.guests}, ${cleaned.notes}, ${cleaned.language},
+         ${cleaned.referrer}, ${cleaned.userAgent})
+    `;
+
+    const calendarLink = buildCalendarLink(cleaned);
+
+    const payload = { ...cleaned, calendarLink };
+
+    // Fire all three notifications in parallel. The DB write is already done;
+    // any notification failures are logged but don't fail the response.
+    await Promise.all([
+      notifyOrganizerEmail(payload),
+      notifyOrganizerWhatsApp(payload),
+      sendUserConfirmation(payload),
+    ]);
 
     res.status(200).json({ ok: true });
   } catch (err) {
