@@ -136,6 +136,7 @@ export default function SignupModal({
           phone,
           guests: Number(guests) || 1,
           notes,
+          language,
         }),
       });
       if (!res.ok) {
