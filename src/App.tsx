@@ -1,7 +1,11 @@
 import { useState } from 'react'
 import emailjs from '@emailjs/browser'
 import AIChatbot from './components/AIChatbot'
+import SignupModal from './components/SignupModal'
 import { useShabbatInfo } from './hooks/useShabbatInfo'
+
+const ZEFFY_DONATE_URL =
+  'https://www.zeffy.com/en-US/donation-form/help-us-continue-our-mission-at-lev-echad'
 // Updated donation section with scrollable options
 
 function App() {
@@ -16,6 +20,9 @@ function App() {
 
   // State for accordion sections
   const [expandedSubSections, setExpandedSubSections] = useState<{ [key: string]: boolean }>({});
+
+  // Sign-up modal state (per-event)
+  const [signupEvent, setSignupEvent] = useState<{ name: string; date?: string } | null>(null);
 
   const shabbat = useShabbatInfo();
 
@@ -89,6 +96,19 @@ function App() {
       joinUs: "Join us for a warm, intimate Shabbat dinner in our home. Experience the warmth of community, delicious Israeli food, and meaningful connection.",
       shabbatMevarchimAdar: "Shabbat Mevarchim Chodesh Adar",
       adarSimcha: "When Adar enters we increase in joy",
+      signUp: "Sign Up",
+      donate: "Donate",
+      donateNow: "Donate Now",
+      donateSubtext: "Secure donation via Zeffy — every dollar goes to the community.",
+      orMessage: "Or message us directly:",
+      taxDeductibleShort: "Tax-deductible — IRS 501(c)(3) public charity",
+      taxStatusTitle: "Tax-deductible giving",
+      taxStatusBody: "Lev Echad is a Pennsylvania nonprofit corporation and an IRS-recognized 501(c)(3) public charity. Contributions are tax-deductible to the fullest extent allowed by law.",
+      legalNameLabel: "Legal name",
+      legalNameValue: "Lev Echad",
+      einLabel: "EIN",
+      einValue: "41-5232599",
+      footerNonprofit: "Lev Echad is a 501(c)(3) public charity · EIN 41-5232599 · Pittsburgh, PA",
       // Interesting Content
       interestingContent: "Interesting Content",
       exploreContent: "Explore thought-provoking discussions and insights",
@@ -202,6 +222,19 @@ function App() {
       joinUs: "הצטרפו אלינו לארוחת שבת חמה ואינטימית בבית שלנו. חוו את החום של הקהילה, אוכל ישראלי טעים וחיבור משמעותי.",
       shabbatMevarchimAdar: "שבת מברכין חודש אדר",
       adarSimcha: "משנכנס אדר מרבין בשמחה",
+      signUp: "הרשמה",
+      donate: "תרומה",
+      donateNow: "תרמו עכשיו",
+      donateSubtext: "תרומה מאובטחת דרך Zeffy — כל דולר מגיע לקהילה.",
+      orMessage: "או שלחו לנו הודעה ישירות:",
+      taxDeductibleShort: "ניתן לניכוי ממס — ארגון 501(c)(3) המוכר ע\"י ה-IRS",
+      taxStatusTitle: "תרומה הניתנת לניכוי ממס",
+      taxStatusBody: "לב אחד הוא תאגיד ללא מטרות רווח רשום במדינת פנסילבניה, ומוכר על ידי רשות המסים האמריקאית (IRS) כעמותת צדקה ציבורית לפי סעיף 501(c)(3). תרומות ניתנות לניכוי ממס במלוא ההיקף המותר בחוק.",
+      legalNameLabel: "שם משפטי",
+      legalNameValue: "Lev Echad",
+      einLabel: "מספר EIN",
+      einValue: "41-5232599",
+      footerNonprofit: "לב אחד הוא ארגון צדקה ציבורי לפי 501(c)(3) · EIN 41-5232599 · פיטסבורג, פנסילבניה",
       // Interesting Content
       interestingContent: "תוכן מעניין",
       exploreContent: "חקור דיונים מעוררי מחשבה ותובנות",
@@ -435,24 +468,29 @@ function App() {
               <div className="text-xs text-blue-600" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].tagline}</div>
             </div>
           </div>
-          <nav className="hidden items-center gap-6 md:flex">
-            <a href="#get-information" className="hover:text-blue-700 transition-colors">{t[language].nav.getInformation}</a>
+          <nav className="hidden items-center gap-4 text-sm font-medium lg:flex">
+            <a href="#get-information" className="hover:text-blue-700 transition-colors whitespace-nowrap">{t[language].nav.getInformation}</a>
             <a href="#programs" className="hover:text-blue-700 transition-colors">{t[language].nav.programs}</a>
             <a href="#events" className="hover:text-blue-700 transition-colors">{t[language].nav.events}</a>
-            <a href="#interesting-content" className="hover:text-blue-700 transition-colors">{t[language].nav.interestingContent}</a>
+            <a href="#interesting-content" className="hover:text-blue-700 transition-colors whitespace-nowrap">{t[language].nav.interestingContent}</a>
             <a href="#about" className="hover:text-blue-700 transition-colors">{t[language].nav.about}</a>
-            <a href="#donations" className="hover:text-blue-700 transition-colors">{t[language].nav.donations}</a>
             <a href="#contact" className="hover:text-blue-700 transition-colors">{t[language].nav.contact}</a>
           </nav>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-shrink-0">
             <button
               onClick={() => setLanguage(language === 'en' ? 'he' : 'en')}
-              className="rounded-lg border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-3 py-1.5 text-sm font-medium transition-colors"
+              className="rounded-lg border border-blue-600 text-blue-600 hover:bg-blue-50 px-2.5 py-1.5 text-xs font-medium transition-colors"
               dir={language === 'he' ? 'rtl' : 'ltr'}
             >
               {language === 'en' ? 'עברית' : 'ENG'}
             </button>
-            <a href="#events" className="rounded-2xl bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 inline-block text-center transition-colors">
+            <a
+              href="#donations"
+              className="hidden md:inline-flex items-center gap-1 rounded-xl bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 text-sm font-semibold transition-colors whitespace-nowrap"
+            >
+              💚 {t[language].donate}
+            </a>
+            <a href="#events" className="rounded-xl bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 text-sm font-semibold inline-block text-center transition-colors whitespace-nowrap">
               {t[language].joinEvents}
             </a>
           </div>
@@ -1726,6 +1764,21 @@ function App() {
                   {t[language].joinUs}
                 </p>
               </div>
+
+              <div className="mt-6 flex justify-center">
+                <button
+                  type="button"
+                  onClick={() =>
+                    setSignupEvent({
+                      name: t[language].shabbatDinner,
+                      date: shabbat.gregorianDate || '',
+                    })
+                  }
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-white text-blue-700 hover:bg-blue-50 px-6 py-3 font-semibold transition-colors shadow-md"
+                >
+                  ✋ {t[language].signUp}
+                </button>
+              </div>
             </div>
           </div>
                 </div>
@@ -1875,29 +1928,67 @@ function App() {
               <p className="text-xl font-medium text-gray-800 text-center" dir={language === 'he' ? 'rtl' : 'ltr'}>
                 {t[language].donationsText}
               </p>
-              
-              <div className="bg-gradient-to-br from-green-50 to-blue-50 rounded-2xl p-8 border-2 border-green-300 mt-8">
-                <div className="text-center">
-                  <div className="flex items-center justify-center gap-4 mb-4">
-                    <div className="text-3xl">📱</div>
-                    <div className="text-3xl">💬</div>
+
+              <div className="flex flex-col items-center gap-3 mt-6">
+                <a
+                  href={ZEFFY_DONATE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-3 rounded-2xl bg-green-600 hover:bg-green-700 text-white px-10 py-4 text-xl font-bold transition-colors shadow-lg"
+                >
+                  <span className="text-2xl">💚</span>
+                  <span>{t[language].donateNow}</span>
+                </a>
+                <p className="text-sm text-gray-500" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                  {t[language].donateSubtext}
+                </p>
+              </div>
+
+              <div className="bg-white rounded-2xl p-6 border-2 border-green-200 mt-6">
+                <div className="flex items-start gap-3" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                  <div className="text-2xl flex-shrink-0">🏛️</div>
+                  <div className="flex-1">
+                    <h3 className="text-lg font-bold text-gray-900 mb-2">
+                      {t[language].taxStatusTitle}
+                    </h3>
+                    <p className="text-sm text-gray-700 leading-relaxed mb-3">
+                      {t[language].taxStatusBody}
+                    </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                      <div>
+                        <span className="text-gray-500">{t[language].legalNameLabel}:</span>{' '}
+                        <span className="font-semibold text-gray-900">{t[language].legalNameValue}</span>
+                      </div>
+                      <div>
+                        <span className="text-gray-500">{t[language].einLabel}:</span>{' '}
+                        <span className="font-mono font-semibold text-gray-900">{t[language].einValue}</span>
+                      </div>
+                    </div>
                   </div>
-                  <p className="text-2xl font-bold text-gray-900 mb-2" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-br from-green-50 to-blue-50 rounded-2xl p-6 border border-green-200 mt-6">
+                <div className="text-center">
+                  <p className="text-sm text-gray-600 mb-3" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                    {t[language].orMessage}
+                  </p>
+                  <p className="text-lg font-semibold text-gray-900 mb-3" dir={language === 'he' ? 'rtl' : 'ltr'}>
                     {t[language].donationsContact}
                   </p>
-                  <div className="flex justify-center gap-4 mt-4">
-                    <a 
-                      href="sms:+14126261823" 
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-green-100 text-green-700 rounded-full text-lg font-semibold hover:bg-green-200 transition-colors"
+                  <div className="flex justify-center gap-3">
+                    <a
+                      href="sms:+14126261823"
+                      className="inline-flex items-center gap-2 px-5 py-2 bg-green-100 text-green-700 rounded-full text-sm font-semibold hover:bg-green-200 transition-colors"
                     >
                       <span>📱</span>
                       <span>SMS</span>
                     </a>
-                    <a 
-                      href="https://wa.me/14126261823" 
-                      target="_blank" 
+                    <a
+                      href="https://wa.me/14126261823"
+                      target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-green-100 text-green-700 rounded-full text-lg font-semibold hover:bg-green-200 transition-colors"
+                      className="inline-flex items-center gap-2 px-5 py-2 bg-green-100 text-green-700 rounded-full text-sm font-semibold hover:bg-green-200 transition-colors"
                     >
                       <span>💬</span>
                       <span>WhatsApp</span>
@@ -2020,6 +2111,9 @@ function App() {
             <span className="text-lg font-bold" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].levEchad}</span>
           </div>
           <p className="text-blue-200 mb-4" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].tagline}</p>
+          <p className="text-blue-300 text-xs mb-2" dir={language === 'he' ? 'rtl' : 'ltr'}>
+            {t[language].footerNonprofit}
+          </p>
           <p className="text-blue-300 text-sm mb-6" dir={language === 'he' ? 'rtl' : 'ltr'}>© {new Date().getFullYear()} {t[language].levEchad}. {t[language].allRightsReserved}</p>
           
           {/* Developer Credit */}
@@ -2041,6 +2135,16 @@ function App() {
       
       {/* AI Chatbot */}
       <AIChatbot language={language} />
+
+      {/* Event sign-up modal */}
+      <SignupModal
+        open={signupEvent !== null}
+        onClose={() => setSignupEvent(null)}
+        eventName={signupEvent?.name || ''}
+        eventDate={signupEvent?.date}
+        language={language}
+      />
+
     </div>
   )
 }
