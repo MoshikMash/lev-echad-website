@@ -198,9 +198,9 @@ function buildUserConfirmationText(payload) {
     `other details you need. We're so glad you'll be with us —`,
     `looking forward to seeing you soon!`,
     '',
-    `💝 Know someone who could use a warm community? Feel free to`,
-    `forward this email or bring a friend — newcomers are always`,
-    `welcome. Just let Shosh know if you're bringing extra guests.`,
+    `💝 Know someone who could use a warm community? Forward this`,
+    `email or share https://www.levechadpgh.org — they can sign up`,
+    `there and get their own confirmation. Newcomers are always welcome!`,
   ].filter((line) => line !== null).join('\n');
 }
 
