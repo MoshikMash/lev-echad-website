@@ -47,6 +47,16 @@ function App() {
       heroText1: "Founded by Shosh Mash, an Israeli mother, educator, and community builder, Lev Echad reflects the power of feeling truly welcomed.",
       heroText2: "Through intimate Shabbat dinners, we create space for connection, emotional support, cultural identity, and lasting friendships.",
       importantNotice: "Important Notice: Lev Echad is a community and personal-friendly organization that operates on a not-for-profit basis. All help provided is friendly and not professional. We are committed to serving our community through personal connections and support.",
+      // Who is this for?
+      whoForTitle: "Come as you are",
+      whoForIntro: "Lev Echad is for anyone who wants the warmth of a Jewish home — without pressure to be more religious, more observant, or more anything. We're not a synagogue and we're not trying to change you. Just a community that welcomes you.",
+      whoForBullet1: "🌟 You're new to Pittsburgh (or one of the nearby suburbs) and don't know anyone yet",
+      whoForBullet2: "💛 You're single — in your 20s, 30s, 40s, 50s+ — and miss family Shabbat dinners",
+      whoForBullet3: "👫 You're a young couple looking for community",
+      whoForBullet4: "🌅 You're recently divorced or widowed and want connection",
+      whoForBullet5: "🌿 You grew up Jewish but don't feel at home in shul",
+      whoForBullet6: "🌎 You're Israeli far from home and miss the feeling of Friday night",
+      whoForOutro: "We've hosted everyone from 20-year-old grad students to grandparents. The only \"requirement\" is wanting to share a meal and feel part of something.",
       // Sections
       welcomeTitle: "Welcome to Pittsburgh!",
       welcomeSubtitle: "Your friendly guide to Jewish life in Pittsburgh. Click on any topic below to explore detailed information!",
@@ -173,6 +183,16 @@ function App() {
       heroText1: "נוסד על ידי שוש, אם ישראלית, מחנכת ובונה קהילה, לב אחד משקף את הכוח של להרגיש באמת רצוי.",
       heroText2: "דרך ארוחות שבת אינטימיות, אנו יוצרים מקום לחיבור, תמיכה רגשית, זהות תרבותית וידידויות מתמשכות.",
       importantNotice: "הודעה חשובה: לב אחד הוא ארגון קהילתי וידידותי אישית הפועל על בסיס ללא מטרות רווח. כל העזרה הניתנת היא ידידותית ולא מקצועית. אנו מחויבים לשרת את הקהילה שלנו דרך קשרים אישיים ותמיכה.",
+      // Who is this for?
+      whoForTitle: "בואו כמו שאתם",
+      whoForIntro: "לב אחד מיועד לכל מי שמחפש את החום של בית יהודי — בלי לחץ להיות יותר דתי, יותר שומר מצוות, או יותר משהו. אנחנו לא בית כנסת ואנחנו לא מנסים לשנות אתכם. רק קהילה שמקבלת אתכם בברכה.",
+      whoForBullet1: "🌟 חדשים בפיטסבורג (או באחת מהפרברים הסמוכים) ועדיין לא מכירים אף אחד",
+      whoForBullet2: "💛 רווקים או רווקות — בני 20, 30, 40, 50+ — ומתגעגעים לארוחות שבת משפחתיות",
+      whoForBullet3: "👫 זוג צעיר שמחפש קהילה",
+      whoForBullet4: "🌅 גרושים, גרושות או אלמנים/ות שרוצים חיבור",
+      whoForBullet5: "🌿 גדלתם יהודים אבל לא מרגישים בבית בבית כנסת",
+      whoForBullet6: "🌎 ישראלים רחוק מהבית שמתגעגעים לתחושת ליל שישי",
+      whoForOutro: "אירחנו את כולם — מסטודנטים בני 20 ועד סבים וסבתות. ה\"דרישה\" היחידה היא רצון לחלוק ארוחה ולהרגיש חלק ממשהו.",
       // Sections
       welcomeTitle: "ברוכים הבאים לפיטסבורג!",
       welcomeSubtitle: "המדריך הידידותי שלכם לחיים יהודיים בפיטסבורג. לחצו על כל נושא למטה כדי לחקור מידע מפורט!",
@@ -678,6 +698,52 @@ function App() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Who is this for? Section */}
+      <section id="who-for" className="py-16 bg-gradient-to-b from-white to-amber-50">
+        <div className="mx-auto max-w-4xl px-4">
+          <div className="bg-white rounded-3xl p-10 md:p-12 shadow-xl border border-amber-100">
+            <h2
+              className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 text-center"
+              dir={language === 'he' ? 'rtl' : 'ltr'}
+            >
+              {t[language].whoForTitle}
+            </h2>
+            <p
+              className="text-lg md:text-xl text-gray-700 leading-relaxed mb-8 text-center max-w-3xl mx-auto"
+              dir={language === 'he' ? 'rtl' : 'ltr'}
+            >
+              {t[language].whoForIntro}
+            </p>
+            <ul
+              className="space-y-3 text-base md:text-lg text-gray-800 mb-8 max-w-2xl mx-auto"
+              dir={language === 'he' ? 'rtl' : 'ltr'}
+            >
+              {[
+                t[language].whoForBullet1,
+                t[language].whoForBullet2,
+                t[language].whoForBullet3,
+                t[language].whoForBullet4,
+                t[language].whoForBullet5,
+                t[language].whoForBullet6,
+              ].map((line, i) => (
+                <li
+                  key={i}
+                  className="bg-amber-50 border border-amber-100 rounded-lg px-4 py-3 leading-relaxed"
+                >
+                  {line}
+                </li>
+              ))}
+            </ul>
+            <p
+              className="text-base md:text-lg text-gray-700 leading-relaxed text-center italic max-w-3xl mx-auto"
+              dir={language === 'he' ? 'rtl' : 'ltr'}
+            >
+              {t[language].whoForOutro}
+            </p>
           </div>
         </div>
       </section>
