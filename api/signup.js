@@ -90,18 +90,32 @@ function clipText(value, max) {
   return s.length > max ? s.slice(0, max) : s;
 }
 
-// Best-effort parse of an event date string into a Date at 6:30 PM ET.
+// Returns true if the given Date falls within US Eastern Daylight Time
+// (second Sunday of March through first Sunday of November).
+function isEDT(d) {
+  const y = d.getUTCFullYear();
+  // 2nd Sunday March (US DST start, 2:00 AM local)
+  const marchFirst = new Date(Date.UTC(y, 2, 1));
+  const dstStart = new Date(Date.UTC(y, 2, 1 + ((7 - marchFirst.getUTCDay()) % 7) + 7));
+  // 1st Sunday November (US DST end, 2:00 AM local)
+  const novFirst = new Date(Date.UTC(y, 10, 1));
+  const dstEnd = new Date(Date.UTC(y, 10, 1 + ((7 - novFirst.getUTCDay()) % 7)));
+  return d >= dstStart && d < dstEnd;
+}
+
+// Best-effort parse of an event date string into a Date at 6:30 PM Eastern.
+// Vercel functions run in UTC, so we explicitly compute the UTC equivalent
+// of 18:30 ET (22:30 UTC during EDT, 23:30 UTC during EST) instead of using
+// setHours which would set the time in the function's wall-clock TZ.
 // Accepts forms like "May 15", "May 15, 2026", "2026-05-15".
-// Returns null if it can't get a sensible date.
 function parseEventStart(eventDate) {
   if (!eventDate) return null;
   const year = new Date().getFullYear();
-  // Try as-is first; if no year, append the current one.
   let d = new Date(eventDate);
   if (isNaN(d.getTime())) d = new Date(`${eventDate}, ${year}`);
   if (isNaN(d.getTime())) return null;
-  // Pin to 18:30 local time.
-  d.setHours(18, 30, 0, 0);
+  const offsetHours = isEDT(d) ? 4 : 5;
+  d.setUTCHours(18 + offsetHours, 30, 0, 0);
   return d;
 }
 
@@ -161,16 +175,13 @@ function buildUserConfirmationText(payload) {
     `  Guests in your party: ${payload.guests}`,
     payload.notes ? `  Your notes: ${payload.notes}` : '',
     '',
-    `After you sign up, Shosh sends all the further details personally —`,
-    `the exact address, parking, what to bring, and anything else you need.`,
+    `Just come — you don't need to bring anything. Shosh will reach out`,
+    `personally with the exact address and any other details you need.`,
     '',
-    `If this is your first time joining us, please reach out to Shosh by SMS`,
-    `or WhatsApp at ${ORGANIZER_PHONE} for a short introduction before the event.`,
+    `If this is your first time joining us, please text or WhatsApp Shosh`,
+    `at ${ORGANIZER_PHONE} for a short introduction before the event.`,
     '',
     `Add to your calendar (one click): ${payload.calendarLink}`,
-    '',
-    `This confirmation was sent from ${ORGANIZER_EMAIL} — please add us to`,
-    `your contacts so future updates don't end up in spam.`,
     '',
     `Need to change anything? Just reply to this email or text Shosh at ${ORGANIZER_PHONE}.`,
     '',
@@ -180,11 +191,69 @@ function buildUserConfirmationText(payload) {
   ].filter(Boolean).join('\n');
 }
 
+// HTML version of the confirmation. Pretty formatting with proper line
+// breaks, bolded labels, and a calendar button. Used as the `html` field in
+// the EmailJS template_params so a dedicated signup template can render it.
+function buildUserConfirmationHtml(payload) {
+  const dateLine = payload.eventDate || 'as scheduled';
+  const notesLine = payload.notes
+    ? `<tr><td style="padding:4px 0;color:#6b7280;width:140px;">Your notes</td><td style="padding:4px 0;">${escapeHtml(payload.notes)}</td></tr>`
+    : '';
+  return `<!DOCTYPE html>
+<html><body style="margin:0;padding:0;background:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1f2937;line-height:1.55;">
+  <div style="max-width:560px;margin:24px auto;background:#ffffff;border-radius:14px;padding:32px;border:1px solid #e5e7eb;">
+    <h1 style="margin:0 0 8px 0;font-size:22px;color:#1d4ed8;">You're signed up — see you soon! 💙</h1>
+    <p style="margin:0 0 20px 0;">Hi <strong>${escapeHtml(payload.name)}</strong>,</p>
+    <p style="margin:0 0 20px 0;">You're confirmed for <strong>${escapeHtml(payload.eventName)}</strong> at Lev Echad. We can't wait to host you.</p>
+
+    <h2 style="margin:24px 0 8px 0;font-size:16px;color:#111827;">Event details</h2>
+    <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;font-size:15px;">
+      <tr><td style="padding:4px 0;color:#6b7280;width:140px;">Date</td><td style="padding:4px 0;">${escapeHtml(dateLine)}</td></tr>
+      <tr><td style="padding:4px 0;color:#6b7280;">Time</td><td style="padding:4px 0;">${DEFAULT_TIME} (Eastern)</td></tr>
+      <tr><td style="padding:4px 0;color:#6b7280;">Where</td><td style="padding:4px 0;">we meet in ${VENUE_AREA}</td></tr>
+      <tr><td style="padding:4px 0;color:#6b7280;">Guests</td><td style="padding:4px 0;">${payload.guests}</td></tr>
+      ${notesLine}
+    </table>
+
+    <p style="margin:24px 0 16px 0;">Just come — you don't need to bring anything. Shosh will reach out personally with the exact address and any other details you need.</p>
+
+    <p style="margin:0 0 16px 0;background:#fef3c7;border-left:4px solid #f59e0b;padding:12px 14px;border-radius:6px;">
+      <strong>First time joining us?</strong> Please text or WhatsApp Shosh at <a href="sms:+1${ORGANIZER_PHONE.replace(/-/g,'')}" style="color:#92400e;">${ORGANIZER_PHONE}</a> for a short introduction before the event.
+    </p>
+
+    <p style="margin:24px 0;text-align:center;">
+      <a href="${payload.calendarLink}" style="display:inline-block;background:#2563eb;color:#ffffff;text-decoration:none;padding:12px 24px;border-radius:8px;font-weight:600;">📅 Add to your calendar</a>
+    </p>
+
+    <p style="margin:20px 0 0 0;font-size:14px;color:#6b7280;">
+      Need to change anything? Just reply to this email or text Shosh at ${ORGANIZER_PHONE}.
+    </p>
+
+    <hr style="border:none;border-top:1px solid #e5e7eb;margin:24px 0;" />
+
+    <p style="margin:0;font-size:14px;color:#374151;">
+      Warmly,<br/>
+      <strong>Shosh & the Lev Echad team</strong><br/>
+      <a href="https://www.levechadpgh.org" style="color:#2563eb;">levechadpgh.org</a>
+    </p>
+  </div>
+</body></html>`;
+}
+
+function escapeHtml(s) {
+  return String(s ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 // One EmailJS path for both organizer notification and user confirmation.
 // EmailJS replies with HTTP 4xx + a short error string if the API rejects
 // the request (e.g. "API access from non-browser environments is disabled"),
 // and "OK" on success — we log both so the next signup shows the outcome.
-async function sendEmailJS({ toName, toEmail, subject, message, replyTo, label }) {
+async function sendEmailJS({ toName, toEmail, subject, message, html, replyTo, label }) {
   if (!toEmail) {
     console.warn(`${label} skipped: no recipient`);
     return;
@@ -200,6 +269,10 @@ async function sendEmailJS({ toName, toEmail, subject, message, replyTo, label }
         from_name: 'Lev Echad',
         subject,
         message,
+        // Available for a dedicated signup template that wants raw HTML via
+        // `{{{html}}}` (triple-brace = no escaping). The plain-text `message`
+        // stays around so the existing Contact Us template keeps working.
+        html: html || message,
         reply_to: replyTo || ORGANIZER_EMAIL,
         user_name: toName,
         user_email: toEmail,
@@ -268,13 +341,19 @@ async function sendUserConfirmation(payload) {
     toEmail: payload.email,
     subject: `You're signed up — ${payload.eventName} at Lev Echad`,
     message: buildUserConfirmationText(payload),
+    html: buildUserConfirmationHtml(payload),
     label: 'User confirmation',
   });
 }
 
 // Exported for local testing. The Vercel runtime only invokes the default
 // export, so these named exports have no production effect.
-export const __test = { buildCalendarLink, buildUserConfirmationText, buildSummaryText };
+export const __test = {
+  buildCalendarLink,
+  buildUserConfirmationText,
+  buildUserConfirmationHtml,
+  buildSummaryText,
+};
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
