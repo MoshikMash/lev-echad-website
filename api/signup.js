@@ -22,8 +22,13 @@ import { neon } from '@neondatabase/serverless';
 
 const sql = process.env.DATABASE_URL ? neon(process.env.DATABASE_URL) : null;
 
-const VENUE_ADDRESS = '5870 Phillips Ave, Pittsburgh, PA 15217';
+// Public-facing location for calendar/confirmation emails: we deliberately
+// share only the neighborhood, not the street address. The exact address is
+// shared by Shosh after a first-time intro (SMS/WhatsApp to 412-626-1823).
+const VENUE_AREA = 'Squirrel Hill, Pittsburgh, 15217';
 const DEFAULT_TIME = '6:30 PM';
+const ORGANIZER_PHONE = '412-626-1823';
+const ORGANIZER_EMAIL = 'mashshosh@gmail.com';
 
 // EmailJS defaults reuse the same account/template the existing contact form
 // already uses. Override via env vars if you create a dedicated signup template.
@@ -92,8 +97,12 @@ function buildCalendarLink({ eventName, eventDate }) {
   const params = new URLSearchParams({
     action: 'TEMPLATE',
     text: `${eventName} — Lev Echad`,
-    location: VENUE_ADDRESS,
-    details: `Lev Echad community event. ${VENUE_ADDRESS}. Time: ${DEFAULT_TIME}.`,
+    location: VENUE_AREA,
+    details:
+      `Lev Echad community event. We meet in ${VENUE_AREA}. ` +
+      `Time: ${DEFAULT_TIME}. ` +
+      `First-time visitors: text or WhatsApp Shosh at ${ORGANIZER_PHONE} ` +
+      `for the exact address and a short intro.`,
   });
   if (start) {
     const end = new Date(start.getTime() + 3 * 60 * 60 * 1000);
@@ -128,13 +137,22 @@ function buildUserConfirmationText(payload) {
     `Event details:`,
     `  ${dateLine}`,
     `  Time: ${DEFAULT_TIME}`,
-    `  Address: ${VENUE_ADDRESS}`,
+    `  Where: we meet in ${VENUE_AREA}`,
     `  Guests in your party: ${payload.guests}`,
     payload.notes ? `  Your notes: ${payload.notes}` : '',
     '',
+    `After you sign up, Shosh sends all the further details personally —`,
+    `the exact address, parking, what to bring, and anything else you need.`,
+    '',
+    `If this is your first time joining us, please reach out to Shosh by SMS`,
+    `or WhatsApp at ${ORGANIZER_PHONE} for a short introduction before the event.`,
+    '',
     `Add to your calendar (one click): ${payload.calendarLink}`,
     '',
-    `Need to change anything? Just reply to this email or text Shosh at 412-626-1823.`,
+    `This confirmation was sent from ${ORGANIZER_EMAIL} — please add us to`,
+    `your contacts so future updates don't end up in spam.`,
+    '',
+    `Need to change anything? Just reply to this email or text Shosh at ${ORGANIZER_PHONE}.`,
     '',
     `Warmly,`,
     `Shosh & the Lev Echad team`,
@@ -216,6 +234,10 @@ async function sendUserConfirmation(payload) {
     console.error('User confirmation failed:', err);
   }
 }
+
+// Exported for local testing. The Vercel runtime only invokes the default
+// export, so these named exports have no production effect.
+export const __test = { buildCalendarLink, buildUserConfirmationText, buildSummaryText };
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
