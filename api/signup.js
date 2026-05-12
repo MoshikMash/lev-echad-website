@@ -167,36 +167,36 @@ function buildSummaryText(payload) {
 //      [OUR MESSAGE]
 //    We'll get back to you soon!  Best regards, The Lev Echad Team"
 //
-// So we shape this message to read coherently inside that wrapper:
-//   - first a brief signup-recap (lines up with "Here's a copy of your
-//     message:")
-//   - then a "What's next" section that reads like a Lev Echad reply
-//   - the wrapper's closing "We'll get back to you soon!" then fits with
-//     Shosh's promise to be in touch personally.
+// Open warmly so the body itself feels welcoming, even if the wrapper's
+// intro is a little awkward. The closing "We'll get back to you soon!"
+// then echoes our "Shosh will be in touch personally" line naturally.
 function buildUserConfirmationText(payload) {
   const dateLine = payload.eventDate || 'as scheduled';
   return [
-    `I just signed up for ${payload.eventName} at Lev Echad.`,
+    `🎉 We're so happy you're joining us!`,
     '',
+    `You signed up for ${payload.eventName}, and we can't wait to`,
+    `welcome you to the Lev Echad community.`,
+    '',
+    `Your details:`,
     `  Name: ${payload.name}`,
-    `  Guests joining me: ${payload.guests}`,
-    payload.notes ? `  My notes: ${payload.notes}` : null,
-    '',
-    `--`,
+    `  Guests joining you: ${payload.guests}`,
+    payload.notes ? `  Your notes: ${payload.notes}` : null,
     '',
     `What's next:`,
     '',
     `  📅 ${dateLine}, ${DEFAULT_TIME} Eastern`,
     `  📍 We meet in ${VENUE_AREA}`,
     `  🎁 You don't need to bring anything — just yourself`,
-    `  📞 First-time joining us? Please text or WhatsApp Shosh at`,
+    `  📞 First time joining us? Please text or WhatsApp Shosh at`,
     `     ${ORGANIZER_PHONE} for a quick hello before the event`,
     '',
     `Add to your calendar (one click):`,
     `${payload.calendarLink}`,
     '',
     `Shosh will be in touch personally with the exact address and any`,
-    `other details you need. Looking forward to seeing you!`,
+    `other details you need. We're so glad you'll be with us —`,
+    `looking forward to seeing you soon!`,
   ].filter((line) => line !== null).join('\n');
 }
 

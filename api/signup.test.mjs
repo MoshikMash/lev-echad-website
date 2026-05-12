@@ -36,7 +36,7 @@ const expectations = [
   ['email tells first-timers to text Shosh',  emailBody.includes('First-time') && emailBody.includes('412-626-1823')],
   ['email says guests don\'t need to bring anything',  emailBody.includes("don't need to bring anything")],
   ['email says Shosh will be in touch personally',  emailBody.includes('Shosh will be in touch personally')],
-  ['email is framed as the signup the guest just submitted', emailBody.includes('I just signed up for')],
+  ['email opens warmly', emailBody.includes("happy you're joining") || emailBody.includes("welcome you to the Lev Echad")],
   ['email includes "What\'s next" section', emailBody.includes("What's next")],
   ['calendar location is neighborhood-only', decodeURIComponent(calendarLink).includes('location=Squirrel+Hill') || decodeURIComponent(calendarLink).includes('location=Squirrel Hill')],
   ['calendar details mention Shosh phone',   decodeURIComponent(calendarLink).includes('412-626-1823')],
