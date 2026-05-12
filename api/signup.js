@@ -197,6 +197,10 @@ function buildUserConfirmationText(payload) {
     `Shosh will be in touch personally with the exact address and any`,
     `other details you need. We're so glad you'll be with us —`,
     `looking forward to seeing you soon!`,
+    '',
+    `💝 Know someone who could use a warm community? Feel free to`,
+    `forward this email or bring a friend — newcomers are always`,
+    `welcome. Just let Shosh know if you're bringing extra guests.`,
   ].filter((line) => line !== null).join('\n');
 }
 
