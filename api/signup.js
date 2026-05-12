@@ -6,15 +6,14 @@
 //   DATABASE_URL
 //
 // Optional env (set in Vercel dashboard if you want notifications):
-//   NOTIFY_EMAIL_ENDPOINT   — Formspree endpoint for organizer notifications,
-//                             e.g. https://formspree.io/f/mnjwlryl
+//   RESEND_API_KEY          — Resend API key (from https://resend.com/api-keys)
+//   RESEND_FROM             — verified sender, e.g. "Lev Echad <shosh@levechadpgh.org>"
+//                             (defaults to "Lev Echad <onboarding@resend.dev>"
+//                              which only delivers to the Resend account owner —
+//                              fine for testing, not for real signups)
 //   WHATSAPP_PHONE          — recipient WhatsApp number with country code,
 //                             e.g. +14126261823
 //   WHATSAPP_APIKEY         — CallMeBot APIKEY (obtained by messaging their bot)
-//   EMAILJS_SERVICE_ID      — defaults to 'service_l47oh6c' (the contact form one)
-//   EMAILJS_TEMPLATE_ID     — defaults to 'template_3a68j0o' (the contact form one)
-//   EMAILJS_USER_ID         — defaults to '9uN_4d08ybrG6_IhR'  (the contact form one)
-//   EMAILJS_ACCESS_TOKEN    — needed if EmailJS strict mode is on (private key)
 //   SIGNUP_SECRET           — if set, requests must include this same value
 //                             in `secret` field
 
@@ -30,12 +29,8 @@ const DEFAULT_TIME = '6:30 PM';
 const ORGANIZER_PHONE = '412-626-1823';
 const ORGANIZER_EMAIL = 'mashshosh@gmail.com';
 
-// EmailJS defaults reuse the same account/template the existing contact form
-// already uses. Override via env vars if you create a dedicated signup template.
-const EMAILJS_SERVICE_ID  = process.env.EMAILJS_SERVICE_ID  || 'service_l47oh6c';
-const EMAILJS_TEMPLATE_ID = process.env.EMAILJS_TEMPLATE_ID || 'template_3a68j0o';
-const EMAILJS_USER_ID     = process.env.EMAILJS_USER_ID     || '9uN_4d08ybrG6_IhR';
-const EMAILJS_ACCESS_TOKEN = process.env.EMAILJS_ACCESS_TOKEN;
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
+const RESEND_FROM    = process.env.RESEND_FROM || 'Lev Echad <onboarding@resend.dev>';
 
 let schemaReady = false;
 
@@ -180,52 +175,47 @@ function buildUserConfirmationText(payload) {
   ].filter(Boolean).join('\n');
 }
 
-// One EmailJS path for both organizer notification and user confirmation.
-// EmailJS replies with HTTP 4xx + a short error string if the API rejects
-// the request (e.g. "API access from non-browser environments is disabled"),
-// and "OK" on success — we log both so the next signup shows the outcome.
-async function sendEmailJS({ toName, toEmail, subject, message, replyTo, label }) {
+// One Resend path for both organizer notification and user confirmation.
+// Resend returns 2xx + JSON {id: "..."} on success, or 4xx + JSON {message: ...}
+// on failure. We log both outcomes (status + first 300 chars of body) so a
+// failed delivery is immediately visible in Vercel logs.
+async function sendResend({ toName, toEmail, subject, message, replyTo, label }) {
   if (!toEmail) {
     console.warn(`${label} skipped: no recipient`);
     return;
   }
+  if (!RESEND_API_KEY) {
+    console.warn(`${label} skipped: RESEND_API_KEY not set`);
+    return;
+  }
   try {
-    const body = {
-      service_id: EMAILJS_SERVICE_ID,
-      template_id: EMAILJS_TEMPLATE_ID,
-      user_id: EMAILJS_USER_ID,
-      template_params: {
-        to_name: toName,
-        to_email: toEmail,
-        from_name: 'Lev Echad',
-        subject,
-        message,
-        reply_to: replyTo || ORGANIZER_EMAIL,
-        user_name: toName,
-        user_email: toEmail,
-        user_message: message,
-      },
-    };
-    if (EMAILJS_ACCESS_TOKEN) body.accessToken = EMAILJS_ACCESS_TOKEN;
-
-    const res = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+    const res = await fetch('https://api.resend.com/emails', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
+      headers: {
+        Authorization: `Bearer ${RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: RESEND_FROM,
+        to: toName ? [`${toName} <${toEmail}>`] : [toEmail],
+        subject,
+        text: message,
+        reply_to: replyTo || ORGANIZER_EMAIL,
+      }),
     });
     const respBody = (await res.text().catch(() => '')).slice(0, 300);
     if (res.ok) {
-      console.log(`${label} EmailJS status=${res.status} to=${toEmail} body=${respBody}`);
+      console.log(`${label} Resend status=${res.status} to=${toEmail} body=${respBody}`);
     } else {
-      console.error(`${label} EmailJS failed status=${res.status} to=${toEmail} body=${respBody}`);
+      console.error(`${label} Resend failed status=${res.status} to=${toEmail} body=${respBody}`);
     }
   } catch (err) {
-    console.error(`${label} EmailJS error:`, err);
+    console.error(`${label} Resend error:`, err);
   }
 }
 
 async function notifyOrganizerEmail(payload) {
-  await sendEmailJS({
+  await sendResend({
     toName: 'Shosh',
     toEmail: ORGANIZER_EMAIL,
     subject: `Lev Echad sign-up: ${payload.name} (${payload.eventName})`,
@@ -263,7 +253,7 @@ async function notifyOrganizerWhatsApp(payload) {
 }
 
 async function sendUserConfirmation(payload) {
-  await sendEmailJS({
+  await sendResend({
     toName: payload.name,
     toEmail: payload.email,
     subject: `You're signed up — ${payload.eventName} at Lev Echad`,
