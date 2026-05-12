@@ -181,14 +181,26 @@ async function notifyOrganizerEmail(payload) {
 async function notifyOrganizerWhatsApp(payload) {
   const phone = process.env.WHATSAPP_PHONE;
   const apikey = process.env.WHATSAPP_APIKEY;
-  if (!phone || !apikey) return;
+  if (!phone || !apikey) {
+    console.warn('WhatsApp skipped: WHATSAPP_PHONE or WHATSAPP_APIKEY not set');
+    return;
+  }
+  // CallMeBot returns HTTP 200 even when the APIKEY is invalid or the
+  // recipient phone was never activated — the rejection lives in the
+  // response body. Log it so a failed delivery shows up in Vercel logs
+  // (the request URL with the APIKEY is intentionally not logged).
   try {
     const url =
       'https://api.callmebot.com/whatsapp.php' +
       `?phone=${encodeURIComponent(phone)}` +
       `&text=${encodeURIComponent(buildSummaryText(payload))}` +
       `&apikey=${encodeURIComponent(apikey)}`;
-    await fetch(url);
+    const res = await fetch(url);
+    const body = (await res.text().catch(() => '')).slice(0, 500);
+    const phoneShape = `${phone.startsWith('+') ? '+' : ''}len${phone.length}`;
+    console.log(
+      `WhatsApp CallMeBot status=${res.status} phone=${phoneShape} body=${body}`,
+    );
   } catch (err) {
     console.error('WhatsApp failed:', err);
   }
