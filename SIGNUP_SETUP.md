@@ -37,15 +37,20 @@ without anything else configured.
 
 | Name | Value | What it does |
 | --- | --- | --- |
-| `NOTIFY_EMAIL_ENDPOINT` | A Formspree endpoint URL, e.g. `https://formspree.io/f/mnjwlryl` | If set, every sign-up triggers an email to the address configured on that Formspree form. |
-| `NOTIFY_EMAIL_TO` | `mashshosh@gmail.com` (informational) | Used in the email payload — does not actually route the email. |
+| `EMAILJS_SERVICE_ID` / `EMAILJS_TEMPLATE_ID` / `EMAILJS_USER_ID` | EmailJS account credentials | Used for **both** the organizer notification (to `mashshosh@gmail.com`) and the signing-up user's confirmation. If these are unset, the defaults in `api/signup.js` (the existing contact-form template) are used. |
+| `EMAILJS_ACCESS_TOKEN` | EmailJS private key | Required only if EmailJS strict mode is on. |
 | `WHATSAPP_PHONE` | `+14126261823` (recipient phone, country code required) | Whose WhatsApp gets the ping. |
 | `WHATSAPP_APIKEY` | The CallMeBot APIKEY (obtained by messaging their bot once — see below) | Required for WhatsApp to fire. |
 | `SIGNUP_SECRET` | Any random string | Optional anti-spam: if set, the website must send the same string in the `secret` field of the POST body. Useful only if your endpoint URL ever leaks publicly. |
 
-If `NOTIFY_EMAIL_ENDPOINT` is unset → no email is sent.
 If `WHATSAPP_PHONE` or `WHATSAPP_APIKEY` is unset → no WhatsApp is sent.
-The sign-up is still saved to the database in both cases.
+The sign-up is still saved to the database regardless.
+
+**EmailJS prerequisite:** in the EmailJS dashboard
+(`https://dashboard.emailjs.com/admin/account/security`) the option
+**"Allow API requests from non-browser environments"** must be ON.
+Otherwise EmailJS returns 403 to the Vercel serverless function and no
+emails go out — though the DB write still succeeds.
 
 ---
 
@@ -98,16 +103,26 @@ sign-up details to the configured phone.
 
 ## Email notifications
 
-The simplest setup is to reuse the existing Formspree form for sign-ups:
+Both the organizer notification (to `mashshosh@gmail.com`) and the
+signing-up user's confirmation are sent via the existing EmailJS account
+that powers the contact form. No extra config is required — the
+defaults baked into `api/signup.js` use the same service/template the
+contact form already uses.
 
-1. In Vercel → project → Settings → Environment Variables, add:
-   - `NOTIFY_EMAIL_ENDPOINT` = `https://formspree.io/f/mnjwlryl` (the
-     dedicated "event_signups" Formspree form already created earlier)
-2. Redeploy.
+The only prerequisite is the EmailJS account-level setting:
 
-Each sign-up will also email you with the full details. Formspree's free
-tier caps at 50/month, but you'll have the database as the source of
-truth regardless.
+1. Go to https://dashboard.emailjs.com/admin/account/security
+2. Toggle **"Allow API requests from non-browser environments"** ON
+3. Save
+
+Without that, EmailJS returns `403 API access from non-browser
+environments is currently disabled` to the Vercel function and no emails
+are sent. The DB row is still written.
+
+To verify after a signup, open Vercel → project → Logs → click the
+`/api/signup` row. You should see two log lines like:
+- `Organizer notification EmailJS status=200 to=mashshosh@gmail.com body=OK`
+- `User confirmation EmailJS status=200 to=<recipient> body=OK`
 
 ---
 
