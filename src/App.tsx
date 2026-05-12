@@ -49,7 +49,7 @@ function App() {
       importantNotice: "Important Notice: Lev Echad is a community and personal-friendly organization that operates on a not-for-profit basis. All help provided is friendly and not professional. We are committed to serving our community through personal connections and support.",
       // Who is this for?
       whoForTitle: "Come as you are",
-      whoForIntro: "Lev Echad is for anyone who wants the warmth of a Jewish home — without pressure to be more religious, more observant, or more anything. We're not a synagogue and we're not trying to change you. Just a community that welcomes you.",
+      whoForIntro: "Lev Echad is for anyone looking for the warmth of a Jewish home — a place to feel welcomed exactly as you are. A friendly community sharing meals and meaningful moments together.",
       whoForBullet1: "🌟 You're new to Pittsburgh (or one of the nearby suburbs) and don't know anyone yet",
       whoForBullet2: "💛 You're single — at any age — and miss family Shabbat dinners",
       whoForBullet3: "👫 You're a young couple looking for community",
@@ -186,7 +186,7 @@ function App() {
       importantNotice: "הודעה חשובה: לב אחד הוא ארגון קהילתי וידידותי אישית הפועל על בסיס ללא מטרות רווח. כל העזרה הניתנת היא ידידותית ולא מקצועית. אנו מחויבים לשרת את הקהילה שלנו דרך קשרים אישיים ותמיכה.",
       // Who is this for?
       whoForTitle: "בואו כמו שאתם",
-      whoForIntro: "לב אחד מיועד לכל מי שמחפש את החום של בית יהודי — בלי לחץ להיות יותר דתי, יותר שומר מצוות, או יותר משהו. אנחנו לא בית כנסת ואנחנו לא מנסים לשנות אתכם. רק קהילה שמקבלת אתכם בברכה.",
+      whoForIntro: "לב אחד מיועד לכל מי שמחפש את החום של בית יהודי — מקום שבו תרגישו רצויים בדיוק כפי שאתם. קהילה ידידותית שחולקת ארוחות ורגעים משמעותיים יחד.",
       whoForBullet1: "🌟 חדשים בפיטסבורג (או באחת מהפרברים הסמוכים) ועדיין לא מכירים אף אחד",
       whoForBullet2: "💛 רווקים או רווקות — בכל גיל — ומתגעגעים לארוחות שבת משפחתיות",
       whoForBullet3: "👫 זוג צעיר שמחפש קהילה",
