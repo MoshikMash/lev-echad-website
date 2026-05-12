@@ -1860,7 +1860,7 @@ function App() {
                     )}
                   </>
                 )}
-                <p className="text-blue-100 text-base mt-3 font-semibold">6:30 PM</p>
+                <p className="text-blue-100 text-base mt-3 font-semibold">7:30 PM</p>
               </div>
               
               <div className="mt-6">

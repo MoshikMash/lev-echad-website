@@ -41,7 +41,7 @@ const expectations = [
   ['calendar location is neighborhood-only', decodeURIComponent(calendarLink).includes('location=Squirrel+Hill') || decodeURIComponent(calendarLink).includes('location=Squirrel Hill')],
   ['calendar details mention Shosh phone',   decodeURIComponent(calendarLink).includes('412-626-1823')],
   ['calendar details do NOT leak street',    !decodeURIComponent(calendarLink).includes('Phillips')],
-  ['calendar start time is 22:30 UTC (6:30 PM EDT for May)', calendarLink.includes('20260515T223000Z')],
+  ['calendar start time is 23:30 UTC (7:30 PM EDT for May)', calendarLink.includes('20260515T233000Z')],
   ['html email contains DOCTYPE and styled wrapper', emailHtml.startsWith('<!DOCTYPE html>') && emailHtml.includes('Add to your calendar')],
   ['html email mentions the user name', emailHtml.includes('Test User')],
   ['html email does NOT leak street address', !emailHtml.includes('Phillips Ave')],

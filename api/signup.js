@@ -26,7 +26,7 @@ const sql = process.env.DATABASE_URL ? neon(process.env.DATABASE_URL) : null;
 // share only the neighborhood, not the street address. The exact address is
 // shared by Shosh after a first-time intro (SMS/WhatsApp to 412-626-1823).
 const VENUE_AREA = 'Squirrel Hill, Pittsburgh, 15217';
-const DEFAULT_TIME = '6:30 PM';
+const DEFAULT_TIME = '7:30 PM';
 const ORGANIZER_PHONE = '412-626-1823';
 const ORGANIZER_EMAIL = 'mashshosh@gmail.com';
 
@@ -103,10 +103,10 @@ function isEDT(d) {
   return d >= dstStart && d < dstEnd;
 }
 
-// Best-effort parse of an event date string into a Date at 6:30 PM Eastern.
+// Best-effort parse of an event date string into a Date at 7:30 PM Eastern.
 // Vercel functions run in UTC, so we explicitly compute the UTC equivalent
-// of 18:30 ET (22:30 UTC during EDT, 23:30 UTC during EST) instead of using
-// setHours which would set the time in the function's wall-clock TZ.
+// of 19:30 ET (23:30 UTC during EDT, 00:30 UTC next-day during EST) instead
+// of using setHours which would set the time in the function's wall-clock TZ.
 // Accepts forms like "May 15", "May 15, 2026", "2026-05-15".
 function parseEventStart(eventDate) {
   if (!eventDate) return null;
@@ -115,7 +115,7 @@ function parseEventStart(eventDate) {
   if (isNaN(d.getTime())) d = new Date(`${eventDate}, ${year}`);
   if (isNaN(d.getTime())) return null;
   const offsetHours = isEDT(d) ? 4 : 5;
-  d.setUTCHours(18 + offsetHours, 30, 0, 0);
+  d.setUTCHours(19 + offsetHours, 30, 0, 0);
   return d;
 }
 
