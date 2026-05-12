@@ -307,11 +307,15 @@ async function sendEmailJS({ toName, toEmail, subject, message, html, replyTo, l
 }
 
 async function notifyOrganizerEmail(payload) {
+  // Shosh gets the same body the guest gets, so she sees exactly what was
+  // sent. The contact details (email, phone) are already covered by the
+  // WhatsApp ping, so we don't duplicate them here.
   await sendEmailJS({
     toName: 'Shosh',
     toEmail: ORGANIZER_EMAIL,
-    subject: `Lev Echad sign-up: ${payload.name} (${payload.eventName})`,
-    message: buildSummaryText(payload),
+    subject: `New signup: ${payload.name} for ${payload.eventName}`,
+    message: buildUserConfirmationText(payload),
+    html: buildUserConfirmationHtml(payload),
     label: 'Organizer notification',
   });
 }
