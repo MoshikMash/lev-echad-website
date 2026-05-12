@@ -508,6 +508,11 @@ function App() {
             to_name: formData.name,
             to_email: formData.email,
             from_name: 'Lev Echad',
+            // The EmailJS template's Subject field is `{{subject}}`, so
+            // every caller controls its own subject. Contact-form copies
+            // get this generic line; signups in the serverless function
+            // pass their own subject.
+            subject: 'Copy of your message to Lev Echad',
             message: formData.message,
             reply_to: 'mashshosh@gmail.com',
             user_name: formData.name,
@@ -516,9 +521,11 @@ function App() {
           };
 
           console.log('Sending EmailJS copy with params:', templateParams);
-          
+
+          // Service ID was rebuilt in EmailJS on 2026-05-12; old `service_l47oh6c`
+          // no longer exists. The new ID is `service_91gmg1n`.
           const result = await emailjs.send(
-            'service_l47oh6c',
+            'service_91gmg1n',
             'template_3a68j0o',
             templateParams
           );
