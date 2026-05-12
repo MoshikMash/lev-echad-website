@@ -46,6 +46,12 @@ const txt = {
     finish: "I'm done",
     successTitle: "You're signed up!",
     successText: "Thank you — we'll see you soon!",
+    successEmailNote:
+      "We just sent a confirmation email from mashshosh@gmail.com — if you don't see it within a few minutes, please check your spam folder.",
+    successDetailsNote:
+      "Shosh will be in touch personally with all the further details — the exact address, parking, what to bring, and anything else you need.",
+    successFirstTimeNote:
+      "First time joining us? Please text or WhatsApp Shosh at 412-626-1823 for a short introduction.",
     close: 'Close',
     errorTitle: 'Something went wrong',
     errorText:
@@ -72,6 +78,12 @@ const txt = {
     finish: 'סיימתי',
     successTitle: 'נרשמת בהצלחה!',
     successText: 'תודה — נתראה בקרוב!',
+    successEmailNote:
+      'שלחנו לכם אימייל אישור מהכתובת mashshosh@gmail.com — אם הוא לא מגיע תוך כמה דקות, בדקו בתיקיית הספאם.',
+    successDetailsNote:
+      'שוש תיצור איתכם קשר אישית עם כל הפרטים הנוספים — הכתובת המדויקת, חניה, מה להביא וכל מה שצריך לדעת.',
+    successFirstTimeNote:
+      'מצטרפים אלינו בפעם הראשונה? שלחו SMS או הודעת WhatsApp לשוש: 412-626-1823 להיכרות קצרה.',
     close: 'סגור',
     errorTitle: 'משהו השתבש',
     errorText:
@@ -297,7 +309,18 @@ export default function SignupModal({
           <div className="p-8 text-center">
             <div className="text-5xl mb-4">✓</div>
             <h3 className="text-2xl font-bold text-green-700 mb-2">{t.successTitle}</h3>
-            <p className="text-gray-600 mb-6">{t.successText}</p>
+            <p className="text-gray-600 mb-4">{t.successText}</p>
+            <div className="mx-auto max-w-md space-y-3 text-left text-sm text-gray-700 mb-6">
+              <p className="rounded-lg bg-blue-50 border border-blue-100 px-4 py-3">
+                {t.successEmailNote}
+              </p>
+              <p className="rounded-lg bg-green-50 border border-green-100 px-4 py-3">
+                {t.successDetailsNote}
+              </p>
+              <p className="rounded-lg bg-amber-50 border border-amber-100 px-4 py-3">
+                {t.successFirstTimeNote}
+              </p>
+            </div>
             <button
               onClick={onClose}
               className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-xl transition-colors"
