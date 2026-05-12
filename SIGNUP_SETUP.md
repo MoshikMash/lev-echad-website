@@ -37,20 +37,34 @@ without anything else configured.
 
 | Name | Value | What it does |
 | --- | --- | --- |
-| `EMAILJS_SERVICE_ID` / `EMAILJS_TEMPLATE_ID` / `EMAILJS_USER_ID` | EmailJS account credentials | Used for **both** the organizer notification (to `mashshosh@gmail.com`) and the signing-up user's confirmation. If these are unset, the defaults in `api/signup.js` (the existing contact-form template) are used. |
-| `EMAILJS_ACCESS_TOKEN` | EmailJS private key | Required only if EmailJS strict mode is on. |
+| `RESEND_API_KEY` | Resend API key (e.g. `re_xxx`) from https://resend.com/api-keys | Required for both the organizer notification (to `mashshosh@gmail.com`) and the signing-up user's confirmation. If unset, **no email is sent** but the DB write still succeeds. |
+| `RESEND_FROM` | A verified sender, e.g. `Lev Echad <shosh@levechadpgh.org>` | Defaults to `Lev Echad <onboarding@resend.dev>` which only delivers to the Resend account owner — fine for testing, not for real signups. Verify your own domain in Resend to send to anyone. |
 | `WHATSAPP_PHONE` | `+14126261823` (recipient phone, country code required) | Whose WhatsApp gets the ping. |
 | `WHATSAPP_APIKEY` | The CallMeBot APIKEY (obtained by messaging their bot once — see below) | Required for WhatsApp to fire. |
 | `SIGNUP_SECRET` | Any random string | Optional anti-spam: if set, the website must send the same string in the `secret` field of the POST body. Useful only if your endpoint URL ever leaks publicly. |
 
 If `WHATSAPP_PHONE` or `WHATSAPP_APIKEY` is unset → no WhatsApp is sent.
-The sign-up is still saved to the database regardless.
+If `RESEND_API_KEY` is unset → no emails are sent.
+The sign-up is still saved to the database in all cases.
 
-**EmailJS prerequisite:** in the EmailJS dashboard
-(`https://dashboard.emailjs.com/admin/account/security`) the option
-**"Allow API requests from non-browser environments"** must be ON.
-Otherwise EmailJS returns 403 to the Vercel serverless function and no
-emails go out — though the DB write still succeeds.
+### Resend setup (one time, ~3 minutes)
+
+1. Create a free account at https://resend.com (3,000 emails/month on the free tier).
+2. **Add and verify your domain** at https://resend.com/domains. Because
+   `levechadpgh.org` is hosted on Vercel, Resend offers a one-click Vercel
+   integration that adds the DNS records (SPF + DKIM) automatically. Wait
+   ~30 seconds for the domain to show as "Verified".
+3. Create an API key at https://resend.com/api-keys (full access is fine
+   for this use). Copy the `re_xxxxx` value.
+4. In Vercel → project → Settings → Environment Variables, add:
+   - `RESEND_API_KEY` = `re_xxxxx`
+   - `RESEND_FROM` = e.g. `Lev Echad <shosh@levechadpgh.org>` (must use the
+     verified domain)
+5. Redeploy (push any commit; Vercel auto-redeploys).
+
+After this, each sign-up sends both emails. Verify in Vercel logs by
+looking for the `Organizer notification Resend status=200 ...` and
+`User confirmation Resend status=200 ...` lines on the next signup.
 
 ---
 
@@ -104,25 +118,14 @@ sign-up details to the configured phone.
 ## Email notifications
 
 Both the organizer notification (to `mashshosh@gmail.com`) and the
-signing-up user's confirmation are sent via the existing EmailJS account
-that powers the contact form. No extra config is required — the
-defaults baked into `api/signup.js` use the same service/template the
-contact form already uses.
-
-The only prerequisite is the EmailJS account-level setting:
-
-1. Go to https://dashboard.emailjs.com/admin/account/security
-2. Toggle **"Allow API requests from non-browser environments"** ON
-3. Save
-
-Without that, EmailJS returns `403 API access from non-browser
-environments is currently disabled` to the Vercel function and no emails
-are sent. The DB row is still written.
+signing-up user's confirmation are sent via Resend. See the "Resend
+setup" section above for getting an API key and verifying the sender
+domain.
 
 To verify after a signup, open Vercel → project → Logs → click the
 `/api/signup` row. You should see two log lines like:
-- `Organizer notification EmailJS status=200 to=mashshosh@gmail.com body=OK`
-- `User confirmation EmailJS status=200 to=<recipient> body=OK`
+- `Organizer notification Resend status=200 to=mashshosh@gmail.com body={"id":"..."}`
+- `User confirmation Resend status=200 to=<recipient> body={"id":"..."}`
 
 ---
 
