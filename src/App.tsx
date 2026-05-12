@@ -57,6 +57,7 @@ function App() {
       whoForBullet5: "🌿 You grew up Jewish but don't quite feel at home or close to Jewish life",
       whoForBullet6: "🌎 You're Israeli far from home and miss the feeling of Friday night",
       whoForOutro: "We've hosted everyone from teenagers and students to grandparents. The only \"requirement\" is wanting to share a meal and feel part of something.",
+      whoForPromise: "💛 And we promise — you'll find really, really nice people here.",
       // Sections
       welcomeTitle: "Welcome to Pittsburgh!",
       welcomeSubtitle: "Your friendly guide to Jewish life in Pittsburgh. Click on any topic below to explore detailed information!",
@@ -193,6 +194,7 @@ function App() {
       whoForBullet5: "🌿 גדלתם יהודים אבל לא ממש מרגישים בבית או קרובים לחיים יהודיים",
       whoForBullet6: "🌎 ישראלים רחוק מהבית שמתגעגעים לתחושת ליל שישי",
       whoForOutro: "אירחנו את כולם — מבני נוער וסטודנטים ועד סבים וסבתות. ה\"דרישה\" היחידה היא רצון לחלוק ארוחה ולהרגיש חלק ממשהו.",
+      whoForPromise: "💛 ואנחנו מבטיחים — תפגשו כאן אנשים ממש, ממש נחמדים.",
       // Sections
       welcomeTitle: "ברוכים הבאים לפיטסבורג!",
       welcomeSubtitle: "המדריך הידידותי שלכם לחיים יהודיים בפיטסבורג. לחצו על כל נושא למטה כדי לחקור מידע מפורט!",
@@ -743,6 +745,12 @@ function App() {
               dir={language === 'he' ? 'rtl' : 'ltr'}
             >
               {t[language].whoForOutro}
+            </p>
+            <p
+              className="mt-6 text-center text-base md:text-lg font-semibold text-pink-700 bg-pink-50 border border-pink-200 rounded-xl px-6 py-4 max-w-2xl mx-auto"
+              dir={language === 'he' ? 'rtl' : 'ltr'}
+            >
+              {t[language].whoForPromise}
             </p>
           </div>
         </div>
