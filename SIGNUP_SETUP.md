@@ -58,10 +58,21 @@ From there you can sort/filter rows and export to CSV.
 
 Columns:
 
-| id | submitted_at | event_name | event_date | name | email | phone | guests | notes |
+| Column | Notes |
+| --- | --- |
+| `id` | serial primary key |
+| `submitted_at` | timestamp |
+| `event_key` | stable slug per event-instance, e.g. `shabbat-dinner-may-15-2026` — group rows by this to count signups per event |
+| `event_name` | self-describing event label including the date (`Shabbat Dinner — May 15, 2026`) |
+| `event_date` | raw date string as displayed on the site |
+| `name`, `email`, `phone`, `guests`, `notes` | from the form |
+| `language` | `en` or `he` |
+| `referrer`, `user_agent` | from the request headers |
 
 The table is **auto-created** by the serverless function on the first POST,
-so you don't need to run any SQL to set it up.
+so you don't need to run any SQL to set it up. The function also runs idempotent
+`ALTER TABLE` migrations on every cold start, so dropped/added columns
+propagate automatically the next time someone signs up.
 
 ---
 
