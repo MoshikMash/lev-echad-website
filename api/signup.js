@@ -130,10 +130,12 @@ function buildCalendarLink({ eventName, eventDate }) {
 }
 
 function buildSummaryText(payload) {
+  // payload.eventName already includes the date (e.g. "Shabbat Dinner —
+  // May 15, 2026"), so we don't append eventDate again.
   return [
     'New Lev Echad sign-up:',
     '',
-    `Event: ${payload.eventName}${payload.eventDate ? ` (${payload.eventDate})` : ''}`,
+    `Event: ${payload.eventName}`,
     `Name: ${payload.name}`,
     `Email: ${payload.email}`,
     `Phone: ${payload.phone}`,
@@ -178,22 +180,58 @@ function buildUserConfirmationText(payload) {
   ].filter(Boolean).join('\n');
 }
 
-async function notifyOrganizerEmail(payload) {
-  const url = process.env.NOTIFY_EMAIL_ENDPOINT;
-  if (!url) return;
-  try {
-    await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({
-        _subject: `🍽️ Lev Echad sign-up: ${payload.name} (${payload.eventName})`,
-        ...payload,
-        summary: buildSummaryText(payload),
-      }),
-    });
-  } catch (err) {
-    console.error('Organizer email failed:', err);
+// One EmailJS path for both organizer notification and user confirmation.
+// EmailJS replies with HTTP 4xx + a short error string if the API rejects
+// the request (e.g. "API access from non-browser environments is disabled"),
+// and "OK" on success — we log both so the next signup shows the outcome.
+async function sendEmailJS({ toName, toEmail, subject, message, replyTo, label }) {
+  if (!toEmail) {
+    console.warn(`${label} skipped: no recipient`);
+    return;
   }
+  try {
+    const body = {
+      service_id: EMAILJS_SERVICE_ID,
+      template_id: EMAILJS_TEMPLATE_ID,
+      user_id: EMAILJS_USER_ID,
+      template_params: {
+        to_name: toName,
+        to_email: toEmail,
+        from_name: 'Lev Echad',
+        subject,
+        message,
+        reply_to: replyTo || ORGANIZER_EMAIL,
+        user_name: toName,
+        user_email: toEmail,
+        user_message: message,
+      },
+    };
+    if (EMAILJS_ACCESS_TOKEN) body.accessToken = EMAILJS_ACCESS_TOKEN;
+
+    const res = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const respBody = (await res.text().catch(() => '')).slice(0, 300);
+    if (res.ok) {
+      console.log(`${label} EmailJS status=${res.status} to=${toEmail} body=${respBody}`);
+    } else {
+      console.error(`${label} EmailJS failed status=${res.status} to=${toEmail} body=${respBody}`);
+    }
+  } catch (err) {
+    console.error(`${label} EmailJS error:`, err);
+  }
+}
+
+async function notifyOrganizerEmail(payload) {
+  await sendEmailJS({
+    toName: 'Shosh',
+    toEmail: ORGANIZER_EMAIL,
+    subject: `Lev Echad sign-up: ${payload.name} (${payload.eventName})`,
+    message: buildSummaryText(payload),
+    label: 'Organizer notification',
+  });
 }
 
 async function notifyOrganizerWhatsApp(payload) {
@@ -225,44 +263,13 @@ async function notifyOrganizerWhatsApp(payload) {
 }
 
 async function sendUserConfirmation(payload) {
-  // Don't try if we have no recipient.
-  if (!payload.email) return;
-  const message = buildUserConfirmationText(payload);
-  const subject = `You're signed up — ${payload.eventName} at Lev Echad`;
-
-  try {
-    const body = {
-      service_id: EMAILJS_SERVICE_ID,
-      template_id: EMAILJS_TEMPLATE_ID,
-      user_id: EMAILJS_USER_ID,
-      template_params: {
-        // The existing contact-form template accepts these names; we reuse them
-        // so the user gets *something* even without a dedicated signup template.
-        // Create a dedicated EmailJS template later for nicer formatting.
-        to_name: payload.name,
-        to_email: payload.email,
-        from_name: 'Lev Echad',
-        subject,
-        message,
-        reply_to: 'mashshosh@gmail.com',
-        user_name: payload.name,
-        user_email: payload.email,
-        user_message: message,
-      },
-    };
-    if (EMAILJS_ACCESS_TOKEN) body.accessToken = EMAILJS_ACCESS_TOKEN;
-
-    const res = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    });
-    if (!res.ok) {
-      console.error('User confirmation failed:', res.status, await res.text().catch(() => ''));
-    }
-  } catch (err) {
-    console.error('User confirmation failed:', err);
-  }
+  await sendEmailJS({
+    toName: payload.name,
+    toEmail: payload.email,
+    subject: `You're signed up — ${payload.eventName} at Lev Echad`,
+    message: buildUserConfirmationText(payload),
+    label: 'User confirmation',
+  });
 }
 
 // Exported for local testing. The Vercel runtime only invokes the default
