@@ -159,36 +159,45 @@ function buildSummaryText(payload) {
   ].join('\n');
 }
 
+// The EmailJS template (Contact Us / template_3a68j0o) wraps everything we
+// send with hardcoded text we can't edit on the free tier:
+//
+//   "Dear {{to_name}}, Thank you for contacting Lev Echad!
+//    Here's a copy of your message:
+//      [OUR MESSAGE]
+//    We'll get back to you soon!  Best regards, The Lev Echad Team"
+//
+// So we shape this message to read coherently inside that wrapper:
+//   - first a brief signup-recap (lines up with "Here's a copy of your
+//     message:")
+//   - then a "What's next" section that reads like a Lev Echad reply
+//   - the wrapper's closing "We'll get back to you soon!" then fits with
+//     Shosh's promise to be in touch personally.
 function buildUserConfirmationText(payload) {
-  const dateLine = payload.eventDate
-    ? `Date: ${payload.eventDate}`
-    : `Date: as scheduled`;
+  const dateLine = payload.eventDate || 'as scheduled';
   return [
-    `Hi ${payload.name},`,
+    `I just signed up for ${payload.eventName} at Lev Echad.`,
     '',
-    `You're signed up for ${payload.eventName} at Lev Echad. Looking forward to seeing you!`,
+    `  Name: ${payload.name}`,
+    `  Guests joining me: ${payload.guests}`,
+    payload.notes ? `  My notes: ${payload.notes}` : null,
     '',
-    `Event details:`,
-    `  ${dateLine}`,
-    `  Time: ${DEFAULT_TIME}`,
-    `  Where: we meet in ${VENUE_AREA}`,
-    `  Guests in your party: ${payload.guests}`,
-    payload.notes ? `  Your notes: ${payload.notes}` : '',
+    `--`,
     '',
-    `Just come — you don't need to bring anything. Shosh will reach out`,
-    `personally with the exact address and any other details you need.`,
+    `What's next:`,
     '',
-    `If this is your first time joining us, please text or WhatsApp Shosh`,
-    `at ${ORGANIZER_PHONE} for a short introduction before the event.`,
+    `  📅 ${dateLine}, ${DEFAULT_TIME} Eastern`,
+    `  📍 We meet in ${VENUE_AREA}`,
+    `  🎁 You don't need to bring anything — just yourself`,
+    `  📞 First-time joining us? Please text or WhatsApp Shosh at`,
+    `     ${ORGANIZER_PHONE} for a quick hello before the event`,
     '',
-    `Add to your calendar (one click): ${payload.calendarLink}`,
+    `Add to your calendar (one click):`,
+    `${payload.calendarLink}`,
     '',
-    `Need to change anything? Just reply to this email or text Shosh at ${ORGANIZER_PHONE}.`,
-    '',
-    `Warmly,`,
-    `Shosh & the Lev Echad team`,
-    `https://www.levechadpgh.org`,
-  ].filter(Boolean).join('\n');
+    `Shosh will be in touch personally with the exact address and any`,
+    `other details you need. Looking forward to seeing you!`,
+  ].filter((line) => line !== null).join('\n');
 }
 
 // HTML version of the confirmation. Pretty formatting with proper line

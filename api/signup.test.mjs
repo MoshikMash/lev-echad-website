@@ -33,9 +33,11 @@ const emailHtml = __test.buildUserConfirmationHtml(payload);
 const expectations = [
   ['email mentions Squirrel Hill, 15217', emailBody.includes('Squirrel Hill, Pittsburgh, 15217')],
   ['email does NOT leak street address', !emailBody.includes('Phillips Ave')],
-  ['email tells first-timers to text Shosh',  emailBody.includes('first time') && emailBody.includes('412-626-1823')],
+  ['email tells first-timers to text Shosh',  emailBody.includes('First-time') && emailBody.includes('412-626-1823')],
   ['email says guests don\'t need to bring anything',  emailBody.includes("don't need to bring anything")],
-  ['email says Shosh reaches out personally',  emailBody.includes('Shosh will reach out')],
+  ['email says Shosh will be in touch personally',  emailBody.includes('Shosh will be in touch personally')],
+  ['email is framed as the signup the guest just submitted', emailBody.includes('I just signed up for')],
+  ['email includes "What\'s next" section', emailBody.includes("What's next")],
   ['calendar location is neighborhood-only', decodeURIComponent(calendarLink).includes('location=Squirrel+Hill') || decodeURIComponent(calendarLink).includes('location=Squirrel Hill')],
   ['calendar details mention Shosh phone',   decodeURIComponent(calendarLink).includes('412-626-1823')],
   ['calendar details do NOT leak street',    !decodeURIComponent(calendarLink).includes('Phillips')],
