@@ -320,48 +320,142 @@ function App() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
-  // Sample testimonials - you can replace these with your actual testimonials
+  // Real testimonials — every entry has both an English and a Hebrew version
+  // so the carousel reads correctly in either language. `role` is the
+  // person's relationship to Lev Echad (Community Member / Student / Parent).
   const testimonials = [
     {
-      text: "I had just moved to Pittsburgh and didn't know a soul. That first Shabbat dinner at Shosh and Moshe's home felt like walking into a warm hug. It's not just a meal — it's a family.",
-      author: "Tammy",
-      role: "Community Member"
+      en: {
+        text: "I had just moved to Pittsburgh and didn't know a soul. That first Shabbat dinner at Shosh and Moshe's home felt like walking into a warm hug. It's not just a meal — it's a family.",
+        author: "Tammy",
+        role: "Community Member",
+      },
+      he: {
+        text: "בדיוק עברתי לפיטסבורג ולא הכרתי אף אחד. ארוחת ליל השבת הראשונה אצל שוש ומשה הרגישה כמו להיכנס לחיבוק חמים. זו לא רק ארוחה — זו משפחה.",
+        author: "תמי",
+        role: "חברה בקהילה",
+      },
     },
     {
-      text: "As someone who lives alone and has no family nearby, these dinners are the highlight of my week. The atmosphere, the food, the learning — it brings my heart back to life.",
-      author: "Dave",
-      role: "Community Member"
+      en: {
+        text: "As someone who lives alone and has no family nearby, these dinners are the highlight of my week. The atmosphere, the food, the learning — it brings my heart back to life.",
+        author: "Dave",
+        role: "Community Member",
+      },
+      he: {
+        text: "בתור מישהו שגר לבד ואין לו משפחה בקרבת מקום, הארוחות האלה הן הנקודה החשובה של השבוע שלי. האווירה, האוכל, הלימוד — הם מחזירים את לבי לחיים.",
+        author: "דייב",
+        role: "חבר בקהילה",
+      },
     },
     {
-      text: "Lev Echad brings people together in a way I've never seen before. Shosh sees each person and makes them feel like they matter.",
-      author: "Mordechai",
-      role: "Community Member"
+      en: {
+        text: "Lev Echad brings people together in a way I've never seen before. Shosh sees each person and makes them feel like they matter.",
+        author: "Mordechai",
+        role: "Community Member",
+      },
+      he: {
+        text: "לב אחד מקרבת אנשים בצורה שלא ראיתי קודם. שוש רואה כל אדם וגורמת לו להרגיש שהוא חשוב.",
+        author: "מרדכי",
+        role: "חבר בקהילה",
+      },
     },
     {
-      text: "It's hard being a student away from home. I didn't expect to feel this kind of connection around a Shabbat table in someone's house — but I did, and I keep coming back.",
-      author: "David",
-      role: "Student"
+      en: {
+        text: "It's hard being a student away from home. I didn't expect to feel this kind of connection around a Shabbat table in someone's house — but I did, and I keep coming back.",
+        author: "David",
+        role: "Student",
+      },
+      he: {
+        text: "קשה להיות סטודנט הרחק מהבית. לא ציפיתי להרגיש סוג כזה של חיבור סביב שולחן שבת בבית של מישהו — אבל הרגשתי, ואני ממשיך לחזור.",
+        author: "דוד",
+        role: "סטודנט",
+      },
     },
     {
-      text: "As an Israeli living far from home, it's easy to feel alone, especially on Shabbat. At the Mash's house, I didn't just meet people, I felt like I found a family. Sitting around the table, singing and sharing stories, I felt seen and loved in a way I didn't expect.",
-      author: "Noga",
-      role: "Israeli Community Member"
+      en: {
+        text: "As an Israeli living far from home, it's easy to feel alone, especially on Shabbat. At the Mash's house, I didn't just meet people, I felt like I found a family. Sitting around the table, singing and sharing stories, I felt seen and loved in a way I didn't expect.",
+        author: "Noga",
+        role: "Israeli Community Member",
+      },
+      he: {
+        text: "בתור ישראלית שגרה רחוק מהבית, קל להרגיש בודדה, במיוחד בשבת. בבית של משפחת מאש לא רק פגשתי אנשים, הרגשתי שמצאתי משפחה. כשישבתי סביב השולחן, שרתי ושיתפתי סיפורים, הרגשתי שרואים אותי ואוהבים אותי באופן שלא ציפיתי לו.",
+        author: "נגה",
+        role: "חברה ישראלית בקהילה",
+      },
     },
     {
-      text: "Lev Echad's help with getting our kids into school made everything so much easier. Shosh connected us directly with the school registrar, and shared so much helpful information that it took all our concerns away. We felt supported from the very beginning.",
-      author: "Adam",
-      role: "Parent"
+      en: {
+        text: "Lev Echad's help with getting our kids into school made everything so much easier. Shosh connected us directly with the school registrar, and shared so much helpful information that it took all our concerns away. We felt supported from the very beginning.",
+        author: "Adam",
+        role: "Parent",
+      },
+      he: {
+        text: "העזרה של לב אחד בהכנסת הילדים שלנו לבית הספר הקלה על הכל. שוש חיברה אותנו ישירות עם הרשמת בית הספר, ושיתפה כל כך הרבה מידע מועיל שזה הוריד מאיתנו את כל הדאגות. הרגשנו נתמכים מהרגע הראשון.",
+        author: "אדם",
+        role: "הורה",
+      },
     },
     {
-      text: "We came to Pittsburgh in complete shock due to our daughter's urgent medical treatment. Everything happened so fast, and we suddenly found ourselves alone, afraid, and barely able to speak English. It was incredibly challenging. Shosh was the first person we reached out to — we got her number from another woman, Tal, whom she had helped in a similar situation. From the moment we connected, I felt like I had family here. Shosh was the first person who truly supported me, and her presence brought us comfort and strength when we needed it most.",
-      author: "Avraham",
-      role: "Parent"
+      en: {
+        text: "We came to Pittsburgh in complete shock due to our daughter's urgent medical treatment. Everything happened so fast, and we suddenly found ourselves alone, afraid, and barely able to speak English. It was incredibly challenging. Shosh was the first person we reached out to — we got her number from another woman, Tal, whom she had helped in a similar situation. From the moment we connected, I felt like I had family here. Shosh was the first person who truly supported me, and her presence brought us comfort and strength when we needed it most.",
+        author: "Avraham",
+        role: "Parent",
+      },
+      he: {
+        text: "הגענו לפיטסבורג בהלם מוחלט בגלל הטיפול הרפואי הדחוף של הבת שלנו. הכל קרה כל כך מהר, ופתאום מצאנו את עצמנו לבד, מפוחדים, ובקושי מסוגלים לדבר אנגלית. זה היה אתגר עצום. שוש הייתה הראשונה שפנינו אליה — קיבלנו את המספר שלה מאישה אחרת, טל, שהיא עזרה לה במצב דומה. מהרגע שהתחברנו, הרגשתי שיש לי משפחה כאן. שוש הייתה האדם הראשון שתמך בנו באמת, והנוכחות שלה הביאה לנו נחמה וכוח כשהכי הצטרכנו.",
+        author: "אברהם",
+        role: "הורה",
+      },
     },
     {
-      text: "Lev Echad helped us find the best care for our baby boy. We were very anxious about the transition — especially worried that the language barrier would make it hard for our son to connect with his teachers since no one spoke Hebrew. Shosh understood our concerns immediately. She supported us through the process, reassured us, and helped us find a place with Hebrew-speaking staff where we feel much more comfortable and at ease.",
-      author: "Rafi",
-      role: "Parent"
-    }
+      en: {
+        text: "Lev Echad helped us find the best care for our baby boy. We were very anxious about the transition — especially worried that the language barrier would make it hard for our son to connect with his teachers since no one spoke Hebrew. Shosh understood our concerns immediately. She supported us through the process, reassured us, and helped us find a place with Hebrew-speaking staff where we feel much more comfortable and at ease.",
+        author: "Rafi",
+        role: "Parent",
+      },
+      he: {
+        text: "לב אחד עזרה לנו למצוא את הטיפול הטוב ביותר לבן התינוק שלנו. היינו מאוד חרדים מהמעבר — במיוחד דאגנו שמחסום השפה יקשה על הבן שלנו ליצור קשר עם המורות כי אף אחד לא דיבר עברית. שוש הבינה את החששות שלנו מיד. היא תמכה בנו לאורך התהליך, הרגיעה אותנו, ועזרה לנו למצוא מקום עם צוות דובר עברית שבו אנחנו מרגישים הרבה יותר נוח ובנחת.",
+        author: "רפי",
+        role: "הורה",
+      },
+    },
+    {
+      en: {
+        text: "These Friday night dinners are bringing me back home. After a long week, they've become a place of peace, comfort, and belonging for me. Thank you for creating something that feels so grounding and meaningful.",
+        author: "Ofek",
+        role: "Community Member",
+      },
+      he: {
+        text: "ארוחות ליל שבת האלה מחזירות אותי הביתה. אחרי שבוע ארוך, הן הפכו למקום של שלווה, נחמה ושייכות עבורי. תודה לכם על שיצרתם משהו כל כך מקרקע ומשמעותי.",
+        author: "אופק",
+        role: "חבר בקהילה",
+      },
+    },
+    {
+      en: {
+        text: "I really look forward to these experiences every week. I miss Israel tremendously, and coming to these Friday night dinners helps me feel connected again — to Israel, to family, and to my roots. These evenings fill my heart with love, warmth, and compassion, and give me such a strong sense of belonging.",
+        author: "Dorit",
+        role: "Community Member",
+      },
+      he: {
+        text: "אני ממש מצפה לחוויות האלה כל שבוע. אני מתגעגעת לישראל מאוד, וההגעה לארוחות ליל שבת האלה עוזרת לי להרגיש מחוברת שוב — לישראל, למשפחה ולשורשים שלי. הערבים האלה ממלאים את לבי באהבה, בחום ובחמלה, ונותנים לי תחושת שייכות חזקה.",
+        author: "דורית",
+        role: "חברה בקהילה",
+      },
+    },
+    {
+      en: {
+        text: "It's so important for me to come to the Friday night dinners whenever I can. Being together with fellow Jews and sharing this experience gives me such a deep sense of connection and belonging. I feel truly blessed to be part of it, and it's something I look forward to all week long.",
+        author: "Mendi",
+        role: "Community Member",
+      },
+      he: {
+        text: "חשוב לי מאוד לבוא לארוחות ליל שבת בכל פעם שאני יכול. הישיבה יחד עם יהודים אחרים ושיתוף בחוויה הזאת נותנים לי תחושה עמוקה של חיבור ושייכות. אני מרגיש מבורך באמת להיות חלק מזה, וזה משהו שאני מצפה לו כל השבוע.",
+        author: "מנדי",
+        role: "חבר בקהילה",
+      },
+    },
   ];
 
   const nextTestimonial = () => {
@@ -527,12 +621,15 @@ function App() {
               <div className="bg-white rounded-2xl p-8 shadow-2xl border border-blue-200">
                 <div className="text-center">
                   <div className="text-4xl text-blue-600 mb-4">💙</div>
-                  <blockquote className="text-lg text-blue-900 italic mb-6 leading-relaxed">
-                    "{testimonials[currentTestimonial].text}"
+                  <blockquote
+                    className="text-lg text-blue-900 italic mb-6 leading-relaxed"
+                    dir={language === 'he' ? 'rtl' : 'ltr'}
+                  >
+                    "{testimonials[currentTestimonial][language].text}"
                   </blockquote>
                   <div className="text-blue-800">
-                    <p className="font-semibold">{testimonials[currentTestimonial].author}</p>
-                    <p className="text-sm opacity-80">{testimonials[currentTestimonial].role}</p>
+                    <p className="font-semibold">{testimonials[currentTestimonial][language].author}</p>
+                    <p className="text-sm opacity-80">{testimonials[currentTestimonial][language].role}</p>
                   </div>
                 </div>
                 
