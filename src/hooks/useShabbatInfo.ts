@@ -22,7 +22,11 @@ function getNextFriday(): Date {
 }
 
 function formatGregorianDate(date: Date): string {
-  return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+  return date.toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  });
 }
 
 function stripYear(hdate: string): string {

@@ -56,14 +56,32 @@ async function ensureSchema() {
     )
   `;
   // Additive columns — idempotent. Existing rows get NULL defaults.
-  await sql`ALTER TABLE signups ADD COLUMN IF NOT EXISTS language        TEXT`;
-  await sql`ALTER TABLE signups ADD COLUMN IF NOT EXISTS referrer        TEXT`;
-  await sql`ALTER TABLE signups ADD COLUMN IF NOT EXISTS user_agent      TEXT`;
-  await sql`ALTER TABLE signups ADD COLUMN IF NOT EXISTS status          TEXT DEFAULT 'pending'`;
-  await sql`ALTER TABLE signups ADD COLUMN IF NOT EXISTS attended        BOOLEAN DEFAULT FALSE`;
-  await sql`ALTER TABLE signups ADD COLUMN IF NOT EXISTS donation_amount NUMERIC(10,2)`;
-  await sql`ALTER TABLE signups ADD COLUMN IF NOT EXISTS donation_method TEXT`;
+  await sql`ALTER TABLE signups ADD COLUMN IF NOT EXISTS language   TEXT`;
+  await sql`ALTER TABLE signups ADD COLUMN IF NOT EXISTS referrer   TEXT`;
+  await sql`ALTER TABLE signups ADD COLUMN IF NOT EXISTS user_agent TEXT`;
+  // Stable slug per event-instance (event_name + event_date), so the same
+  // Shabbat Dinner on different dates groups as separate events.
+  await sql`ALTER TABLE signups ADD COLUMN IF NOT EXISTS event_key  TEXT`;
+  // Drop columns we never populate — they were added speculatively for a
+  // future organizer workflow that didn't materialize. DROP IF EXISTS is
+  // idempotent and safe to leave in this migration.
+  await sql`ALTER TABLE signups DROP COLUMN IF EXISTS status`;
+  await sql`ALTER TABLE signups DROP COLUMN IF EXISTS attended`;
+  await sql`ALTER TABLE signups DROP COLUMN IF EXISTS donation_amount`;
+  await sql`ALTER TABLE signups DROP COLUMN IF EXISTS donation_method`;
   schemaReady = true;
+}
+
+// Slugify "Shabbat Dinner" + "May 15, 2026" → "shabbat-dinner-may-15-2026".
+// Stable across reruns so signups for the same event-instance share a key.
+function makeEventKey(eventName, eventDate) {
+  const joined = [eventName, eventDate].filter(Boolean).join(' ').toLowerCase();
+  return joined
+    .normalize('NFKD')
+    .replace(/[^\w\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
 }
 
 function clipText(value, max) {
@@ -293,9 +311,17 @@ export default async function handler(req, res) {
     }
 
     // Trim and bound everything before storage / outbound use.
+    const baseEventName = clipText(eventName, 120);
+    const cleanedDate   = clipText(eventDate, 120);
+    // Fold the date into the stored event name so each (event, date) is
+    // self-describing when read out of the table.
+    const eventNameWithDate = cleanedDate
+      ? `${baseEventName} — ${cleanedDate}`
+      : baseEventName;
     const cleaned = {
-      eventName:  clipText(eventName,  120),
-      eventDate:  clipText(eventDate,  120),
+      eventName:  eventNameWithDate,
+      eventDate:  cleanedDate,
+      eventKey:   makeEventKey(baseEventName, cleanedDate),
       name:       clipText(name,       120),
       email:      clipText(email,      200),
       phone:      clipText(phone,      40),
@@ -310,9 +336,9 @@ export default async function handler(req, res) {
 
     await sql`
       INSERT INTO signups
-        (event_name, event_date, name, email, phone, guests, notes, language, referrer, user_agent)
+        (event_key, event_name, event_date, name, email, phone, guests, notes, language, referrer, user_agent)
       VALUES
-        (${cleaned.eventName}, ${cleaned.eventDate}, ${cleaned.name}, ${cleaned.email},
+        (${cleaned.eventKey}, ${cleaned.eventName}, ${cleaned.eventDate}, ${cleaned.name}, ${cleaned.email},
          ${cleaned.phone}, ${cleaned.guests}, ${cleaned.notes}, ${cleaned.language},
          ${cleaned.referrer}, ${cleaned.userAgent})
     `;
