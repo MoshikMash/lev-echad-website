@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 
 type Language = 'en' | 'he';
+type Step = 'form' | 'donate' | 'success';
 
 interface SignupModalProps {
   open: boolean;
@@ -8,9 +9,10 @@ interface SignupModalProps {
   eventName: string;
   eventDate?: string;
   language: Language;
+  // Used by the localhost-only preview URL (?preview-step=) to render
+  // the donate or success view without going through a real signup.
+  initialStep?: Step;
 }
-
-type Step = 'form' | 'donate' | 'success';
 
 const ZEFFY_DONATE_URL =
   'https://www.zeffy.com/en-US/donation-form/help-us-continue-our-mission-at-lev-echad';
@@ -119,11 +121,12 @@ export default function SignupModal({
   eventName,
   eventDate,
   language,
+  initialStep = 'form',
 }: SignupModalProps) {
   const t = txt[language];
   const dir = language === 'he' ? 'rtl' : 'ltr';
 
-  const [step, setStep] = useState<Step>('form');
+  const [step, setStep] = useState<Step>(initialStep);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -136,11 +139,11 @@ export default function SignupModal({
 
   useEffect(() => {
     if (open) {
-      setStep('form');
+      setStep(initialStep);
       setError(null);
       setCopied(false);
     }
-  }, [open]);
+  }, [open, initialStep]);
 
   useEffect(() => {
     setCanNativeShare(typeof navigator !== 'undefined' && typeof navigator.share === 'function');

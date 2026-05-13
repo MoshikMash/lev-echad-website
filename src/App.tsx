@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import emailjs from '@emailjs/browser'
 import AIChatbot from './components/AIChatbot'
 import SignupModal from './components/SignupModal'
@@ -23,6 +23,23 @@ function App() {
 
   // Sign-up modal state (per-event)
   const [signupEvent, setSignupEvent] = useState<{ name: string; date?: string } | null>(null);
+  const [signupPreviewStep, setSignupPreviewStep] = useState<'form' | 'donate' | 'success'>('form');
+
+  // Localhost-only signup-modal preview, so we can eyeball the donate /
+  // success screens without writing a row to the DB.
+  // Usage:  /?preview-step=success         (or donate)
+  //         /?preview-step=success&preview-lang=he
+  useEffect(() => {
+    const host = window.location.hostname;
+    if (host !== 'localhost' && host !== '127.0.0.1') return;
+    const params = new URLSearchParams(window.location.search);
+    const step = params.get('preview-step');
+    if (step === 'donate' || step === 'success') {
+      setSignupPreviewStep(step);
+      setSignupEvent({ name: 'Shabbat Dinner', date: 'May 15, 2026' });
+    }
+    if (params.get('preview-lang') === 'he') setLanguage('he');
+  }, []);
 
   const shabbat = useShabbatInfo();
 
@@ -2321,6 +2338,7 @@ function App() {
         eventName={signupEvent?.name || ''}
         eventDate={signupEvent?.date}
         language={language}
+        initialStep={signupPreviewStep}
       />
 
     </div>
