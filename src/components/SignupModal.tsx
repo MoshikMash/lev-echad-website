@@ -52,6 +52,17 @@ const txt = {
       "Shosh will be in touch personally with all the further details — the exact address, parking, what to bring, and anything else you need.",
     successFirstTimeNote:
       "First time joining us? Please text or WhatsApp Shosh at 412-626-1823 for a short introduction.",
+    shareTitle: 'Share with a friend',
+    shareSubtitle:
+      'Know someone who could use a warm community? Newcomers are always welcome.',
+    shareMessage:
+      'I just signed up for a Lev Echad event in Pittsburgh — a warm Jewish community with Shabbat dinners and gatherings. Check it out: https://www.levechadpgh.org',
+    shareSubject: 'Check out Lev Echad — a warm Pittsburgh Jewish community',
+    shareWhatsApp: 'WhatsApp',
+    shareEmail: 'Email',
+    shareCopy: 'Copy link',
+    shareCopied: 'Copied!',
+    shareNative: 'Share',
     close: 'Close',
     errorTitle: 'Something went wrong',
     errorText:
@@ -84,6 +95,17 @@ const txt = {
       'שוש תיצור איתכם קשר אישית עם כל הפרטים הנוספים — הכתובת המדויקת, חניה, מה להביא וכל מה שצריך לדעת.',
     successFirstTimeNote:
       'מצטרפים אלינו בפעם הראשונה? שלחו SMS או הודעת WhatsApp לשוש: 412-626-1823 להיכרות קצרה.',
+    shareTitle: 'שתפו עם חבר',
+    shareSubtitle:
+      'מכירים מישהו שיכול להנות מקהילה חמה? חדשים תמיד מוזמנים.',
+    shareMessage:
+      'בדיוק נרשמתי לאירוע של לב אחד בפיטסבורג — קהילה יהודית חמה עם ארוחות שבת ומפגשים. תראו: https://www.levechadpgh.org',
+    shareSubject: 'הצצה ללב אחד — קהילה יהודית חמה בפיטסבורג',
+    shareWhatsApp: 'וואטסאפ',
+    shareEmail: 'אימייל',
+    shareCopy: 'העתק קישור',
+    shareCopied: 'הועתק!',
+    shareNative: 'שיתוף',
     close: 'סגור',
     errorTitle: 'משהו השתבש',
     errorText:
@@ -109,13 +131,46 @@ export default function SignupModal({
   const [notes, setNotes] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+  const [canNativeShare, setCanNativeShare] = useState(false);
 
   useEffect(() => {
     if (open) {
       setStep('form');
       setError(null);
+      setCopied(false);
     }
   }, [open]);
+
+  useEffect(() => {
+    setCanNativeShare(typeof navigator !== 'undefined' && typeof navigator.share === 'function');
+  }, []);
+
+  const SHARE_URL = 'https://www.levechadpgh.org';
+  const whatsAppHref = `https://wa.me/?text=${encodeURIComponent(t.shareMessage)}`;
+  const mailtoHref = `mailto:?subject=${encodeURIComponent(t.shareSubject)}&body=${encodeURIComponent(t.shareMessage)}`;
+
+  const handleCopyShare = async () => {
+    try {
+      await navigator.clipboard.writeText(t.shareMessage);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // ignore — clipboard can fail in non-secure contexts
+    }
+  };
+
+  const handleNativeShare = async () => {
+    if (typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
+      try {
+        await navigator.share({ title: 'Lev Echad', text: t.shareMessage, url: SHARE_URL });
+      } catch {
+        // user cancelled or share failed — silent
+      }
+    } else {
+      handleCopyShare();
+    }
+  };
 
   useEffect(() => {
     if (!open) return;
@@ -321,6 +376,59 @@ export default function SignupModal({
                 {t.successFirstTimeNote}
               </p>
             </div>
+
+            <div className="mx-auto max-w-md mb-6 rounded-2xl bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-100 p-5 text-left">
+              <h4 className="text-base font-bold text-gray-900 mb-1 flex items-center gap-2">
+                <span>💝</span>
+                <span>{t.shareTitle}</span>
+              </h4>
+              <p className="text-sm text-gray-600 mb-4">{t.shareSubtitle}</p>
+              <div className={`grid ${canNativeShare ? 'grid-cols-2' : 'grid-cols-3'} gap-2`}>
+                <a
+                  href={whatsAppHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-[#25D366] hover:bg-[#1ebe57] text-white font-semibold px-3 py-2.5 text-sm transition-colors shadow-sm"
+                >
+                  <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26L4.6 19.27l1.054-.92zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                  </svg>
+                  {t.shareWhatsApp}
+                </a>
+                <a
+                  href={mailtoHref}
+                  className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold px-3 py-2.5 text-sm transition-colors shadow-sm"
+                >
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                  {t.shareEmail}
+                </a>
+                <button
+                  type="button"
+                  onClick={handleCopyShare}
+                  className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-white border-2 border-purple-300 text-purple-700 hover:bg-purple-50 font-semibold px-3 py-2.5 text-sm transition-colors"
+                >
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  {copied ? t.shareCopied : t.shareCopy}
+                </button>
+                {canNativeShare && (
+                  <button
+                    type="button"
+                    onClick={handleNativeShare}
+                    className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-semibold px-3 py-2.5 text-sm transition-colors shadow-sm"
+                  >
+                    <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                    </svg>
+                    {t.shareNative}
+                  </button>
+                )}
+              </div>
+            </div>
+
             <button
               onClick={onClose}
               className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-xl transition-colors"
