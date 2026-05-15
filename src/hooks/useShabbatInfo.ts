@@ -9,6 +9,7 @@ interface ShabbatInfo {
   candleLighting: string;
   loading: boolean;
   error: boolean;
+  signupOpen: boolean;
 }
 
 function getNextFriday(): Date {
@@ -19,6 +20,39 @@ function getNextFriday(): Date {
   friday.setDate(now.getDate() + daysUntilFriday);
   friday.setHours(0, 0, 0, 0);
   return friday;
+}
+
+// Pittsburgh (US Eastern) is the event's local timezone — the candle-lighting
+// lookup above and the calendar invite in api/signup.js are both computed for
+// Pittsburgh — so the Thursday 22:00 sign-up cutoff is Pittsburgh wall-clock
+// time too, regardless of where the visitor's browser is.
+const EVENT_TIME_ZONE = 'America/New_York';
+const SIGNUP_CUTOFF_HOUR = 22; // Thursday 22:00 Pittsburgh time
+
+// Current weekday (0=Sun..6=Sat) and hour (0-23) in the event's timezone.
+function eventZoneNow(): { weekday: number; hour: number } {
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone: EVENT_TIME_ZONE,
+    weekday: 'short',
+    hour: 'numeric',
+    hour12: false,
+  }).formatToParts(new Date());
+  const weekdayName = parts.find((p) => p.type === 'weekday')?.value ?? '';
+  const weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(weekdayName);
+  let hour = Number(parts.find((p) => p.type === 'hour')?.value ?? '0');
+  if (hour === 24) hour = 0; // some engines report midnight as 24
+  return { weekday, hour };
+}
+
+// The event card always shows the upcoming Friday (see getNextFriday). Sign-ups
+// for that event close at 22:00 the Thursday before it, and the next event is
+// "created" — getNextFriday rolls forward a week — at Friday 00:00, which
+// reopens sign-ups. So sign-ups are closed only during Thursday 22:00–24:00
+// Pittsburgh time.
+function isSignupOpen(): boolean {
+  const { weekday, hour } = eventZoneNow();
+  const isThursday = weekday === 4;
+  return !(isThursday && hour >= SIGNUP_CUTOFF_HOUR);
 }
 
 function formatGregorianDate(date: Date): string {
@@ -34,7 +68,7 @@ function stripYear(hdate: string): string {
 }
 
 export function useShabbatInfo(): ShabbatInfo {
-  const [info, setInfo] = useState<ShabbatInfo>({
+  const [info, setInfo] = useState<Omit<ShabbatInfo, 'signupOpen'>>({
     gregorianDate: '',
     hebrewDate: '',
     hebrewDateHe: '',
@@ -44,6 +78,14 @@ export function useShabbatInfo(): ShabbatInfo {
     loading: true,
     error: false,
   });
+  const [signupOpen, setSignupOpen] = useState<boolean>(isSignupOpen);
+
+  useEffect(() => {
+    const tick = () => setSignupOpen(isSignupOpen());
+    tick();
+    const id = window.setInterval(tick, 60_000);
+    return () => window.clearInterval(id);
+  }, []);
 
   useEffect(() => {
     const friday = getNextFriday();
@@ -120,5 +162,5 @@ export function useShabbatInfo(): ShabbatInfo {
       });
   }, []);
 
-  return info;
+  return { ...info, signupOpen };
 }

@@ -108,6 +108,7 @@ function App() {
       shabbatMevarchimAdar: "Shabbat Mevarchim Chodesh Adar",
       adarSimcha: "When Adar enters we increase in joy",
       signUp: "Sign Up",
+      signupClosed: "See you at the next event — sign-ups are closed. For emergencies, talk to Shosh.",
       donate: "Donate",
       donateNow: "Donate Now",
       donateSubtext: "Secure donation via Zeffy — every dollar goes to the community.",
@@ -245,6 +246,7 @@ function App() {
       shabbatMevarchimAdar: "שבת מברכין חודש אדר",
       adarSimcha: "משנכנס אדר מרבין בשמחה",
       signUp: "הרשמה",
+      signupClosed: "נתראה באירוע הבא — ההרשמה סגורה. למקרי חירום דברו עם שוש",
       donate: "תרומה",
       donateNow: "תרמו עכשיו",
       donateSubtext: "תרומה מאובטחת דרך Zeffy — כל דולר מגיע לקהילה.",
@@ -1943,19 +1945,32 @@ function App() {
                 </p>
               </div>
 
-              <div className="mt-6 flex justify-center">
+              <div className="mt-6 flex flex-col items-center gap-3">
                 <button
                   type="button"
+                  disabled={!shabbat.signupOpen}
                   onClick={() =>
                     setSignupEvent({
                       name: t[language].shabbatDinner,
                       date: shabbat.gregorianDate || '',
                     })
                   }
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-white text-blue-700 hover:bg-blue-50 px-6 py-3 font-semibold transition-colors shadow-md"
+                  className={
+                    shabbat.signupOpen
+                      ? 'inline-flex items-center justify-center gap-2 rounded-xl bg-white text-blue-700 hover:bg-blue-50 px-6 py-3 font-semibold transition-colors shadow-md'
+                      : 'inline-flex items-center justify-center gap-2 rounded-xl bg-white/40 text-blue-900/50 px-6 py-3 font-semibold shadow-md cursor-not-allowed'
+                  }
                 >
                   ✋ {t[language].signUp}
                 </button>
+                {!shabbat.signupOpen && (
+                  <p
+                    className="text-blue-100 text-sm text-center max-w-sm"
+                    dir={language === 'he' ? 'rtl' : 'ltr'}
+                  >
+                    {t[language].signupClosed}
+                  </p>
+                )}
               </div>
             </div>
           </div>
