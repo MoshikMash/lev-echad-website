@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { ACTIVE_EVENT_DATES } from '../config/events';
 
 interface ShabbatInfo {
   gregorianDate: string;
@@ -9,16 +10,17 @@ interface ShabbatInfo {
   candleLighting: string;
   loading: boolean;
   error: boolean;
+  eventActive: boolean;
   signupOpen: boolean;
 }
 
 // Pittsburgh (US Eastern) is the event's local timezone — the candle-lighting
 // lookup below and the calendar invite in api/signup.js are both computed for
-// Pittsburgh — so the event-rollover and sign-up cutoff are Pittsburgh
+// Pittsburgh — so the event rollover and sign-up cutoff are Pittsburgh
 // wall-clock times too, regardless of where the visitor's browser is.
 const EVENT_TIME_ZONE = 'America/New_York';
 const SIGNUP_CUTOFF_HOUR = 22; // Thursday 22:00 Pittsburgh time — sign-ups close
-const EVENT_ROLLOVER_HOUR = 21; // Saturday 21:00 Pittsburgh time — next event is created
+const EVENT_ROLLOVER_HOUR = 21; // Saturday 21:00 Pittsburgh time — week advances
 
 // Current calendar date + weekday (0=Sun..6=Sat) + hour (0-23) in the event's
 // timezone.
@@ -51,40 +53,55 @@ function eventZoneNow(): {
   };
 }
 
-// The Friday of the current Shabbat week. The displayed event rolls forward to
-// the next Friday at Saturday 21:00 Pittsburgh time — so the card keeps showing
-// "this Shabbat" through the dinner and Shabbat itself, then advances once
-// Shabbat is over.
-function getEventFriday(): Date {
+function isoDate(y: number, m: number, d: number): string {
+  return `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+}
+
+// The ISO date `days` away from the given YYYY-MM-DD, computed in UTC so the
+// calendar arithmetic is unaffected by the browser timezone.
+function addDaysISO(iso: string, days: number): string {
+  const [y, m, d] = iso.split('-').map(Number);
+  return new Date(Date.UTC(y, m - 1, d + days)).toISOString().slice(0, 10);
+}
+
+// The Friday (YYYY-MM-DD) of the current Shabbat week in Pittsburgh time. It
+// rolls forward to the next Friday at Saturday 21:00 Pittsburgh time, so "this
+// Shabbat" stays current through the dinner and Shabbat itself.
+function currentShabbatFriday(): string {
   const { year, month, day, weekday, hour } = eventZoneNow();
   let daysToFriday: number;
   if (weekday === 6) {
-    // Saturday: still this week's Friday until the 21:00 rollover, then next.
-    daysToFriday = hour >= EVENT_ROLLOVER_HOUR ? 6 : -1;
+    daysToFriday = hour >= EVENT_ROLLOVER_HOUR ? 6 : -1; // Saturday
   } else if (weekday === 5) {
-    daysToFriday = 0; // Friday: tonight's dinner
+    daysToFriday = 0; // Friday — tonight's dinner
   } else {
-    daysToFriday = 5 - weekday; // Sun–Thu: the coming Friday
+    daysToFriday = 5 - weekday; // Sun–Thu — the coming Friday
   }
-  // Built from the Pittsburgh calendar date; downstream code reads it back with
-  // local getters, so the Y/M/D round-trips regardless of the browser TZ.
-  return new Date(year, month - 1, day + daysToFriday);
+  return addDaysISO(isoDate(year, month, day), daysToFriday);
 }
 
-// Sign-ups for the current event close at 22:00 the Thursday before it and
-// reopen when the next event is created at Saturday 21:00 Pittsburgh time. So
-// sign-ups are closed from Thursday 22:00 through Saturday 21:00 (covering the
-// dinner and Shabbat itself).
-function isSignupOpen(): boolean {
-  const { weekday, hour } = eventZoneNow();
-  if (weekday === 4 && hour >= SIGNUP_CUTOFF_HOUR) return false; // Thu 22:00+
-  if (weekday === 5) return false; // all of Friday
-  if (weekday === 6 && hour < EVENT_ROLLOVER_HOUR) return false; // Sat before 21:00
-  return true;
+// The next scheduled event on or after the current Shabbat week, or null when
+// nothing is scheduled. Events are opt-in — see src/config/events.ts.
+function nextActiveEvent(): string | null {
+  const from = currentShabbatFriday();
+  const upcoming = ACTIVE_EVENT_DATES.filter((d) => d >= from).sort();
+  return upcoming[0] ?? null;
 }
 
-function formatGregorianDate(date: Date): string {
-  return date.toLocaleDateString('en-US', {
+// Sign-ups for a given event close at 22:00 the Thursday before it (Pittsburgh
+// time); until then they're open.
+function isSignupOpen(eventFridayISO: string): boolean {
+  const { year, month, day, hour } = eventZoneNow();
+  const today = isoDate(year, month, day);
+  const cutoffDay = addDaysISO(eventFridayISO, -1); // the Thursday before
+  if (today < cutoffDay) return true;
+  if (today > cutoffDay) return false;
+  return hour < SIGNUP_CUTOFF_HOUR;
+}
+
+function formatGregorianDate(iso: string): string {
+  const [y, m, d] = iso.split('-').map(Number);
+  return new Date(y, m - 1, d).toLocaleDateString('en-US', {
     month: 'long',
     day: 'numeric',
     year: 'numeric',
@@ -95,35 +112,46 @@ function stripYear(hdate: string): string {
   return hdate.replace(/\s*\d{4}$/, '');
 }
 
+const EMPTY: Omit<ShabbatInfo, 'eventActive' | 'signupOpen'> = {
+  gregorianDate: '',
+  hebrewDate: '',
+  hebrewDateHe: '',
+  parasha: '',
+  parashaHe: '',
+  candleLighting: '',
+  loading: true,
+  error: false,
+};
+
 export function useShabbatInfo(): ShabbatInfo {
-  const [info, setInfo] = useState<Omit<ShabbatInfo, 'signupOpen'>>({
-    gregorianDate: '',
-    hebrewDate: '',
-    hebrewDateHe: '',
-    parasha: '',
-    parashaHe: '',
-    candleLighting: '',
-    loading: true,
-    error: false,
+  const [info, setInfo] = useState(EMPTY);
+  const [eventActive, setEventActive] = useState<boolean>(() => nextActiveEvent() !== null);
+  const [signupOpen, setSignupOpen] = useState<boolean>(() => {
+    const next = nextActiveEvent();
+    return next !== null && isSignupOpen(next);
   });
-  const [signupOpen, setSignupOpen] = useState<boolean>(isSignupOpen);
 
   useEffect(() => {
-    const tick = () => setSignupOpen(isSignupOpen());
+    const tick = () => {
+      const next = nextActiveEvent();
+      setEventActive(next !== null);
+      setSignupOpen(next !== null && isSignupOpen(next));
+    };
     tick();
     const id = window.setInterval(tick, 60_000);
     return () => window.clearInterval(id);
   }, []);
 
   useEffect(() => {
-    const friday = getEventFriday();
-    const gregorianDate = formatGregorianDate(friday);
+    const next = nextActiveEvent();
+    if (!next) {
+      setInfo({ ...EMPTY, loading: false });
+      return;
+    }
 
-    const yyyy = friday.getFullYear();
-    const mm = String(friday.getMonth() + 1).padStart(2, '0');
-    const dd = String(friday.getDate()).padStart(2, '0');
-
-    const url = `https://www.hebcal.com/shabbat?cfg=json&geonameid=5206379&M=on&start=${yyyy}-${mm}-${dd}&end=${yyyy}-${mm}-${dd}`;
+    const gregorianDate = formatGregorianDate(next);
+    const [yyyy, mm, dd] = next.split('-');
+    const url = `https://www.hebcal.com/shabbat?cfg=json&geonameid=5206379&M=on&start=${next}&end=${next}`;
 
     fetch(url)
       .then((res) => res.json())
@@ -159,7 +187,7 @@ export function useShabbatInfo(): ShabbatInfo {
           hebrewDate
             ? Promise.resolve({ en: hebrewDate, he: '' })
             : fetch(
-                `https://www.hebcal.com/converter?cfg=json&gy=${yyyy}&gm=${friday.getMonth() + 1}&gd=${friday.getDate()}&g2h=1`
+                `https://www.hebcal.com/converter?cfg=json&gy=${yyyy}&gm=${Number(mm)}&gd=${Number(dd)}&g2h=1`
               )
                 .then((r) => r.json())
                 .then((hd) => ({
@@ -190,5 +218,5 @@ export function useShabbatInfo(): ShabbatInfo {
       });
   }, []);
 
-  return { ...info, signupOpen };
+  return { ...info, eventActive, signupOpen };
 }

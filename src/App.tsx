@@ -109,6 +109,7 @@ function App() {
       adarSimcha: "When Adar enters we increase in joy",
       signUp: "Sign Up",
       signupClosed: "See you at the next event — sign-ups are closed. For emergencies, talk to Shosh.",
+      noUpcomingEvents: "No Shabbat dinners are scheduled right now — check back soon, or reach out to Shosh.",
       donate: "Donate",
       donateNow: "Donate Now",
       donateSubtext: "Secure donation via Zeffy — every dollar goes to the community.",
@@ -247,6 +248,7 @@ function App() {
       adarSimcha: "משנכנס אדר מרבין בשמחה",
       signUp: "הרשמה",
       signupClosed: "נתראה באירוע הבא — ההרשמה סגורה. למקרי חירום דברו עם שוש",
+      noUpcomingEvents: "אין ארוחות שבת מתוכננות כרגע — בקרו שוב בקרוב, או פנו לשוש.",
       donate: "תרומה",
       donateNow: "תרמו עכשיו",
       donateSubtext: "תרומה מאובטחת דרך Zeffy — כל דולר מגיע לקהילה.",
@@ -1907,7 +1909,8 @@ function App() {
           </div>
 
           <div className="grid md:grid-cols-1 gap-6 max-w-3xl mx-auto">
-            {/* Shabbat Dinner Event */}
+            {shabbat.eventActive ? (
+            // Shabbat Dinner Event
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
               <div className="text-center mb-6">
                 <div className="text-4xl mb-4">🍽️</div>
@@ -1973,6 +1976,14 @@ function App() {
                 )}
               </div>
             </div>
+            ) : (
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 text-center">
+              <div className="text-4xl mb-4">🕯️</div>
+              <p className="text-blue-100 text-lg" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                {t[language].noUpcomingEvents}
+              </p>
+            </div>
+            )}
           </div>
                 </div>
       </section>
