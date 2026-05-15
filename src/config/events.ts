@@ -10,4 +10,6 @@
 //     '2026-05-22',
 //     '2026-06-05',
 //   ];
-export const ACTIVE_EVENT_DATES: string[] = [];
+export const ACTIVE_EVENT_DATES: string[] = [
+  '2026-05-15',
+];
