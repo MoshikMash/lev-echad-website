@@ -42,7 +42,6 @@ const txt = {
     pickAmount: 'Choose an amount:',
     other: 'Other',
     donateNote: "We'll open Zeffy in a new tab so you can finish there.",
-    skip: 'Maybe later',
     finish: "I'm done",
     successTitle: "You're signed up!",
     successText: "Thank you — we'll see you soon!",
@@ -74,7 +73,6 @@ const txt = {
     pickAmount: 'בחרו סכום:',
     other: 'אחר',
     donateNote: 'נפתח את Zeffy בכרטיסייה חדשה לסיום התרומה.',
-    skip: 'אולי בפעם אחרת',
     finish: 'סיימתי',
     successTitle: 'נרשמת בהצלחה!',
     successText: 'תודה — נתראה בקרוב!',
@@ -294,14 +292,7 @@ export default function SignupModal({
               </a>
             </div>
 
-            <p className="text-xs text-gray-500 text-center mb-5">{t.donateNote}</p>
-
-            <button
-              onClick={() => setStep('success')}
-              className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-3 rounded-xl transition-colors text-sm"
-            >
-              {t.skip}
-            </button>
+            <p className="text-xs text-gray-500 text-center">{t.donateNote}</p>
           </div>
         )}
 
