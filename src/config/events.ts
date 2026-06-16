@@ -11,5 +11,5 @@
 //     '2026-06-05',
 //   ];
 export const ACTIVE_EVENT_DATES: string[] = [
-  '2026-06-05',
+  '2026-06-19',
 ];
