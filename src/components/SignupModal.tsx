@@ -40,7 +40,6 @@ const txt = {
     donateSubtitle:
       "Lev Echad runs on donations — would you like to chip in to help cover this event? Every dollar goes to the community, and it's tax-deductible.",
     pickAmount: 'Choose an amount:',
-    other: 'Other',
     donateNote: "We'll open Zeffy in a new tab so you can finish there.",
     finish: "I'm done",
     successTitle: "You're signed up!",
@@ -71,7 +70,6 @@ const txt = {
     donateSubtitle:
       'לב אחד פועל מתרומות — האם תרצה לתרום כדי לעזור לכסות את האירוע? כל דולר מגיע לקהילה, וניתן לניכוי ממס.',
     pickAmount: 'בחרו סכום:',
-    other: 'אחר',
     donateNote: 'נפתח את Zeffy בכרטיסייה חדשה לסיום התרומה.',
     finish: 'סיימתי',
     successTitle: 'נרשמת בהצלחה!',
@@ -268,7 +266,7 @@ export default function SignupModal({
               {t.pickAmount}
             </p>
 
-            <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 mb-4">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
               {DONATION_PRESETS.map((amount) => (
                 <a
                   key={amount}
@@ -281,15 +279,6 @@ export default function SignupModal({
                   ${amount}
                 </a>
               ))}
-              <a
-                href={buildZeffyUrl()}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setStep('success')}
-                className="inline-flex items-center justify-center rounded-xl bg-white border-2 border-green-600 text-green-700 hover:bg-green-50 font-bold px-4 py-3 transition-colors"
-              >
-                {t.other}
-              </a>
             </div>
 
             <p className="text-xs text-gray-500 text-center">{t.donateNote}</p>
