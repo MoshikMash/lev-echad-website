@@ -3,6 +3,7 @@
 // event_key matches the one /api/signup would produce for the same event.
 
 import { __test as admin } from './admin-signup.js';
+import { __test as signup } from './signup.js';
 
 const eventName = 'Shabbat Dinner';
 const eventDate = 'June 19, 2026';
@@ -10,6 +11,10 @@ const key = admin.makeEventKey(eventName, eventDate);
 
 const expectations = [
   ['event_key is slugified',                key === 'shabbat-dinner-june-19-2026'],
+  ['Hebrew event name keys the same event',  admin.makeEventKey('ארוחת שבת', eventDate) === key],
+  ['unmapped non-Latin name falls back',     admin.makeEventKey('סעודה שלישית', eventDate) === key],
+  ['admin and form keys agree (English)',    signup.makeEventKey(eventName, eventDate) === key],
+  ['admin and form keys agree (Hebrew)',     signup.makeEventKey('ארוחת שבת', eventDate) === key],
   ['clipText trims to max length',           admin.clipText('abcdef', 3) === 'abc'],
   ['clipText is a no-op when short enough',  admin.clipText('abc', 10) === 'abc'],
   ['clipText handles null/undefined',        admin.clipText(null, 5) === '' && admin.clipText(undefined, 5) === ''],

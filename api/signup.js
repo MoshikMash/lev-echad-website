@@ -72,10 +72,26 @@ async function ensureSchema() {
   schemaReady = true;
 }
 
+// The modal posts the event name in the visitor's language, but the slug
+// below strips non-Latin characters — so a Hebrew sign-up for "ארוחת שבת"
+// used to key on the date alone ("july-31-2026") and split one dinner into
+// two event_keys. Map the localized names back to canonical English first,
+// and fall back to the canonical name if a name slugifies to nothing, so
+// the key stays language-independent.
+const CANONICAL_EVENT_NAME = 'Shabbat Dinner';
+const LOCALIZED_EVENT_NAMES = {
+  'ארוחת שבת': CANONICAL_EVENT_NAME,
+};
+
 // Slugify "Shabbat Dinner" + "May 15, 2026" → "shabbat-dinner-may-15-2026".
 // Stable across reruns so signups for the same event-instance share a key.
 function makeEventKey(eventName, eventDate) {
-  const joined = [eventName, eventDate].filter(Boolean).join(' ').toLowerCase();
+  const trimmedName = String(eventName || '').trim();
+  let canonicalName = LOCALIZED_EVENT_NAMES[trimmedName] || trimmedName;
+  if (canonicalName && !/[\w-]/.test(canonicalName.normalize('NFKD'))) {
+    canonicalName = CANONICAL_EVENT_NAME;
+  }
+  const joined = [canonicalName, eventDate].filter(Boolean).join(' ').toLowerCase();
   return joined
     .normalize('NFKD')
     .replace(/[^\w\s-]/g, '')
@@ -368,6 +384,7 @@ async function sendUserConfirmation(payload) {
 // Exported for local testing. The Vercel runtime only invokes the default
 // export, so these named exports have no production effect.
 export const __test = {
+  makeEventKey,
   buildCalendarLink,
   buildUserConfirmationText,
   buildUserConfirmationHtml,

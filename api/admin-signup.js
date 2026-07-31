@@ -33,9 +33,21 @@ import { neon } from '@neondatabase/serverless';
 const sql = process.env.DATABASE_URL ? neon(process.env.DATABASE_URL) : null;
 
 // Mirrors the slug rules in api/signup.js so admin-added rows share an
-// event_key with form-submitted rows for the same (event, date).
+// event_key with form-submitted rows for the same (event, date) — including
+// the localized-name normalization, so a Hebrew event name keys the same as
+// its English counterpart instead of falling back to a date-only slug.
+const CANONICAL_EVENT_NAME = 'Shabbat Dinner';
+const LOCALIZED_EVENT_NAMES = {
+  'ארוחת שבת': CANONICAL_EVENT_NAME,
+};
+
 function makeEventKey(eventName, eventDate) {
-  const joined = [eventName, eventDate].filter(Boolean).join(' ').toLowerCase();
+  const trimmedName = String(eventName || '').trim();
+  let canonicalName = LOCALIZED_EVENT_NAMES[trimmedName] || trimmedName;
+  if (canonicalName && !/[\w-]/.test(canonicalName.normalize('NFKD'))) {
+    canonicalName = CANONICAL_EVENT_NAME;
+  }
+  const joined = [canonicalName, eventDate].filter(Boolean).join(' ').toLowerCase();
   return joined
     .normalize('NFKD')
     .replace(/[^\w\s-]/g, '')
