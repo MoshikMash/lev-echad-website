@@ -22,4 +22,5 @@ INSERT INTO signups (event_key, event_name, event_date, name, email, phone, gues
 VALUES
   ('shabbat-dinner-july-31-2026', 'Shabbat Dinner — July 31, 2026', 'July 31, 2026', 'David Marks',      '', '', 1, 'Added manually by organizer', 'en'),
   ('shabbat-dinner-july-31-2026', 'Shabbat Dinner — July 31, 2026', 'July 31, 2026', 'Mendy Minsky',     '', '', 1, 'Added manually by organizer', 'en'),
-  ('shabbat-dinner-july-31-2026', 'Shabbat Dinner — July 31, 2026', 'July 31, 2026', 'Atar Tenenboem',   '', '', 5, 'Added manually by organizer', 'en');
+  ('shabbat-dinner-july-31-2026', 'Shabbat Dinner — July 31, 2026', 'July 31, 2026', 'Atar Tenenboem',   '', '', 5, 'Added manually by organizer', 'en'),
+  ('shabbat-dinner-july-31-2026', 'Shabbat Dinner — July 31, 2026', 'July 31, 2026', 'Daniel Wienn',     '', '', 3, 'Added manually by organizer', 'en');
