@@ -664,13 +664,16 @@ function App() {
             <a href="#about" className="hover:text-blue-700 transition-colors">{t[language].nav.about}</a>
             <a href="#contact" className="hover:text-blue-700 transition-colors">{t[language].nav.contact}</a>
           </nav>
-          <div className="flex items-center gap-2 flex-shrink-0">
+          {/* ms-4 keeps this cluster from crowding the last nav link
+              ("Contact"); the two-letter toggle label buys the rest. */}
+          <div className="ms-4 flex items-center gap-2 flex-shrink-0">
             <button
               onClick={() => setLanguage(language === 'en' ? 'he' : 'en')}
               className="rounded-lg border border-blue-600 text-blue-600 hover:bg-blue-50 px-2.5 py-1.5 text-xs font-medium transition-colors"
               dir={language === 'he' ? 'rtl' : 'ltr'}
+              aria-label={language === 'en' ? 'עברית' : 'English'}
             >
-              {language === 'en' ? 'עברית' : 'ENG'}
+              {language === 'en' ? 'עב' : 'EN'}
             </button>
             <a
               href="#donations"
@@ -793,21 +796,20 @@ function App() {
                   alt="A long Shabbat table set for guests"
                   width={1050}
                   height={1400}
-                  className="row-span-2 h-full w-full rounded-2xl object-cover shadow-lg ring-4 ring-white"
+                  className="h-full w-full rounded-2xl object-cover shadow-lg ring-4 ring-white"
                 />
-                <img
-                  src="./community/gathering.jpg"
-                  alt="Guests talking together before Shabbat dinner"
-                  width={1400}
-                  height={788}
-                  className="w-full rounded-2xl object-cover shadow-lg ring-4 ring-white"
-                />
-                <img
-                  src="./community/evening.jpg"
-                  alt="The community gathered in the living room"
-                  width={1400}
-                  height={788}
-                  className="w-full rounded-2xl object-cover shadow-lg ring-4 ring-white"
+                {/* A 9-second muted loop from the same dinner — cut from the
+                    full phone video (1.4MB at 720p, GPS metadata stripped).
+                    object-cover crops the landscape frame into the tall cell. */}
+                <video
+                  src="./community/dinner.mp4"
+                  poster="./community/dinner-poster.jpg"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  aria-label="Guests talking and laughing at a Lev Echad Shabbat dinner"
+                  className="h-full w-full rounded-2xl object-cover shadow-lg ring-4 ring-white"
                 />
               </div>
               <p
