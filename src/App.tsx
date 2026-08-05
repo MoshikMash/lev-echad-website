@@ -41,7 +41,23 @@ function App() {
     if (!el) return;
     // One frame later, so the sticky header and images have taken their space
     // and we don't scroll to a position that is about to shift.
-    requestAnimationFrame(() => el!.scrollIntoView({ block: 'start' }));
+    const jump = () => el!.scrollIntoView({ block: 'start' });
+    requestAnimationFrame(jump);
+    // Chrome's scroll restoration can land after that first jump and drag the
+    // page back to wherever it was on a previous visit. Re-assert once, a beat
+    // later — unless the visitor has already started scrolling themselves.
+    let userScrolled = false;
+    const mark = () => { userScrolled = true; };
+    window.addEventListener('wheel', mark, { once: true, passive: true });
+    window.addEventListener('touchstart', mark, { once: true, passive: true });
+    window.addEventListener('keydown', mark, { once: true });
+    const settle = setTimeout(() => { if (!userScrolled) jump(); }, 450);
+    return () => {
+      clearTimeout(settle);
+      window.removeEventListener('wheel', mark);
+      window.removeEventListener('touchstart', mark);
+      window.removeEventListener('keydown', mark);
+    };
   }, []);
 
   // "Tell us about yourself" link from the welcome email: /?profile=TOKEN.
@@ -145,6 +161,9 @@ function App() {
       subscribeClosedSub: "Sign-ups are closed for this week. Leave your email and we'll let you know when the next dinner opens.",
       subscribeNoEventHeadline: "Be the first to know",
       subscribeNoEventSub: "No dinner is scheduled right now — but there will be. Leave your email and we'll tell you as soon as it is.",
+      joinCommunityNav: "Join our community",
+      joinCommunityNavShort: "Join",
+      subscribePhotoCaption: "From our Shabbat dinner — this could be your Friday night 💛",
       donate: "Donate",
       donateNow: "Donate Now",
       donateSubtext: "Secure donation via Zeffy — every dollar goes to the community.",
@@ -288,6 +307,9 @@ function App() {
       subscribeClosedSub: "ההרשמה לשבוע הזה נסגרה. השאירו אימייל ונעדכן אתכם כשההרשמה הבאה נפתחת.",
       subscribeNoEventHeadline: "תהיו הראשונים לדעת",
       subscribeNoEventSub: "אין כרגע ארוחה מתוכננת — אבל תהיה. השאירו אימייל ונעדכן אתכם ברגע שנקבע מועד.",
+      joinCommunityNav: "הצטרפו לקהילה",
+      joinCommunityNavShort: "הצטרפו",
+      subscribePhotoCaption: "מארוחת השבת שלנו — ככה נראה אצלנו ליל שישי 💛",
       donate: "תרומה",
       donateNow: "תרמו עכשיו",
       donateSubtext: "תרומה מאובטחת דרך Zeffy — כל דולר מגיע לקהילה.",
@@ -656,8 +678,17 @@ function App() {
             >
               💚 {t[language].donate}
             </a>
-            <a href="#events" className="rounded-xl bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 text-sm font-semibold inline-block text-center transition-colors whitespace-nowrap">
+            <a href="#events" className="hidden sm:inline-block rounded-xl bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 text-sm font-semibold text-center transition-colors whitespace-nowrap">
               {t[language].joinEvents}
+            </a>
+            {/* The distribution-list CTA — deliberately the loudest thing in
+                the header: amber against an all-blue bar, plus a pulsing halo. */}
+            <a
+              href="#subscribe"
+              className="cta-glow inline-flex items-center gap-1 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 text-white px-3 py-1.5 text-sm font-bold transition-colors whitespace-nowrap shadow-md"
+            >
+              💛 <span className="hidden md:inline">{t[language].joinCommunityNav}</span>
+              <span className="md:hidden">{t[language].joinCommunityNavShort}</span>
             </a>
           </div>
         </div>
@@ -747,6 +778,52 @@ function App() {
         </div>
       </section>
 
+      {/* Join the community — first section after the hero, so it is the first
+          thing anyone sees when they start scrolling, and the target of the
+          pulsing header button and the Facebook link:
+          https://www.levechadpgh.org/#subscribe
+          The photos are from the July 31, 2026 Shabbat dinner. */}
+      <section id="subscribe" className="scroll-mt-24 bg-gradient-to-b from-amber-50 via-orange-50 to-white py-14">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="grid items-center gap-8 md:grid-cols-2">
+            <div>
+              <div className="grid grid-cols-2 gap-3">
+                <img
+                  src="./community/table.jpg"
+                  alt="A long Shabbat table set for guests"
+                  width={1050}
+                  height={1400}
+                  className="row-span-2 h-full w-full rounded-2xl object-cover shadow-lg ring-4 ring-white"
+                />
+                <img
+                  src="./community/gathering.jpg"
+                  alt="Guests talking together before Shabbat dinner"
+                  width={1400}
+                  height={788}
+                  className="w-full rounded-2xl object-cover shadow-lg ring-4 ring-white"
+                />
+                <img
+                  src="./community/evening.jpg"
+                  alt="The community gathered in the living room"
+                  width={1400}
+                  height={788}
+                  className="w-full rounded-2xl object-cover shadow-lg ring-4 ring-white"
+                />
+              </div>
+              <p
+                className="mt-3 text-center text-sm font-medium text-amber-800"
+                dir={language === 'he' ? 'rtl' : 'ltr'}
+              >
+                {t[language].subscribePhotoCaption}
+              </p>
+            </div>
+            <div className="rounded-3xl border-2 border-amber-200 bg-white px-6 py-10 shadow-xl md:px-10">
+              <SubscribeForm language={language} source="section" variant="section" />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Who is this for? Section */}
       <section id="who-for" className="py-16 bg-gradient-to-b from-white to-amber-50">
         <div className="mx-auto max-w-4xl px-4">
@@ -795,17 +872,6 @@ function App() {
             >
               {t[language].whoForPromise}
             </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Join the community — placed right after "Come as you are", the
-          emotional peak of the page. This is also the anchor to link from
-          Facebook: https://www.levechadpgh.org/#subscribe */}
-      <section id="subscribe" className="py-16 bg-gradient-to-b from-amber-50 to-white">
-        <div className="mx-auto max-w-3xl px-4">
-          <div className="rounded-2xl border border-amber-200 bg-white px-6 py-10 shadow-sm md:px-10">
-            <SubscribeForm language={language} source="section" variant="section" />
           </div>
         </div>
       </section>

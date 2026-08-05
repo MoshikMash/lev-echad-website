@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Pulsing halo for the "join our community" call-to-action. Draws the eye
+   without flashing the button itself on and off. */
+@keyframes cta-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.6); }
+  50%      { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); }
+}
+.cta-glow { animation: cta-glow 2.2s ease-in-out infinite; }
