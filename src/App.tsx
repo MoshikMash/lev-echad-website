@@ -107,6 +107,8 @@ function App() {
       whoForBullet4: "🌅 You're recently divorced or widowed and want connection",
       whoForBullet5: "🌿 You grew up Jewish but don't quite feel at home or close to Jewish life",
       whoForBullet6: "🌎 You're Israeli far from home and miss the feeling of Friday night",
+      whoForBullet7: "🕯️ You want your kids to grow up with the feeling of Shabbat",
+      whoForBullet8: "🤝 You're looking to meet really nice people who share your interests",
       whoForOutro: "We've hosted everyone from teenagers and students to grandparents. The only \"requirement\" is wanting to share a meal and feel part of something.",
       whoForPromise: "💛 And we promise — you'll find really, really nice people here.",
       // Sections
@@ -253,6 +255,8 @@ function App() {
       whoForBullet4: "🌅 גרושים, גרושות או אלמנים/ות שרוצים חיבור",
       whoForBullet5: "🌿 גדלתם יהודים אבל לא ממש מרגישים בבית או קרובים לחיים יהודיים",
       whoForBullet6: "🌎 ישראלים רחוק מהבית שמתגעגעים לתחושת ליל שישי",
+      whoForBullet7: "🕯️ אתם רוצים שהילדים שלכם יגדלו עם תחושה של שבת",
+      whoForBullet8: "🤝 אתם מחפשים להכיר אנשים ממש נחמדים עם תחומי עניין משותפים",
       whoForOutro: "אירחנו את כולם — מבני נוער וסטודנטים ועד סבים וסבתות. ה\"דרישה\" היחידה היא רצון לחלוק ארוחה ולהרגיש חלק ממשהו.",
       whoForPromise: "💛 ואנחנו מבטיחים — תפגשו כאן אנשים ממש, ממש נחמדים.",
       // Sections
@@ -872,6 +876,8 @@ function App() {
                 t[language].whoForBullet4,
                 t[language].whoForBullet5,
                 t[language].whoForBullet6,
+                t[language].whoForBullet7,
+                t[language].whoForBullet8,
               ].map((line, i) => (
                 <li
                   key={i}
