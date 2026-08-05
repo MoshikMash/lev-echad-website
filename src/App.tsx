@@ -163,7 +163,7 @@ function App() {
       subscribeNoEventSub: "No dinner is scheduled right now — but there will be. Leave your email and we'll tell you as soon as it is.",
       joinCommunityNav: "Join our community",
       joinCommunityNavShort: "Join",
-      subscribePhotoCaption: "From our Shabbat dinner — this could be your Friday night 💛",
+      subscribePhotoCaption: "From our Shabbat dinner — this could be your Friday night 💛 (photos and video taken before Shabbat)",
       donate: "Donate",
       donateNow: "Donate Now",
       donateSubtext: "Secure donation via Zeffy — every dollar goes to the community.",
@@ -309,7 +309,7 @@ function App() {
       subscribeNoEventSub: "אין כרגע ארוחה מתוכננת — אבל תהיה. השאירו אימייל ונעדכן אתכם ברגע שנקבע מועד.",
       joinCommunityNav: "הצטרפו לקהילה",
       joinCommunityNavShort: "הצטרפו",
-      subscribePhotoCaption: "מארוחת השבת שלנו — ככה נראה אצלנו ליל שישי 💛",
+      subscribePhotoCaption: "מארוחת השבת שלנו — ככה נראה אצלנו ליל שישי 💛 (הצילומים נעשו לפני כניסת השבת)",
       donate: "תרומה",
       donateNow: "תרמו עכשיו",
       donateSubtext: "תרומה מאובטחת דרך Zeffy — כל דולר מגיע לקהילה.",
@@ -798,9 +798,11 @@ function App() {
                   height={1400}
                   className="h-full w-full rounded-2xl object-cover shadow-lg ring-4 ring-white"
                 />
-                {/* A 9-second muted loop from the same dinner — cut from the
-                    full phone video (1.4MB at 720p, GPS metadata stripped).
-                    object-cover crops the landscape frame into the tall cell. */}
+                {/* The full minute of the dinner video, muted and looping —
+                    re-encoded from 150MB to ~10MB at 720p, GPS metadata
+                    stripped. Streams progressively, so only what is watched
+                    is downloaded. object-cover crops the landscape frame
+                    into the tall cell. */}
                 <video
                   src="./community/dinner.mp4"
                   poster="./community/dinner-poster.jpg"
@@ -808,6 +810,17 @@ function App() {
                   muted
                   loop
                   playsInline
+                  // React sets the muted *property* but never writes the
+                  // *attribute*, and Chrome's autoplay policy looks at the
+                  // attribute — so larger files that finish loading after the
+                  // policy check stay frozen on the poster. Set it ourselves
+                  // and nudge playback. (facebook/react#10389)
+                  ref={(el) => {
+                    if (!el) return;
+                    el.muted = true;
+                    el.setAttribute('muted', '');
+                    el.play().catch(() => {});
+                  }}
                   aria-label="Guests talking and laughing at a Lev Echad Shabbat dinner"
                   className="h-full w-full rounded-2xl object-cover shadow-lg ring-4 ring-white"
                 />
