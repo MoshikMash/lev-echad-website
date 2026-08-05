@@ -68,9 +68,20 @@ export default async function handler(req, res) {
 
   try {
     const includeAll = req.query?.all === '1';
-    const rows = includeAll
-      ? await sql`SELECT * FROM subscribers ORDER BY created_at DESC`
-      : await sql`SELECT * FROM subscribers WHERE status = 'subscribed' ORDER BY created_at DESC`;
+    let rows;
+    try {
+      rows = includeAll
+        ? await sql`SELECT * FROM subscribers ORDER BY created_at DESC`
+        : await sql`SELECT * FROM subscribers WHERE status = 'subscribed' ORDER BY created_at DESC`;
+    } catch (err) {
+      // 42P01 = undefined_table. Only api/subscribe.js creates the schema, so
+      // before the first ever sign-up there is no table — that is an empty
+      // list, not a server error.
+      const missingTable =
+        err?.code === '42P01' || /relation .* does not exist/i.test(err?.message || '');
+      if (!missingTable) throw err;
+      rows = [];
+    }
 
     res.setHeader('Cache-Control', 'no-store');
 

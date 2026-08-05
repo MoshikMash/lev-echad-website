@@ -105,6 +105,13 @@ function send(res, status, html) {
   res.status(status).send(html);
 }
 
+// 42P01 = undefined_table. Only api/subscribe.js creates the schema, so before
+// the very first sign-up the table genuinely does not exist. An unsubscribe
+// link in that world can only be bogus — show the expired page, not a 500.
+function isMissingTable(err) {
+  return err?.code === '42P01' || /relation .* does not exist/i.test(err?.message || '');
+}
+
 function notFound(res, language) {
   const t = txt[language] || txt.en;
   send(res, 404, page({
@@ -132,9 +139,15 @@ export default async function handler(req, res) {
   }
 
   try {
-    const rows = await sql`
-      SELECT email, language, status FROM subscribers WHERE token = ${token} LIMIT 1
-    `;
+    let rows;
+    try {
+      rows = await sql`
+        SELECT email, language, status FROM subscribers WHERE token = ${token} LIMIT 1
+      `;
+    } catch (err) {
+      if (!isMissingTable(err)) throw err;
+      rows = [];
+    }
     if (!rows.length) {
       notFound(res, 'en');
       return;
