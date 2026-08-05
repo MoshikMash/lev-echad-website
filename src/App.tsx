@@ -25,6 +25,25 @@ function App() {
   // Sign-up modal state (per-event)
   const [signupEvent, setSignupEvent] = useState<{ name: string; date?: string } | null>(null);
 
+  // Deep links like /#subscribe (the one we share on Facebook) land on the
+  // hero instead of the section: the browser looks for the anchor before React
+  // has mounted, finds nothing, and never retries. Re-run the jump once the
+  // element actually exists.
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash.length < 2) return;
+    let el: Element | null = null;
+    try {
+      el = document.querySelector(hash);
+    } catch {
+      return; // hash isn't a valid selector — nothing to scroll to
+    }
+    if (!el) return;
+    // One frame later, so the sticky header and images have taken their space
+    // and we don't scroll to a position that is about to shift.
+    requestAnimationFrame(() => el!.scrollIntoView({ block: 'start' }));
+  }, []);
+
   // "Tell us about yourself" link from the welcome email: /?profile=TOKEN.
   const [profileToken, setProfileToken] = useState<string | null>(null);
   useEffect(() => {
