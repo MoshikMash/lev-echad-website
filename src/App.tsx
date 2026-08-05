@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import emailjs from '@emailjs/browser'
 import AIChatbot from './components/AIChatbot'
 import SignupModal from './components/SignupModal'
+import SubscribeForm, { ProfileModal } from './components/SubscribeForm'
 import { useShabbatInfo } from './hooks/useShabbatInfo'
 
 const ZEFFY_DONATE_URL =
@@ -23,6 +24,17 @@ function App() {
 
   // Sign-up modal state (per-event)
   const [signupEvent, setSignupEvent] = useState<{ name: string; date?: string } | null>(null);
+
+  // "Tell us about yourself" link from the welcome email: /?profile=TOKEN.
+  const [profileToken, setProfileToken] = useState<string | null>(null);
+  useEffect(() => {
+    const token = new URLSearchParams(window.location.search).get('profile');
+    if (!token) return;
+    setProfileToken(token);
+    // Drop the token from the address bar once we have it, so it doesn't sit
+    // in browser history or get shared along with a copy-pasted URL.
+    window.history.replaceState({}, '', window.location.pathname + window.location.hash);
+  }, []);
 
   const shabbat = useShabbatInfo();
 
@@ -110,6 +122,10 @@ function App() {
       signUp: "Sign Up",
       signupClosed: "See you at the next event — sign-ups are closed. For emergencies, talk to Shosh.",
       noUpcomingEvents: "No Shabbat dinners are scheduled right now — check back soon, or reach out to Shosh.",
+      subscribeClosedHeadline: "Want to hear about the next one?",
+      subscribeClosedSub: "Sign-ups are closed for this week. Leave your email and we'll let you know when the next dinner opens.",
+      subscribeNoEventHeadline: "Be the first to know",
+      subscribeNoEventSub: "No dinner is scheduled right now — but there will be. Leave your email and we'll tell you as soon as it is.",
       donate: "Donate",
       donateNow: "Donate Now",
       donateSubtext: "Secure donation via Zeffy — every dollar goes to the community.",
@@ -249,6 +265,10 @@ function App() {
       signUp: "הרשמה",
       signupClosed: "נתראה באירוע הבא — ההרשמה סגורה. למקרי חירום דברו עם שוש",
       noUpcomingEvents: "אין ארוחות שבת מתוכננות כרגע — בקרו שוב בקרוב, או פנו לשוש.",
+      subscribeClosedHeadline: "רוצים לשמוע על הארוחה הבאה?",
+      subscribeClosedSub: "ההרשמה לשבוע הזה נסגרה. השאירו אימייל ונעדכן אתכם כשההרשמה הבאה נפתחת.",
+      subscribeNoEventHeadline: "תהיו הראשונים לדעת",
+      subscribeNoEventSub: "אין כרגע ארוחה מתוכננת — אבל תהיה. השאירו אימייל ונעדכן אתכם ברגע שנקבע מועד.",
       donate: "תרומה",
       donateNow: "תרמו עכשיו",
       donateSubtext: "תרומה מאובטחת דרך Zeffy — כל דולר מגיע לקהילה.",
@@ -756,6 +776,17 @@ function App() {
             >
               {t[language].whoForPromise}
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Join the community — placed right after "Come as you are", the
+          emotional peak of the page. This is also the anchor to link from
+          Facebook: https://www.levechadpgh.org/#subscribe */}
+      <section id="subscribe" className="py-16 bg-gradient-to-b from-amber-50 to-white">
+        <div className="mx-auto max-w-3xl px-4">
+          <div className="rounded-2xl border border-amber-200 bg-white px-6 py-10 shadow-sm md:px-10">
+            <SubscribeForm language={language} source="section" variant="section" />
           </div>
         </div>
       </section>
@@ -1975,6 +2006,20 @@ function App() {
                   </p>
                 )}
               </div>
+
+              {/* Sign-ups closed is otherwise a dead end — the person is
+                  interested and there is nothing for them to do. Catch them. */}
+              {!shabbat.signupOpen && (
+                <div className="mt-6 border-t border-white/20 pt-6">
+                  <SubscribeForm
+                    language={language}
+                    source="events"
+                    variant="events"
+                    headline={t[language].subscribeClosedHeadline}
+                    subline={t[language].subscribeClosedSub}
+                  />
+                </div>
+              )}
             </div>
             ) : (
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 text-center">
@@ -1982,6 +2027,18 @@ function App() {
               <p className="text-blue-100 text-lg" dir={language === 'he' ? 'rtl' : 'ltr'}>
                 {t[language].noUpcomingEvents}
               </p>
+
+              {/* Same reasoning as above: no scheduled event is the moment a
+                  mailing list is worth the most, not the least. */}
+              <div className="mt-6 border-t border-white/20 pt-6">
+                <SubscribeForm
+                  language={language}
+                  source="events"
+                  variant="events"
+                  headline={t[language].subscribeNoEventHeadline}
+                  subline={t[language].subscribeNoEventSub}
+                />
+              </div>
             </div>
             )}
           </div>
@@ -2319,7 +2376,12 @@ function App() {
             {t[language].footerNonprofit}
           </p>
           <p className="text-blue-300 text-sm mb-6" dir={language === 'he' ? 'rtl' : 'ltr'}>© {new Date().getFullYear()} {t[language].levEchad}. {t[language].allRightsReserved}</p>
-          
+
+          {/* Always-on capture for anyone who reads to the bottom. */}
+          <div className="mx-auto max-w-md border-t border-blue-700 pt-6 text-left">
+            <SubscribeForm language={language} source="footer" variant="footer" />
+          </div>
+
           {/* Developer Credit */}
           <div className="border-t border-blue-700 pt-6 mt-6">
             <p className="text-blue-300 text-sm text-center" dir={language === 'he' ? 'rtl' : 'ltr'}>
@@ -2337,6 +2399,15 @@ function App() {
         </div>
       </footer>
       
+      {/* Profile form, opened by the link in the welcome email */}
+      {profileToken && (
+        <ProfileModal
+          language={language}
+          token={profileToken}
+          onClose={() => setProfileToken(null)}
+        />
+      )}
+
       {/* AI Chatbot */}
       <AIChatbot language={language} />
 

@@ -11,7 +11,7 @@
 //   WHATSAPP_PHONE          — recipient WhatsApp number with country code,
 //                             e.g. +14126261823
 //   WHATSAPP_APIKEY         — CallMeBot APIKEY (obtained by messaging their bot)
-//   EMAILJS_SERVICE_ID      — defaults to 'service_l47oh6c' (the contact form one)
+//   EMAILJS_SERVICE_ID      — defaults to 'service_91gmg1n' (the contact form one)
 //   EMAILJS_TEMPLATE_ID     — defaults to 'template_3a68j0o' (the contact form one)
 //   EMAILJS_USER_ID         — defaults to '9uN_4d08ybrG6_IhR'  (the contact form one)
 //   EMAILJS_ACCESS_TOKEN    — needed if EmailJS strict mode is on (private key)
@@ -32,7 +32,12 @@ const ORGANIZER_EMAIL = 'mashshosh@gmail.com';
 
 // EmailJS defaults reuse the same account/template the existing contact form
 // already uses. Override via env vars if you create a dedicated signup template.
-const EMAILJS_SERVICE_ID  = process.env.EMAILJS_SERVICE_ID  || 'service_l47oh6c';
+//
+// The service ID was rebuilt in EmailJS on 2026-05-12 and the old
+// `service_l47oh6c` no longer exists — this default used to point at it, so
+// signup emails silently failed on any deploy without EMAILJS_SERVICE_ID set.
+// Keep this in sync with the client-side call in src/App.tsx.
+const EMAILJS_SERVICE_ID  = process.env.EMAILJS_SERVICE_ID  || 'service_91gmg1n';
 const EMAILJS_TEMPLATE_ID = process.env.EMAILJS_TEMPLATE_ID || 'template_3a68j0o';
 const EMAILJS_USER_ID     = process.env.EMAILJS_USER_ID     || '9uN_4d08ybrG6_IhR';
 const EMAILJS_ACCESS_TOKEN = process.env.EMAILJS_ACCESS_TOKEN;

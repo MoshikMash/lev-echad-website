@@ -20,6 +20,7 @@ const DONATION_PRESETS = [20, 50, 100, 150];
 // writes a row to Neon Postgres and fires email + WhatsApp notifications.
 // See api/signup.js and SIGNUP_SETUP.md.
 const SIGNUP_ENDPOINT = '/api/signup';
+const SUBSCRIBE_ENDPOINT = '/api/subscribe';
 
 const buildZeffyUrl = (amount?: number) =>
   amount ? `${ZEFFY_DONATE_URL}?amount=${amount}` : ZEFFY_DONATE_URL;
@@ -34,6 +35,7 @@ const txt = {
     guests: 'Number of guests (including you)',
     notes: 'Notes (allergies, dietary, anything else)',
     optional: 'optional',
+    keepMePosted: 'Also keep me posted about future events and what’s happening at Lev Echad',
     submit: 'Submit sign-up',
     submitting: 'Submitting...',
     donateTitle: 'Thank you for signing up!',
@@ -65,6 +67,7 @@ const txt = {
     guests: 'מספר אורחים (כולל אותך)',
     notes: 'הערות (אלרגיות, תזונה, וכל דבר נוסף)',
     optional: 'אופציונלי',
+    keepMePosted: 'אשמח לקבל עדכונים על אירועים עתידיים ועל מה שקורה בלב אחד',
     submit: 'שלח הרשמה',
     submitting: 'שולח...',
     donateTitle: 'תודה שנרשמת!',
@@ -105,6 +108,9 @@ export default function SignupModal({
   const [phone, setPhone] = useState('');
   const [guests, setGuests] = useState('1');
   const [notes, setNotes] = useState('');
+  // Pre-checked: someone signing up for a dinner is the warmest audience there
+  // is, and "tell me about future events" is what they already came for.
+  const [keepMePosted, setKeepMePosted] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -153,6 +159,17 @@ export default function SignupModal({
         const body = await res.json().catch(() => ({}));
         throw new Error(body?.error || `HTTP ${res.status}`);
       }
+
+      // Fire-and-forget: the event sign-up already succeeded, so a failure to
+      // add them to the mailing list must never surface as a sign-up error.
+      if (keepMePosted) {
+        fetch(SUBSCRIBE_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'join', email, language, source: 'modal' }),
+        }).catch(() => {});
+      }
+
       setStep('donate');
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
@@ -237,6 +254,15 @@ export default function SignupModal({
                 rows={3}
                 className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
               />
+              <label className="flex cursor-pointer items-start gap-3 rounded-lg bg-blue-50 border border-blue-100 p-3">
+                <input
+                  type="checkbox"
+                  checked={keepMePosted}
+                  onChange={(e) => setKeepMePosted(e.target.checked)}
+                  className="mt-0.5 h-4 w-4 flex-none accent-blue-600"
+                />
+                <span className="text-sm text-blue-900">{t.keepMePosted}</span>
+              </label>
             </div>
 
             {error && (
