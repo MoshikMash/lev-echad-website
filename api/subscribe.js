@@ -47,11 +47,36 @@ const SPOKEN_LANGUAGES = ['english', 'hebrew', 'russian', 'spanish', 'yiddish'];
 const GENDERS = ['female', 'male', 'prefer_not'];
 const AGE_GROUPS = ['student', '20s_30s', '30s_40s', '40s_50s', '50_plus'];
 const MARITAL = ['single', 'relationship', 'married', 'divorced', 'widowed', 'prefer_not'];
-const NEIGHBORHOODS = [
-  'squirrel_hill', 'shadyside', 'oakland', 'point_breeze', 'greenfield',
-  'downtown', 'other_pgh', 'moving_soon', 'not_pgh',
-];
+const LOCATION_STATUS = ['in_pittsburgh', 'moving_soon', 'considering', 'not_pgh'];
+const PARENTAL = ['no_kids', 'expecting', 'young_kids', 'school_age', 'grown_kids', 'prefer_not'];
 const HEARD_FROM = ['facebook', 'friend', 'event', 'google', 'other'];
+
+// Pittsburgh ZIPs that matter for a Friday-night dinner in Squirrel Hill.
+// Deriving the area from the ZIP means we ask one short question instead of
+// two, and 15217 vs 15213 is the difference between "can walk on Shabbat" and
+// "is a student in Oakland" — both worth knowing without asking for either.
+const ZIP_TO_NEIGHBORHOOD = {
+  '15217': 'squirrel_hill',
+  '15213': 'oakland',
+  '15232': 'shadyside',
+  '15206': 'east_liberty',
+  '15208': 'point_breeze',
+  '15218': 'regent_square',
+  '15207': 'greenfield',
+  '15222': 'downtown',
+  '15201': 'lawrenceville',
+  '15216': 'dormont',
+  '15228': 'mt_lebanon',
+  '15241': 'upper_st_clair',
+  '15102': 'bethel_park',
+  '15143': 'sewickley',
+  '15238': 'fox_chapel',
+};
+
+function neighborhoodFromZip(zip) {
+  const five = String(zip || '').trim().slice(0, 5);
+  return ZIP_TO_NEIGHBORHOOD[five] || null;
+}
 
 let schemaReady = false;
 
@@ -91,6 +116,8 @@ async function ensureSchema() {
   // columns cost nothing and a question can be added later without a migration.
   await sql`ALTER TABLE subscribers ADD COLUMN IF NOT EXISTS zip                  TEXT`;
   await sql`ALTER TABLE subscribers ADD COLUMN IF NOT EXISTS unsubscribed_at      TIMESTAMPTZ`;
+  await sql`ALTER TABLE subscribers ADD COLUMN IF NOT EXISTS parental_status      TEXT`;
+  await sql`ALTER TABLE subscribers ADD COLUMN IF NOT EXISTS location_status      TEXT`;
   // The token is the lookup key for both the profile link and the unsubscribe
   // link, so every click from an email hits this index.
   await sql`CREATE INDEX IF NOT EXISTS subscribers_token_idx ON subscribers (token)`;
@@ -301,8 +328,10 @@ export const __test = {
   buildWelcomeHtml,
   profileUrl,
   unsubscribeUrl,
+  neighborhoodFromZip,
   INTERESTS,
-  NEIGHBORHOODS,
+  LOCATION_STATUS,
+  PARENTAL,
 };
 
 async function handleJoin(req, res, body) {
@@ -364,6 +393,11 @@ async function handleProfile(req, res, body) {
 
   await ensureSchema();
 
+  const zip = clipText(body.zip, 10) || null;
+  // Only overwrite the neighbourhood when a ZIP we recognise came in, so a
+  // re-save with the ZIP left blank keeps whatever we worked out last time.
+  const derivedNeighborhood = zip ? neighborhoodFromZip(zip) : null;
+
   // COALESCE so a partially-filled profile never blanks out data the
   // subscriber already gave us on an earlier pass.
   const rows = await sql`
@@ -377,7 +411,10 @@ async function handleProfile(req, res, body) {
       gender               = COALESCE(${pickOne(body.gender, GENDERS)}, gender),
       age_group            = COALESCE(${pickOne(body.ageGroup, AGE_GROUPS)}, age_group),
       marital_status       = COALESCE(${pickOne(body.maritalStatus, MARITAL)}, marital_status),
-      neighborhood         = COALESCE(${pickOne(body.neighborhood, NEIGHBORHOODS)}, neighborhood),
+      parental_status      = COALESCE(${pickOne(body.parentalStatus, PARENTAL)}, parental_status),
+      location_status      = COALESCE(${pickOne(body.locationStatus, LOCATION_STATUS)}, location_status),
+      zip                  = COALESCE(${zip}, zip),
+      neighborhood         = COALESCE(${derivedNeighborhood}, neighborhood),
       heard_from           = COALESCE(${pickOne(body.heardFrom, HEARD_FROM)}, heard_from),
       willing_to_host      = COALESCE(${typeof body.willingToHost === 'boolean' ? body.willingToHost : null}, willing_to_host),
       profile_completed_at = NOW(),

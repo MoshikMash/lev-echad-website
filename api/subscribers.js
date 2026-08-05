@@ -21,7 +21,8 @@ const sql = process.env.DATABASE_URL ? neon(process.env.DATABASE_URL) : null;
 const COLUMNS = [
   'id', 'email', 'name', 'phone', 'language', 'status',
   'interests', 'languages_spoken', 'gender', 'age_group', 'marital_status',
-  'neighborhood', 'profession', 'willing_to_host', 'heard_from', 'notes',
+  'parental_status', 'location_status', 'zip', 'neighborhood',
+  'profession', 'willing_to_host', 'heard_from', 'notes',
   'consent_at', 'consent_source', 'profile_completed_at',
   'created_at', 'updated_at', 'unsubscribed_at',
 ];

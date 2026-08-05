@@ -36,7 +36,8 @@ const txt = {
     error: "That didn't work. Please try again, or text Shosh at 412-626-1823.",
     profileTitle: "You're in! 💛",
     profileSubtitle:
-      'Tell us a bit about yourself so we can invite you to the right things. All optional — you can skip any of it.',
+      'Please let us know a bit about you, so we can help you in the best way, invite you to the events that suit you, and send you the information that actually fits.',
+    profileOptional: 'Everything here is optional — skip anything you’d rather not answer.',
     interestsLabel: 'What would you like to see?',
     interestsHint: 'Some of these are ideas we’re exploring — tell us what you’d actually come to.',
     aboutLabel: 'About you',
@@ -45,8 +46,12 @@ const txt = {
     profession: 'What do you do?',
     gender: 'Gender',
     age: 'Age',
-    marital: 'Status',
-    neighborhood: 'Where are you?',
+    marital: 'Marital status',
+    parental: 'Children',
+    zip: 'ZIP code',
+    zipHint: 'Helps us know your area — useful for walking distance on Shabbat and for carpools.',
+    locationStatus: 'Where are you?',
+    choose: 'Choose…',
     languagesSpoken: 'Languages you speak',
     hostLabel: "I'd be happy to host or co-host a Shabbat dinner",
     heardFrom: 'How did you hear about us?',
@@ -72,7 +77,8 @@ const txt = {
     error: 'משהו השתבש. נסו שוב, או שלחו הודעה לשוש: 412-626-1823.',
     profileTitle: 'אתם בפנים! 💛',
     profileSubtitle:
-      'ספרו לנו קצת עליכם, כדי שנוכל להזמין אתכם לדברים הנכונים. הכל אופציונלי — אפשר לדלג.',
+      'ספרו לנו קצת עליכם, כדי שנוכל לעזור לכם בצורה הטובה ביותר, להזמין אתכם לאירועים שמתאימים לכם, ולשלוח לכם את המידע שבאמת רלוונטי.',
+    profileOptional: 'הכל אופציונלי — אפשר לדלג על כל שאלה.',
     interestsLabel: 'מה הייתם רוצים לראות?',
     interestsHint: 'חלק מהדברים האלה הם רעיונות שאנחנו בוחנים — ספרו לנו למה באמת תבואו.',
     aboutLabel: 'קצת עליכם',
@@ -81,8 +87,12 @@ const txt = {
     profession: 'במה אתם עוסקים?',
     gender: 'מגדר',
     age: 'גיל',
-    marital: 'סטטוס',
-    neighborhood: 'איפה אתם גרים?',
+    marital: 'מצב משפחתי',
+    parental: 'ילדים',
+    zip: 'מיקוד (ZIP)',
+    zipHint: 'עוזר לנו לדעת באיזה אזור אתם — חשוב למרחק הליכה בשבת ולנסיעות משותפות.',
+    locationStatus: 'איפה אתם?',
+    choose: 'בחרו…',
     languagesSpoken: 'שפות שאתם דוברים',
     hostLabel: 'אשמח לארח או לארח יחד ארוחת שבת',
     heardFrom: 'איך שמעתם עלינו?',
@@ -143,16 +153,23 @@ const MARITAL = [
   { value: 'prefer_not',   en: 'Prefer not to say', he: 'מעדיף/ה לא לומר' },
 ];
 
-const NEIGHBORHOODS = [
-  { value: 'squirrel_hill', en: 'Squirrel Hill',           he: 'סקוירל היל' },
-  { value: 'shadyside',     en: 'Shadyside',               he: 'Shadyside' },
-  { value: 'oakland',       en: 'Oakland',                 he: 'Oakland' },
-  { value: 'point_breeze',  en: 'Point Breeze',            he: 'Point Breeze' },
-  { value: 'greenfield',    en: 'Greenfield',              he: 'Greenfield' },
-  { value: 'downtown',      en: 'Downtown',                he: 'Downtown' },
-  { value: 'other_pgh',     en: 'Elsewhere in Pittsburgh', he: 'אזור אחר בפיטסבורג' },
-  { value: 'moving_soon',   en: 'Moving to Pittsburgh soon', he: 'עוברים לפיטסבורג בקרוב' },
-  { value: 'not_pgh',       en: 'Not in Pittsburgh',       he: 'לא בפיטסבורג' },
+// Replaces the old neighbourhood dropdown. The neighbourhood is derived from
+// the ZIP server-side, so asking for it separately was making the visitor do
+// work we can do ourselves.
+const LOCATION_STATUS = [
+  { value: 'in_pittsburgh', en: 'I live in Pittsburgh',        he: 'אני גר/ה בפיטסבורג' },
+  { value: 'moving_soon',   en: 'Moving to Pittsburgh',        he: 'עובר/ת לפיטסבורג' },
+  { value: 'considering',   en: 'Thinking about moving here',  he: 'שוקל/ת לעבור לכאן' },
+  { value: 'not_pgh',       en: 'None of these',               he: 'אף אחד מאלה' },
+];
+
+const PARENTAL_STATUS = [
+  { value: 'no_kids',     en: 'No children',        he: 'ללא ילדים' },
+  { value: 'expecting',   en: 'Expecting',          he: 'בהריון' },
+  { value: 'young_kids',  en: 'Young children',     he: 'ילדים קטנים' },
+  { value: 'school_age',  en: 'School-age children',he: 'ילדים בגיל בית ספר' },
+  { value: 'grown_kids',  en: 'Grown children',     he: 'ילדים בוגרים' },
+  { value: 'prefer_not',  en: 'Prefer not to say',  he: 'מעדיף/ה לא לומר' },
 ];
 
 const HEARD_FROM = [
@@ -165,6 +182,57 @@ const HEARD_FROM = [
 
 function label(opt: { en: string; he: string }, language: Language) {
   return language === 'he' ? opt.he : opt.en;
+}
+
+type Opt = { value: string; en: string; he: string };
+
+// A visible label above every control. Relying on a placeholder alone made the
+// dropdowns read as empty boxes, and a placeholder disappears the moment a
+// value is picked — so the field stops explaining itself exactly when the
+// answer matters.
+function Field({
+  label: text,
+  hint,
+  children,
+}: {
+  label: string;
+  hint?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <label className="block">
+      <span className="mb-1 block text-sm font-medium text-gray-700">{text}</span>
+      {children}
+      {hint && <span className="mt-1 block text-xs text-gray-500">{hint}</span>}
+    </label>
+  );
+}
+
+function Select({
+  value,
+  onChange,
+  options,
+  language,
+  placeholder,
+  className,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  options: Opt[];
+  language: Language;
+  placeholder: string;
+  className: string;
+}) {
+  return (
+    <select value={value} onChange={(e) => onChange(e.target.value)} className={className}>
+      <option value="">{placeholder}</option>
+      {options.map((o) => (
+        <option key={o.value} value={o.value}>
+          {label(o, language)}
+        </option>
+      ))}
+    </select>
+  );
 }
 
 export default function SubscribeForm({
@@ -301,7 +369,9 @@ export function ProfileModal({ language, token, onClose }: ProfileModalProps) {
   const [gender, setGender] = useState('');
   const [ageGroup, setAgeGroup] = useState('');
   const [maritalStatus, setMaritalStatus] = useState('');
-  const [neighborhood, setNeighborhood] = useState('');
+  const [parentalStatus, setParentalStatus] = useState('');
+  const [zip, setZip] = useState('');
+  const [locationStatus, setLocationStatus] = useState('');
   const [heardFrom, setHeardFrom] = useState('');
   const [willingToHost, setWillingToHost] = useState(false);
   const [notes, setNotes] = useState('');
@@ -347,7 +417,9 @@ export function ProfileModal({ language, token, onClose }: ProfileModalProps) {
           gender,
           ageGroup,
           maritalStatus,
-          neighborhood,
+          parentalStatus,
+          zip,
+          locationStatus,
           heardFrom,
           willingToHost,
         }),
@@ -410,13 +482,76 @@ export function ProfileModal({ language, token, onClose }: ProfileModalProps) {
           </div>
         ) : (
           <form onSubmit={handleSave} className="p-6 md:p-8">
-            <div className="mb-5">
-              <h3 className="mb-1 text-2xl font-bold text-gray-900">{t.profileTitle}</h3>
-              <p className="text-sm text-gray-600">{t.profileSubtitle}</p>
+            <div className="mb-6">
+              <h3 className="mb-3 text-2xl font-bold text-gray-900">{t.profileTitle}</h3>
+              <p className="rounded-xl border border-blue-200 bg-blue-50 px-4 py-3 text-base font-semibold text-blue-900">
+                {t.profileSubtitle}
+              </p>
+              <p className="mt-2 text-xs text-gray-500">{t.profileOptional}</p>
+            </div>
+
+            {/* "About you" leads, because it is the part that lets Shosh
+                actually tailor an invitation. Every control carries its own
+                label rather than relying on a placeholder. */}
+            <p className="mb-3 text-lg font-bold text-gray-900">{t.aboutLabel}</p>
+            <div className="mb-5 grid gap-4 sm:grid-cols-2">
+              <Field label={t.name}>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className={inputClass}
+                />
+              </Field>
+              <Field label={t.phone}>
+                <input
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  className={inputClass}
+                />
+              </Field>
+              <Field label={t.gender}>
+                <Select value={gender} onChange={setGender} options={GENDERS} language={language} placeholder={t.choose} className={selectClass} />
+              </Field>
+              <Field label={t.age}>
+                <Select value={ageGroup} onChange={setAgeGroup} options={AGE_GROUPS} language={language} placeholder={t.choose} className={selectClass} />
+              </Field>
+              <Field label={t.marital}>
+                <Select value={maritalStatus} onChange={setMaritalStatus} options={MARITAL} language={language} placeholder={t.choose} className={selectClass} />
+              </Field>
+              <Field label={t.parental}>
+                <Select value={parentalStatus} onChange={setParentalStatus} options={PARENTAL_STATUS} language={language} placeholder={t.choose} className={selectClass} />
+              </Field>
+              <Field label={t.locationStatus}>
+                <Select value={locationStatus} onChange={setLocationStatus} options={LOCATION_STATUS} language={language} placeholder={t.choose} className={selectClass} />
+              </Field>
+              <Field label={t.zip} hint={t.zipHint}>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  maxLength={10}
+                  placeholder="15217"
+                  value={zip}
+                  onChange={(e) => setZip(e.target.value)}
+                  className={inputClass}
+                />
+              </Field>
+              <Field label={t.profession}>
+                <input
+                  type="text"
+                  value={profession}
+                  onChange={(e) => setProfession(e.target.value)}
+                  className={inputClass}
+                />
+              </Field>
+              <Field label={t.heardFrom}>
+                <Select value={heardFrom} onChange={setHeardFrom} options={HEARD_FROM} language={language} placeholder={t.choose} className={selectClass} />
+              </Field>
             </div>
 
             <div className="mb-6">
-              <p className="mb-1 text-sm font-semibold text-gray-800">{t.interestsLabel}</p>
+              <p className="mb-1 text-lg font-bold text-gray-900">{t.interestsLabel}</p>
               <p className="mb-3 text-xs text-gray-500">{t.interestsHint}</p>
               <div className="flex flex-wrap gap-2">
                 {INTERESTS.map((item) => {
@@ -451,71 +586,8 @@ export function ProfileModal({ language, token, onClose }: ProfileModalProps) {
               <span className="text-sm text-amber-900">{t.hostLabel}</span>
             </label>
 
-            <p className="mb-3 text-sm font-semibold text-gray-800">{t.aboutLabel}</p>
-            <div className="mb-4 grid gap-3 sm:grid-cols-2">
-              <input
-                type="text"
-                placeholder={t.name}
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className={inputClass}
-              />
-              <input
-                type="tel"
-                placeholder={t.phone}
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                className={inputClass}
-              />
-              <select value={gender} onChange={(e) => setGender(e.target.value)} className={selectClass}>
-                <option value="">{t.gender}</option>
-                {GENDERS.map((o) => (
-                  <option key={o.value} value={o.value}>{label(o, language)}</option>
-                ))}
-              </select>
-              <select value={ageGroup} onChange={(e) => setAgeGroup(e.target.value)} className={selectClass}>
-                <option value="">{t.age}</option>
-                {AGE_GROUPS.map((o) => (
-                  <option key={o.value} value={o.value}>{label(o, language)}</option>
-                ))}
-              </select>
-              <select
-                value={maritalStatus}
-                onChange={(e) => setMaritalStatus(e.target.value)}
-                className={selectClass}
-              >
-                <option value="">{t.marital}</option>
-                {MARITAL.map((o) => (
-                  <option key={o.value} value={o.value}>{label(o, language)}</option>
-                ))}
-              </select>
-              <select
-                value={neighborhood}
-                onChange={(e) => setNeighborhood(e.target.value)}
-                className={selectClass}
-              >
-                <option value="">{t.neighborhood}</option>
-                {NEIGHBORHOODS.map((o) => (
-                  <option key={o.value} value={o.value}>{label(o, language)}</option>
-                ))}
-              </select>
-              <input
-                type="text"
-                placeholder={t.profession}
-                value={profession}
-                onChange={(e) => setProfession(e.target.value)}
-                className={inputClass}
-              />
-              <select value={heardFrom} onChange={(e) => setHeardFrom(e.target.value)} className={selectClass}>
-                <option value="">{t.heardFrom}</option>
-                {HEARD_FROM.map((o) => (
-                  <option key={o.value} value={o.value}>{label(o, language)}</option>
-                ))}
-              </select>
-            </div>
-
             <div className="mb-4">
-              <p className="mb-2 text-sm text-gray-600">{t.languagesSpoken}</p>
+              <p className="mb-2 text-sm font-semibold text-gray-800">{t.languagesSpoken}</p>
               <div className="flex flex-wrap gap-2">
                 {SPOKEN_LANGUAGES.map((o) => {
                   const active = languagesSpoken.includes(o.value);

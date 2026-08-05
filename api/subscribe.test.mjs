@@ -8,7 +8,7 @@ import { __test } from './subscribe.js';
 const {
   normalizeEmail, looksLikeEmail, pickOne, pickMany,
   buildWelcomeText, buildWelcomeHtml, profileUrl, unsubscribeUrl,
-  INTERESTS, NEIGHBORHOODS,
+  neighborhoodFromZip, INTERESTS, LOCATION_STATUS, PARENTAL,
 } = __test;
 
 const TOKEN = '11111111-2222-3333-4444-555555555555';
@@ -36,11 +36,22 @@ const checks = [
   ['empty rejected',              !looksLikeEmail(normalizeEmail(''))],
 
   // --- single-choice whitelist ---
-  ['known neighborhood kept',     pickOne('squirrel_hill', NEIGHBORHOODS) === 'squirrel_hill'],
-  ['case-insensitive match',      pickOne('Squirrel_Hill', NEIGHBORHOODS) === 'squirrel_hill'],
-  ['unknown value dropped',       pickOne('mars', NEIGHBORHOODS) === null],
-  ['SQL-ish payload dropped',     pickOne("'; DROP TABLE subscribers;--", NEIGHBORHOODS) === null],
-  ['empty dropped',               pickOne('', NEIGHBORHOODS) === null],
+  ['known location kept',         pickOne('in_pittsburgh', LOCATION_STATUS) === 'in_pittsburgh'],
+  ['case-insensitive match',      pickOne('In_Pittsburgh', LOCATION_STATUS) === 'in_pittsburgh'],
+  ['unknown value dropped',       pickOne('mars', LOCATION_STATUS) === null],
+  ['SQL-ish payload dropped',     pickOne("'; DROP TABLE subscribers;--", LOCATION_STATUS) === null],
+  ['empty dropped',               pickOne('', LOCATION_STATUS) === null],
+  ['parental status whitelisted', pickOne('young_kids', PARENTAL) === 'young_kids'],
+  ['bogus parental dropped',      pickOne('seventeen_kids', PARENTAL) === null],
+
+  // --- zip -> neighbourhood, so we ask one question instead of two ---
+  ['15217 is Squirrel Hill',      neighborhoodFromZip('15217') === 'squirrel_hill'],
+  ['15213 is Oakland',            neighborhoodFromZip('15213') === 'oakland'],
+  ['ZIP+4 still resolves',        neighborhoodFromZip('15217-1234') === 'squirrel_hill'],
+  ['surrounding space tolerated', neighborhoodFromZip('  15232 ') === 'shadyside'],
+  ['out-of-area ZIP is null',     neighborhoodFromZip('90210') === null],
+  ['garbage ZIP is null',         neighborhoodFromZip('abcde') === null],
+  ['empty ZIP is null',           neighborhoodFromZip('') === null],
 
   // --- multi-choice whitelist ---
   ['known interests kept',        JSON.stringify(pickMany(['shabbat_dinners', 'hebrew_learning'], INTERESTS)) === '["shabbat_dinners","hebrew_learning"]'],
