@@ -9,6 +9,10 @@ const ZEFFY_DONATE_URL =
   'https://www.zeffy.com/en-US/donation-form/help-us-continue-our-mission-at-lev-echad'
 // Updated donation section with scrollable options
 
+// Hidden for now (2026-08-05) — flip to true to bring back the Purim video
+// series section and its nav link. All strings and episode data stay in place.
+const SHOW_INTERESTING_CONTENT = false
+
 function App() {
   // Language state
   const [language, setLanguage] = useState<'en' | 'he'>('en');
@@ -660,7 +664,9 @@ function App() {
             <a href="#get-information" className="hover:text-blue-700 transition-colors whitespace-nowrap">{t[language].nav.getInformation}</a>
             <a href="#programs" className="hover:text-blue-700 transition-colors">{t[language].nav.programs}</a>
             <a href="#events" className="hover:text-blue-700 transition-colors">{t[language].nav.events}</a>
-            <a href="#interesting-content" className="hover:text-blue-700 transition-colors whitespace-nowrap">{t[language].nav.interestingContent}</a>
+            {SHOW_INTERESTING_CONTENT && (
+              <a href="#interesting-content" className="hover:text-blue-700 transition-colors whitespace-nowrap">{t[language].nav.interestingContent}</a>
+            )}
             <a href="#about" className="hover:text-blue-700 transition-colors">{t[language].nav.about}</a>
             <a href="#contact" className="hover:text-blue-700 transition-colors">{t[language].nav.contact}</a>
           </nav>
@@ -2145,7 +2151,8 @@ function App() {
                 </div>
       </section>
 
-      {/* Interesting Content Section */}
+      {/* Interesting Content Section — hidden for now via SHOW_INTERESTING_CONTENT */}
+      {SHOW_INTERESTING_CONTENT && (
       <section id="interesting-content" className="py-16 bg-gradient-to-b from-white to-gray-50">
         <div className="mx-auto max-w-6xl px-4">
           <div className="text-center mb-12">
@@ -2244,6 +2251,7 @@ function App() {
           </div>
         </div>
       </section>
+      )}
 
       {/* About Us Section */}
       <section id="about" className="py-16 bg-white relative">
