@@ -415,6 +415,22 @@ function App() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  // Which community media is open full-screen in the lightbox, if any.
+  const [lightboxMedia, setLightboxMedia] = useState<'image' | 'video' | null>(null);
+  useEffect(() => {
+    if (!lightboxMedia) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setLightboxMedia(null);
+    };
+    document.addEventListener('keydown', onKeyDown);
+    // Lock page scroll while the lightbox is open.
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [lightboxMedia]);
   // Real testimonials — every entry has both an English and a Hebrew version
   // so the carousel reads correctly in either language. `role` is the
   // person's relationship to Lev Echad (Community Member / Student / Parent).
@@ -801,39 +817,63 @@ function App() {
           <div className="grid items-center gap-8 md:grid-cols-2">
             <div>
               <div className="grid grid-cols-2 gap-3">
-                <img
-                  src="./community/table.jpg"
-                  alt="A long Shabbat table set for guests"
-                  width={1050}
-                  height={1400}
-                  className="h-full w-full rounded-2xl object-cover shadow-lg ring-4 ring-white"
-                />
+                <button
+                  type="button"
+                  onClick={() => setLightboxMedia('image')}
+                  className="group relative block h-full w-full cursor-zoom-in overflow-hidden rounded-2xl shadow-lg ring-4 ring-white focus:outline-none focus-visible:ring-amber-400"
+                  aria-label="View photo full size"
+                >
+                  <img
+                    src="./community/table.jpg"
+                    alt="A long Shabbat table set for guests"
+                    width={1050}
+                    height={1400}
+                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <span className="absolute bottom-2 right-2 rounded-full bg-black/50 p-2 text-white opacity-0 transition-opacity group-hover:opacity-100" aria-hidden="true">
+                    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-5.2-5.2M10.5 18a7.5 7.5 0 110-15 7.5 7.5 0 010 15zM10.5 7.5v6M7.5 10.5h6" />
+                    </svg>
+                  </span>
+                </button>
                 {/* The full minute of the dinner video, muted and looping —
                     re-encoded from 150MB to ~10MB at 720p, GPS metadata
                     stripped. Streams progressively, so only what is watched
                     is downloaded. object-cover crops the landscape frame
                     into the tall cell. */}
-                <video
-                  src="./community/dinner.mp4"
-                  poster="./community/dinner-poster.jpg"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  // React sets the muted *property* but never writes the
-                  // *attribute*, and Chrome's autoplay policy looks at the
-                  // attribute — so larger files that finish loading after the
-                  // policy check stay frozen on the poster. Set it ourselves
-                  // and nudge playback. (facebook/react#10389)
-                  ref={(el) => {
-                    if (!el) return;
-                    el.muted = true;
-                    el.setAttribute('muted', '');
-                    el.play().catch(() => {});
-                  }}
-                  aria-label="Guests talking and laughing at a Lev Echad Shabbat dinner"
-                  className="h-full w-full rounded-2xl object-cover shadow-lg ring-4 ring-white"
-                />
+                <button
+                  type="button"
+                  onClick={() => setLightboxMedia('video')}
+                  className="group relative block h-full w-full cursor-zoom-in overflow-hidden rounded-2xl shadow-lg ring-4 ring-white focus:outline-none focus-visible:ring-amber-400"
+                  aria-label="Watch video full size"
+                >
+                  <video
+                    src="./community/dinner.mp4"
+                    poster="./community/dinner-poster.jpg"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    // React sets the muted *property* but never writes the
+                    // *attribute*, and Chrome's autoplay policy looks at the
+                    // attribute — so larger files that finish loading after the
+                    // policy check stay frozen on the poster. Set it ourselves
+                    // and nudge playback. (facebook/react#10389)
+                    ref={(el) => {
+                      if (!el) return;
+                      el.muted = true;
+                      el.setAttribute('muted', '');
+                      el.play().catch(() => {});
+                    }}
+                    aria-label="Guests talking and laughing at a Lev Echad Shabbat dinner"
+                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <span className="absolute bottom-2 right-2 rounded-full bg-black/50 p-2 text-white opacity-0 transition-opacity group-hover:opacity-100" aria-hidden="true">
+                    <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </span>
+                </button>
               </div>
               <p
                 className="mt-3 text-center text-sm font-medium text-amber-800"
@@ -848,6 +888,50 @@ function App() {
           </div>
         </div>
       </section>
+
+      {/* Full-size media lightbox — opened by clicking the community photo or
+          video above. Click anywhere outside the media, the ✕ button, or press
+          Escape to close. The video restarts here with controls and sound. */}
+      {lightboxMedia && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4"
+          onClick={() => setLightboxMedia(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={lightboxMedia === 'image' ? 'Photo viewer' : 'Video player'}
+        >
+          <button
+            type="button"
+            onClick={() => setLightboxMedia(null)}
+            className="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white transition-colors hover:bg-white/25 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            aria-label="Close full-size view"
+          >
+            <svg className="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          {lightboxMedia === 'image' ? (
+            <img
+              src="./community/table.jpg"
+              alt="A long Shabbat table set for guests"
+              onClick={(e) => e.stopPropagation()}
+              className="max-h-full max-w-full rounded-lg object-contain shadow-2xl"
+            />
+          ) : (
+            <video
+              src="./community/dinner.mp4"
+              poster="./community/dinner-poster.jpg"
+              controls
+              autoPlay
+              loop
+              playsInline
+              onClick={(e) => e.stopPropagation()}
+              aria-label="Guests talking and laughing at a Lev Echad Shabbat dinner"
+              className="max-h-full max-w-full rounded-lg object-contain shadow-2xl"
+            />
+          )}
+        </div>
+      )}
 
       {/* Who is this for? Section */}
       <section id="who-for" className="py-16 bg-gradient-to-b from-white to-amber-50">
