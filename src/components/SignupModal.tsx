@@ -162,11 +162,13 @@ export default function SignupModal({
 
       // Fire-and-forget: the event sign-up already succeeded, so a failure to
       // add them to the mailing list must never surface as a sign-up error.
+      // Name and phone ride along so the subscriber row describes the same
+      // person as the event sign-up (the API only fills blanks with them).
       if (keepMePosted) {
         fetch(SUBSCRIBE_ENDPOINT, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: 'join', email, language, source: 'modal' }),
+          body: JSON.stringify({ action: 'join', email, name, phone, language, source: 'modal' }),
         }).catch(() => {});
       }
 

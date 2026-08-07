@@ -33,6 +33,8 @@ const txt = {
     submitting: 'Joining...',
     joined: "You're in! 💛",
     joinedNote: "We've sent you a welcome email.",
+    alreadyNote:
+      "You're already on our list — we've emailed you a link to update your details.",
     error: "That didn't work. Please try again, or text Shosh at 412-626-1823.",
     profileTitle: "You're in! 💛",
     profileSubtitle:
@@ -74,6 +76,7 @@ const txt = {
     submitting: 'מצטרפים...',
     joined: 'אתם בפנים! 💛',
     joinedNote: 'שלחנו לכם אימייל ברוכים הבאים.',
+    alreadyNote: 'אתם כבר ברשימה — שלחנו לכם אימייל עם קישור לעדכון הפרטים.',
     error: 'משהו השתבש. נסו שוב, או שלחו הודעה לשוש: 412-626-1823.',
     profileTitle: 'אתם בפנים! 💛',
     profileSubtitle:
@@ -264,6 +267,10 @@ export default function SubscribeForm({
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const body = await res.json();
+      // The API returns a token only for a brand-new subscriber — that's the
+      // immediate "tell us about yourself" path. An existing subscriber gets
+      // their personal link by email instead, so someone typing another
+      // person's address can't open (or edit) that person's profile.
       setToken(body?.token ?? null);
       setJoined(true);
       setShowProfile(true);
@@ -311,7 +318,9 @@ export default function SubscribeForm({
             }`}
           >
             <span className="font-semibold">{t.joined}</span>{' '}
-            <span className={onDark ? 'text-blue-100' : ''}>{t.joinedNote}</span>
+            <span className={onDark ? 'text-blue-100' : ''}>
+              {token ? t.joinedNote : t.alreadyNote}
+            </span>
           </div>
         ) : (
           <form
@@ -389,6 +398,47 @@ export function ProfileModal({ language, token, onClose }: ProfileModalProps) {
       document.body.style.overflow = '';
     };
   }, [onClose]);
+
+  // Pre-fill from what we already know, so opening this from the email link
+  // reads as "manage my details" rather than a blank quiz. Best-effort, and
+  // each setter only fills a field the visitor hasn't touched yet — a slow
+  // response never clobbers something they're mid-typing.
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch(SUBSCRIBE_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'get', token }),
+        });
+        if (!res.ok) return;
+        const body = await res.json();
+        const p = body?.profile;
+        if (!p || cancelled) return;
+        setName((v) => v || p.name || '');
+        setPhone((v) => v || p.phone || '');
+        setProfession((v) => v || p.profession || '');
+        setNotes((v) => v || p.notes || '');
+        setGender((v) => v || p.gender || '');
+        setAgeGroup((v) => v || p.ageGroup || '');
+        setMaritalStatus((v) => v || p.maritalStatus || '');
+        setParentalStatus((v) => v || p.parentalStatus || '');
+        setZip((v) => v || p.zip || '');
+        setLocationStatus((v) => v || p.locationStatus || '');
+        setHeardFrom((v) => v || p.heardFrom || '');
+        setWillingToHost((v) => v || !!p.willingToHost);
+        setInterests((v) => (v.length ? v : p.interests || []));
+        setLanguagesSpoken((v) => (v.length ? v : p.languagesSpoken || []));
+      } catch {
+        // The empty form still works — saving COALESCEs on the server, so
+        // untouched fields keep their stored values either way.
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [token]);
 
   // Functional updater, not `list` from the closure: two chips tapped inside a
   // single React batch would both read the same stale array and the second

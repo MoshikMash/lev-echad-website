@@ -74,6 +74,10 @@ async function ensureSchema() {
   await sql`ALTER TABLE signups DROP COLUMN IF EXISTS attended`;
   await sql`ALTER TABLE signups DROP COLUMN IF EXISTS donation_amount`;
   await sql`ALTER TABLE signups DROP COLUMN IF EXISTS donation_method`;
+  // The email is the join key between event sign-ups and the mailing list
+  // (subscribers.email) — "who came to dinner and is on the list" is a single
+  // indexed join away.
+  await sql`CREATE INDEX IF NOT EXISTS signups_email_idx ON signups (email)`;
   schemaReady = true;
 }
 
@@ -433,7 +437,9 @@ export default async function handler(req, res) {
       eventDate:  cleanedDate,
       eventKey:   makeEventKey(baseEventName, cleanedDate),
       name:       clipText(name,       120),
-      email:      clipText(email,      200),
+      // Lowercased + trimmed exactly like api/subscribe.js normalises it, so
+      // a signup and a subscription from the same person always share a key.
+      email:      clipText(email,      200).trim().toLowerCase(),
       phone:      clipText(phone,      40),
       guests:     Math.max(1, Math.min(20, Number(guests) || 1)),
       notes:      clipText(notes,      1000),

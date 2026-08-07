@@ -1,18 +1,24 @@
 // Vercel serverless function — mailing-list / community sign-ups.
 //
-// Two actions, both POST to this same endpoint:
+// Three actions, all POST to this same endpoint:
 //
-//   action: 'join'     { email, language, source }
-//                      Upserts a subscriber row and returns { token }.
-//                      This is the only required step — one field, one row.
+//   action: 'join'     { email, language, source, name?, phone? }
+//                      Upserts a subscriber row. Returns { token } only when
+//                      the row is NEW — for an existing subscriber the token
+//                      travels exclusively by email, so typing someone else's
+//                      address never hands over the key to their row.
 //
-//   action: 'profile'  { email, token, ...optional profile fields }
+//   action: 'profile'  { token, ...optional profile fields }
 //                      Fills in the optional "tell us about yourself" data.
-//                      Guarded by the token returned from 'join' so knowing
-//                      someone's email isn't enough to overwrite their row.
+//                      Guarded by the token so knowing someone's email isn't
+//                      enough to overwrite their row.
 //
-// The same token is the future unsubscribe / edit-my-profile key, so the
-// welcome email can link straight back here without any login.
+//   action: 'get'      { token }
+//                      Returns the stored profile, so the form can open
+//                      pre-filled and act as "manage my details".
+//
+// The same token is the unsubscribe / edit-my-profile key, so the welcome
+// email can link straight back here without any login.
 //
 // Required env:
 //   DATABASE_URL            — Neon Postgres (set by the Neon Vercel integration)
@@ -343,6 +349,10 @@ async function handleJoin(req, res, body) {
 
   const language = clipText(body.language, 8) || 'en';
   const source   = clipText(body.source, 40) || 'unknown';
+  // The event sign-up modal already collected a name and phone — carry them
+  // over so the subscriber row and the event sign-up describe the same person.
+  const name     = clipText(body.name, 120) || null;
+  const phone    = clipText(body.phone, 40) || null;
   const ip       = clientIp(req);
   const ua       = clipText(req.headers?.['user-agent'] || '', 500);
   const token    = randomUUID();
@@ -358,27 +368,46 @@ async function handleJoin(req, res, body) {
   // unsubscribed and later books a dinner must not be silently resurrected by
   // a box they never actively ticked. Every other source is an explicit act of
   // typing an address into a subscribe form, so it does reactivate.
+  //
+  // name/phone fill only NULLs on conflict: this request isn't token-guarded,
+  // so it may add to an existing row but never overwrite what's there.
   const rows = await sql`
     INSERT INTO subscribers
-      (email, token, language, consent_ip, consent_source, user_agent)
+      (email, token, name, phone, language, consent_ip, consent_source, user_agent)
     VALUES
-      (${email}, ${token}, ${language}, ${ip}, ${source}, ${ua})
+      (${email}, ${token}, ${name}, ${phone}, ${language}, ${ip}, ${source}, ${ua})
     ON CONFLICT (email) DO UPDATE SET
       status          = CASE WHEN subscribers.status = 'unsubscribed' AND ${source} = 'modal'
                              THEN subscribers.status ELSE 'subscribed' END,
       unsubscribed_at = CASE WHEN subscribers.status = 'unsubscribed' AND ${source} = 'modal'
                              THEN subscribers.unsubscribed_at ELSE NULL END,
+      name            = COALESCE(subscribers.name,  EXCLUDED.name),
+      phone           = COALESCE(subscribers.phone, EXCLUDED.phone),
       language        = EXCLUDED.language,
       updated_at      = NOW()
-    RETURNING token, (xmax = 0) AS is_new
+    RETURNING token, status, (xmax = 0) AS is_new
   `;
 
   const row = rows[0];
-  if (row?.is_new) {
+  const isNew = !!row?.is_new;
+
+  // New subscriber → welcome email. Returning subscriber who typed their
+  // address into a subscribe form → the same email again, because it carries
+  // their personal profile + unsubscribe links and is the only channel that
+  // proves they own the mailbox. Two silences: a deliberately-unsubscribed
+  // person who merely booked a dinner (status stayed 'unsubscribed'), and an
+  // already-subscribed diner whose pre-checked box shouldn't generate mail.
+  const shouldEmail =
+    row && row.status !== 'unsubscribed' && (isNew || source !== 'modal');
+  if (shouldEmail) {
     await sendWelcomeEmail({ toEmail: email, language, token: row.token });
   }
 
-  res.status(200).json({ ok: true, token: row?.token, isNew: !!row?.is_new });
+  // The token is a capability: whoever holds it can rewrite the profile and
+  // unsubscribe the row. Hand it out in-band only for a brand-new row — its
+  // creator is the person at the keyboard. For an existing row the token
+  // travels only inside email, so only the mailbox owner can act on it.
+  res.status(200).json({ ok: true, token: isNew ? row.token : undefined, isNew });
 }
 
 // Keyed by token alone. The token is an unguessable UUID, so it authenticates
@@ -430,6 +459,52 @@ async function handleProfile(req, res, body) {
   res.status(200).json({ ok: true });
 }
 
+// Returns the stored profile for a token, so the edit form opens showing what
+// we already know instead of a blank quiz. Holding the token IS the login —
+// same trust model as handleProfile, read instead of write.
+async function handleGet(req, res, body) {
+  const token = clipText(body.token, 64);
+  if (!token) {
+    res.status(400).json({ error: 'Missing token' });
+    return;
+  }
+
+  await ensureSchema();
+
+  const rows = await sql`
+    SELECT name, phone, profession, notes, interests, languages_spoken,
+           gender, age_group, marital_status, parental_status, zip,
+           location_status, heard_from, willing_to_host, status
+      FROM subscribers WHERE token = ${token} LIMIT 1
+  `;
+  if (!rows.length) {
+    res.status(403).json({ error: 'Forbidden' });
+    return;
+  }
+
+  const r = rows[0];
+  res.status(200).json({
+    ok: true,
+    profile: {
+      name:            r.name,
+      phone:           r.phone,
+      profession:      r.profession,
+      notes:           r.notes,
+      interests:       r.interests || [],
+      languagesSpoken: r.languages_spoken || [],
+      gender:          r.gender,
+      ageGroup:        r.age_group,
+      maritalStatus:   r.marital_status,
+      parentalStatus:  r.parental_status,
+      zip:             r.zip,
+      locationStatus:  r.location_status,
+      heardFrom:       r.heard_from,
+      willingToHost:   r.willing_to_host,
+      status:          r.status,
+    },
+  });
+}
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -458,6 +533,8 @@ export default async function handler(req, res) {
 
     if (body.action === 'profile') {
       await handleProfile(req, res, body);
+    } else if (body.action === 'get') {
+      await handleGet(req, res, body);
     } else {
       await handleJoin(req, res, body);
     }
