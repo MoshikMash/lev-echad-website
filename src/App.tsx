@@ -92,7 +92,6 @@ function App() {
         donations: "Donations",
         contact: "Contact"
       },
-      joinEvents: "Join Events",
       // Hero
       heroTitle: "A Home Away from Home for Jewish and Israeli Pittsburghers",
       heroText1: "Founded by Shosh Mash, an Israeli mother, educator, and community builder, Lev Echad reflects the power of feeling truly welcomed.",
@@ -240,7 +239,6 @@ function App() {
         donations: "תרומות",
         contact: "צור קשר"
       },
-      joinEvents: "הצטרף לאירועים",
       // Hero
       heroTitle: "בית רחוק מהבית עבור יהודים וישראלים בפיטסבורג",
       heroText1: "נוסד על ידי שוש, אם ישראלית, מחנכת ובונה קהילה, לב אחד משקף את הכוח של להרגיש באמת רצוי.",
@@ -673,11 +671,15 @@ function App() {
       {/* Header */}
       <header className="sticky top-0 z-50 bg-white/80 border-b border-blue-200">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-          <div className="flex items-center gap-3">
-            <img src="./logo.jpg" alt="Lev Echad Logo" className="h-12 w-12 rounded-full object-cover shadow-lg" />
-            <div className="leading-tight">
-              <div className="text-lg font-bold text-blue-900" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].levEchad}</div>
-              <div className="text-xs text-blue-600" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].tagline}</div>
+          {/* min-w-0 + nowrap: with three CTAs in the cluster on the right,
+              a wrappable brand block would fold onto four lines on a phone
+              and double the header's height. The tagline steps aside below
+              sm instead. */}
+          <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+            <img src="./logo.jpg" alt="Lev Echad Logo" className="h-10 w-10 sm:h-12 sm:w-12 rounded-full object-cover shadow-lg flex-shrink-0" />
+            <div className="min-w-0 leading-tight">
+              <div className="text-base sm:text-lg font-bold text-blue-900 truncate" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].levEchad}</div>
+              <div className="hidden sm:block text-xs text-blue-600" dir={language === 'he' ? 'rtl' : 'ltr'}>{t[language].tagline}</div>
             </div>
           </div>
           <nav className="hidden items-center gap-4 text-sm font-medium lg:flex">
@@ -691,11 +693,13 @@ function App() {
             <a href="#contact" className="hover:text-blue-700 transition-colors">{t[language].nav.contact}</a>
           </nav>
           {/* ms-4 keeps this cluster from crowding the last nav link
-              ("Contact"); the two-letter toggle label buys the rest. */}
-          <div className="ms-4 flex items-center gap-2 flex-shrink-0">
+              ("Contact"); the two-letter toggle label buys the rest. Below sm
+              the margin and gaps tighten so three CTAs still leave room for
+              the site name. */}
+          <div className="ms-2 sm:ms-4 flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
             <button
               onClick={() => setLanguage(language === 'en' ? 'he' : 'en')}
-              className="rounded-lg border border-blue-600 text-blue-600 hover:bg-blue-50 px-2.5 py-1.5 text-xs font-medium transition-colors"
+              className="rounded-lg border border-blue-600 text-blue-600 hover:bg-blue-50 px-2 sm:px-2.5 py-1.5 text-xs font-medium transition-colors"
               dir={language === 'he' ? 'rtl' : 'ltr'}
               aria-label={language === 'en' ? 'עברית' : 'English'}
             >
@@ -707,14 +711,21 @@ function App() {
             >
               💚 {t[language].donate}
             </a>
-            <a href="#events" className="hidden sm:inline-block rounded-xl bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 text-sm font-semibold text-center transition-colors whitespace-nowrap">
-              {t[language].joinEvents}
+            {/* Events sits immediately before the join CTA and stays visible at
+                every width: the nav bar is lg-only and there's no mobile menu,
+                so on a phone this button is the only way up to the events
+                section. */}
+            <a
+              href="#events"
+              className="inline-flex items-center gap-1 rounded-xl bg-blue-600 hover:bg-blue-700 text-white px-2 sm:px-3 py-1.5 text-xs sm:text-sm font-semibold transition-colors whitespace-nowrap"
+            >
+              <span className="hidden sm:inline">📅</span> {t[language].nav.events}
             </a>
             {/* The distribution-list CTA — deliberately the loudest thing in
                 the header: amber against an all-blue bar, plus a pulsing halo. */}
             <a
               href="#subscribe"
-              className="cta-glow inline-flex items-center gap-1 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 text-white px-3 py-1.5 text-sm font-bold transition-colors whitespace-nowrap shadow-md"
+              className="cta-glow inline-flex items-center gap-1 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 text-white px-2 sm:px-3 py-1.5 text-xs sm:text-sm font-bold transition-colors whitespace-nowrap shadow-md"
             >
               💛 <span className="hidden md:inline">{t[language].joinCommunityNav}</span>
               <span className="md:hidden">{t[language].joinCommunityNavShort}</span>
